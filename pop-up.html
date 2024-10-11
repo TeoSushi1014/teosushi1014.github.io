@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Multi-Content with Windows 11 Blur Effect</title>
+<style>
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f0f0; /* Light gray background */
+}
+
+.content-button {
+    background: none; /* Transparent button */
+    border: none;
+    cursor: pointer;
+    color: #0078d4; /* Windows 11 blue */
+    text-decoration: underline;
+    font-size: 16px;
+    padding: 8px 12px;
+    margin-top: 10px;
+}
+
+/* Blur Frame Styles */
+.blur-frame {
+    position: absolute;
+    display: none; /* Initially hidden */
+    max-width: 400px; /* Size limit */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    border-radius: 8px;
+    backdrop-filter: blur(10px); /* The blur effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    z-index: 1; /* Ensure frame is above other elements */
+}
+</style>
+</head>
+<body>
+
+<div class="content-container">
+    <p>Content 1 goes here...</p>
+    <button class="content-button" data-content="This is the detailed content for Content 1.">Read More</button>
+</div>
+
+<div class="content-container">
+    <p>Content 2 goes here...</p>
+    <button class="content-button" data-content="More information about Content 2.">Learn More</button>
+</div>
+
+<div class="blur-frame"></div> 
+
+<script>
+const buttons = document.querySelectorAll('.content-button');
+const frame = document.querySelector('.blur-frame');
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        frame.textContent = button.dataset.content;
+        frame.style.display = 'block';
+
+        // Position the frame
+        const buttonRect = button.getBoundingClientRect();
+        frame.style.top = `${buttonRect.bottom + window.scrollY}px`;
+        frame.style.left = `${buttonRect.left + window.scrollX}px`;
+    });
+});
+
+// Hide frame when clicking outside
+document.addEventListener('click', (event) => {
+    if (!frame.contains(event.target) && !event.target.classList.contains('content-button')) {
+        frame.style.display = 'none';
+    }
+});
+</script>
+
+</body>
+</html>
