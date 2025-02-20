@@ -1,10 +1,9 @@
 backend:
-  name: github
-  repo: TeoSushi1014/teosushi1014.github.io
+  name: git-gateway
   branch: main
-  client_id: Ov23liSyMU0un5r2RpN4
-  base_url: https://teosushi1014.github.io
-  auth_type: implicit
+  accept_roles: 
+    - admin
+    - editor
 
 site_url: https://teosushi1014.github.io
 display_url: https://teosushi1014.github.io

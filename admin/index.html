@@ -4,29 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
+  <!-- Include Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
-    if (document.location.hash.startsWith('#access_token=')) {
-      const token = document.location.hash.split('=')[1];
-      localStorage.setItem('github-token', token);
-      history.replaceState(null, '', location.href.split('#')[0]);
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
     }
-
-    if (document.location.hash.startsWith('#error=')) {
-      console.error('Auth Error:', document.location.hash);
-    }
-
-    // Configure CMS before init
-    window.CMS.registerBackend('github', {
-      repo: 'TeoSushi1014/teosushi1014.github.io',
-      branch: 'main',
-      client_id: 'Ov23liSyMU0un5r2RpN4',
-      auth_type: 'implicit',
-      base_url: 'https://teosushi1014.github.io'
-    });
-
+    
+    // Initialize CMS
     window.CMS.init();
   </script>
 </body>
