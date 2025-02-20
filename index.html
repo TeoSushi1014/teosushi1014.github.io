@@ -1,321 +1,76 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personal portfolio showcasing creative development and design projects">
-    <meta name="keywords" content="portfolio, web development, design, projects">
-    <meta name="author" content="Teo Sushi">
-    <meta property="og:title" content="Teo Sushi - Portfolio">
-    <meta property="og:description" content="Creative Developer & Designer Portfolio">
-    <meta property="og:image" content="assets/images/og-image.jpg">
-    <meta property="og:url" content="https://teosushi1014.github.io">
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=cal-sans@400,700&display=swap" rel="stylesheet">
-    <title>Portfolio - Tèo Sushi</title>
-    <style>
-        .nav-content {
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .nav-content ul {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-content a {
-            color: var(--text-primary-light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition-base);
-            position: relative;
-        }
-
-        .nav-content a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background: var(--gradient-primary-light);
-            transition: width 0.3s ease;
-        }
-
-        .nav-content a:hover::after {
-            width: 100%;
-        }
-
-        .dark .nav-content a {
-            color: var(--text-primary-dark);
-        }
-
-        .dark .nav-content a::after {
-            background: var(--gradient-primary-dark);
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            background: var(--title-gradient-light);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .dark .section-title {
-            background: var(--title-gradient-dark);
-        }
-
-        .card {
-            background: var(--glass-light);
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid var(--glass-border-light);
-            transition: var(--transition-base);
-        }
-
-        .dark .card {
-            background: var(--glass-dark);
-            border-color: var(--glass-border-dark);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--button-shadow-hover-light);
-        }
-
-        .dark .card:hover {
-            box-shadow: var(--button-shadow-hover-dark);
-        }
-
-        .about-contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .about-card, .contact-card {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .about-card h3, .contact-card h3 {
-            font-size: 1.5rem;
-            color: var(--text-primary-light);
-            margin-bottom: 1rem;
-        }
-
-        .dark .about-card h3, .dark .contact-card h3 {
-            color: var(--text-primary-dark);
-        }
-
-        .skills {
-            margin-top: auto;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .skill-tag {
-            background: var(--glass-light);
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.9rem;
-            border: 1px solid var(--glass-border-light);
-        }
-
-        .dark .skill-tag {
-            background: var(--glass-dark);
-            border-color: var(--glass-border-dark);
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .contact-icon {
-            width: 1.5rem;
-            height: 1.5rem;
-            color: var(--text-primary-light);
-        }
-
-        .dark .contact-icon {
-            color: var(--text-primary-dark);
-        }
-
-        .contact-item a {
-            color: var(--text-primary-light);
-            text-decoration: none;
-            transition: var(--transition-base);
-        }
-
-        .dark .contact-item a {
-            color: var(--text-primary-dark);
-        }
-
-        .contact-item a:hover {
-            color: var(--accent-light);
-        }
-
-        .dark .contact-item a:hover {
-            color: var(--accent-dark);
-        }
-
-        @media (max-width: 768px) {
-            .about-contact-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <title>TeoSushi - Portfolio</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
-    <nav class="glass-nav">
-        <div class="nav-content">
-            <h1 class="gradient-text">Tèo Sushi</h1>
-            <ul>
-                <li><a href="#home" data-section="home">Home</a></li>
-                <li><a href="#projects" data-section="projects">Projects</a></li>
-                <li><a href="#about" data-section="about">About</a></li>
-                <li><a href="#contact" data-section="contact">Contact</a></li>
-            </ul>
+    <nav class="glass fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-4">
+        <div class="logo font-display text-xl font-bold">
+            <span class="gradient-text">TeoSushi</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <button id="themeToggle" class="nav-button" aria-label="Toggle theme">
+                <i data-feather="sun" class="light-icon"></i>
+                <i data-feather="moon" class="dark-icon hidden"></i>
+            </button>
         </div>
     </nav>
 
-    <main>
-        <section id="home" class="glass-section" data-aos="fade-up">
-            <h2 class="section-title">Welcome to My Portfolio</h2>
-            <p class="lead">Creative Developer & Designer</p>
+    <main class="container mx-auto px-4 pt-24">
+        <header class="text-center mb-16">
+            <h1 class="page-title">Welcome to My Portfolio</h1>
+            <p class="text-secondary text-lg max-w-2xl mx-auto">
+                Full-stack developer passionate about creating beautiful and functional web applications
+            </p>
+        </header>
+
+        <section id="projects" class="mb-16">
+            <h2 class="section-title mb-8">My Projects</h2>
+            <div class="preview-grid" id="projectGrid">
+                <!-- Projects will be dynamically loaded here -->
+            </div>
         </section>
 
-        <section id="projects" class="glass-section" data-aos="fade-up" data-aos-delay="100">
-            <h2 class="section-title">My Projects</h2>
-            <div id="projects-grid" class="card-grid"></div>
+        <section id="about" class="glass p-8 rounded-2xl mb-16">
+            <h2 class="section-title mb-8">About Me</h2>
+            <div class="prose max-w-none">
+                <p class="text-secondary">
+                    I'm a passionate developer focused on creating innovative solutions using modern web technologies.
+                    My expertise includes full-stack development, responsive design, and user experience optimization.
+                </p>
+            </div>
         </section>
 
-        <section id="about" class="glass-section" data-aos="fade-up" data-aos-delay="200">
-            <h2 class="section-title">About Me & Contact</h2>
-            <div class="about-contact-container">
-                <div class="card about-card">
-                    <h3>About Me</h3>
-                    <p>A passionate developer focused on creating interactive and user-friendly applications.</p>
-                    <div class="skills">
-                        <h4>Skills</h4>
-                        <div class="skill-tags">
-                            <span class="skill-tag">HTML/CSS</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">React</span>
-                            <span class="skill-tag">Node.js</span>
-                            <span class="skill-tag">UI/UX Design</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card contact-card">
-                    <h3>Contact</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                            </svg>
-                            <a href="mailto:contact@teosushi.com">contact@teosushi.com</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-                            </svg>
-                            <a href="https://github.com/teosuhi1014" target="_blank" class="social-link">GitHub</a>
-                        </div>
-                    </div>
-                </div>
+        <section id="contact" class="glass p-8 rounded-2xl mb-16">
+            <h2 class="section-title mb-8">Contact</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <a href="https://github.com/TeoSushi1014" target="_blank" class="nav-button flex-1">
+                    <i data-feather="github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="mailto:your.email@example.com" class="nav-button flex-1">
+                    <i data-feather="mail"></i>
+                    <span>Email</span>
+                </a>
             </div>
         </section>
     </main>
 
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-    </button>
+    <footer class="glass mt-auto py-6">
+        <div class="container mx-auto px-4 text-center text-secondary">
+            <p>&copy; 2024 TeoSushi. All rights reserved.</p>
+        </div>
+    </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script type="module">
-        import { pageTransition, loadingState, toast } from './assets/js/utils.js';
-
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-out',
-            once: true
-        });
-
-        // Initialize page transition
-        pageTransition.init();
-
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const section = document.querySelector(this.getAttribute('href'));
-                section.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-
-        // Active section highlighting
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.7
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    document.querySelectorAll('.nav-content a').forEach(link => {
-                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                    });
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('section[id]').forEach((section) => {
-            observer.observe(section);
-        });
-    </script>
-    <script src="assets/js/main.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        feather.replace();
+    </script>
 </body>
-</html>
+</html> 

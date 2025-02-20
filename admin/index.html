@@ -1,421 +1,76 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=cal-sans@400,700&display=swap" rel="stylesheet">
-    <title>Admin Dashboard - Tèo Sushi</title>
+    <title>TeoSushi - Admin</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="admin.css">
-    <style>
-        .auth-container {
-            position: fixed;
-            inset: 0;
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur-size));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .auth-form {
-            background: var(--glass-light);
-            padding: 2.5rem;
-            border-radius: 1rem;
-            border: 1px solid var(--glass-border-light);
-            width: 100%;
-            max-width: 400px;
-            box-shadow: var(--button-shadow-light);
-        }
-
-        .dark .auth-form {
-            background: var(--glass-dark);
-            border-color: var(--glass-border-dark);
-            box-shadow: var(--button-shadow-dark);
-        }
-
-        .auth-form h2 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            background: var(--title-gradient-light);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-primary-light);
-        }
-
-        .dark .form-group label {
-            color: var(--text-primary-dark);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid var(--glass-border-light);
-            background: var(--glass-light);
-            color: var(--text-primary-light);
-            transition: var(--transition-base);
-        }
-
-        .dark .form-group input {
-            background: var(--glass-dark);
-            border-color: var(--glass-border-dark);
-            color: var(--text-primary-dark);
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--sky-blue);
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
-        }
-
-        .dark .form-group input:focus {
-            border-color: var(--soft-pink);
-            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
-        }
-
-        .error-message {
-            color: #ef4444;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-
-        .form-group.error .error-message {
-            display: block;
-        }
-
-        .form-group.error input {
-            border-color: #ef4444;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--gradient-primary-light);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-base);
-        }
-
-        .dark .btn-login {
-            background: var(--gradient-primary-dark);
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--button-shadow-hover-light);
-        }
-
-        .dark .btn-login:hover {
-            box-shadow: var(--button-shadow-hover-dark);
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 1rem;
-        }
-
-        .project-card {
-            background: var(--glass-light);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            border: 1px solid var(--glass-border-light);
-            transition: var(--transition-base);
-        }
-
-        .dark .project-card {
-            background: var(--glass-dark);
-            border-color: var(--glass-border-dark);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
-    <div id="authContainer" class="auth-container">
-        <form id="authForm" class="auth-form">
-            <h2>Admin Login</h2>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required placeholder="Enter username">
-                <div class="error-message">Invalid username</div>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Enter password">
-                <div class="error-message">Invalid password</div>
-            </div>
-            <button type="submit" class="btn-login">Login</button>
-        </form>
-    </div>
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div id="loginForm" class="glass p-8 rounded-2xl w-full max-w-md">
+            <h1 class="text-2xl font-bold mb-6 text-center font-display">Admin Login</h1>
+            <form id="adminLoginForm" class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="username" class="w-full p-2 rounded-lg glass" required>
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="password" class="w-full p-2 rounded-lg glass" required>
+                </div>
+                <button type="submit" class="btn-primary w-full py-2 rounded-lg">Login</button>
+            </form>
+        </div>
 
-    <nav class="glass-nav">
-        <div class="nav-content">
-            <h1 class="gradient-text">Tèo Sushi Admin</h1>
-            <div class="nav-actions">
-                <div id="userInfo" class="user-info"></div>
-                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
+        <div id="adminPanel" class="container mx-auto px-4 hidden">
+            <header class="mb-8">
+                <h1 class="text-3xl font-bold mb-4">Project Management</h1>
+                <button id="logoutBtn" class="nav-button">
+                    <i data-feather="log-out"></i>
+                    <span>Logout</span>
                 </button>
-                <button id="logoutBtn" class="btn">Logout</button>
-                <a href="../index.html" class="btn">Back to Portfolio</a>
+            </header>
+
+            <div class="glass p-6 rounded-2xl mb-8">
+                <h2 class="text-xl font-bold mb-4">Add New Project</h2>
+                <form id="projectForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Project Title</label>
+                        <input type="text" name="title" class="w-full p-2 rounded-lg glass" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Description</label>
+                        <textarea name="description" class="w-full p-2 rounded-lg glass" rows="3" required></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">GitHub URL</label>
+                        <input type="url" name="github" class="w-full p-2 rounded-lg glass" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Technologies (comma-separated)</label>
+                        <input type="text" name="technologies" class="w-full p-2 rounded-lg glass" required>
+                    </div>
+                    <button type="submit" class="btn-primary py-2 px-4 rounded-lg">Add Project</button>
+                </form>
+            </div>
+
+            <div class="glass p-6 rounded-2xl">
+                <h2 class="text-xl font-bold mb-4">Existing Projects</h2>
+                <div id="projectsList" class="space-y-4">
+                    <!-- Projects will be listed here -->
+                </div>
             </div>
         </div>
-    </nav>
-
-    <main id="adminContent" style="display: none;">
-        <section class="glass-section">
-            <h2 class="section-title">Add New Project</h2>
-            <form id="projectForm" class="admin-form">
-                <div class="form-group">
-                    <label for="title">Project Title</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="title" name="title" required 
-                               minlength="3" 
-                               placeholder="Enter project title"
-                               pattern="^[a-zA-Z0-9\s\-_]+$"
-                               title="Title can only contain letters, numbers, spaces, hyphens and underscores">
-                        <span class="input-icon success-icon"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <div class="input-wrapper">
-                        <textarea id="description" name="description" required 
-                                minlength="10" 
-                                maxlength="500"
-                                placeholder="Describe your project (10-500 characters)"
-                                rows="4"></textarea>
-                        <span class="input-icon success-icon"></span>
-                    </div>
-                    <small class="char-count">0/500</small>
-                </div>
-                <div class="form-group">
-                    <label for="technologies">Technologies (comma separated)</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="technologies" name="technologies"
-                               required
-                               placeholder="e.g., HTML, CSS, JavaScript"
-                               pattern="^[a-zA-Z0-9\s\-_+#,\.]+$"
-                               title="Enter technologies separated by commas">
-                        <span class="input-icon success-icon"></span>
-                    </div>
-                    <div class="tech-preview"></div>
-                </div>
-                <div class="form-group">
-                    <label for="link">Project Link</label>
-                    <div class="input-wrapper">
-                        <input type="url" id="link" name="link" required
-                               placeholder="https://example.com"
-                               pattern="https?://.+"
-                               title="Include http:// or https:// in the URL">
-                        <span class="input-icon success-icon"></span>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Project</button>
-            </form>
-        </section>
-
-        <section class="glass-section">
-            <h2 class="section-title">Manage Projects</h2>
-            <div id="projectsGrid" class="project-grid"></div>
-        </section>
-    </main>
-
-    <div class="loading" id="loadingSpinner">
-        <div class="spinner"></div>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script type="module">
-        import { pageTransition, loadingState, toast, focusManager } from '../assets/js/utils.js';
-
-        // Initialize page transition
-        pageTransition.init();
-
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-out',
-            once: true
-        });
-
-        // Form validation and feedback
-        const projectForm = document.getElementById('projectForm');
-        const formGroups = projectForm.querySelectorAll('.form-group');
-
-        formGroups.forEach(group => {
-            const input = group.querySelector('input, textarea');
-            const wrapper = document.createElement('div');
-            wrapper.className = 'input-wrapper';
-            input.parentNode.insertBefore(wrapper, input);
-            wrapper.appendChild(input);
-
-            const icon = document.createElement('span');
-            icon.className = 'input-icon';
-            icon.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-            `;
-            wrapper.appendChild(icon);
-
-            input.addEventListener('input', validateInput);
-        });
-
-        function validateInput(e) {
-            const input = e.target;
-            const group = input.closest('.form-group');
-            const isValid = input.checkValidity();
-
-            group.classList.remove('success', 'error');
-            group.classList.add(isValid ? 'success' : 'error');
-        }
-
-        // Handle project submission with loading state
-        projectForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            if (!projectForm.checkValidity()) {
-                return;
-            }
-
-            loadingState.show('Adding project...');
-            
-            try {
-                // Your existing project addition logic
-                const project = {
-                    id: Date.now(),
-                    title: document.getElementById('title').value,
-                    description: document.getElementById('description').value,
-                    technologies: document.getElementById('technologies').value.split(',').map(t => t.trim()),
-                    link: document.getElementById('link').value,
-                    createdBy: localStorage.getItem('adminUsername'),
-                    createdAt: new Date().toISOString()
-                };
-                
-                await new Promise(resolve => setTimeout(resolve, 800)); // Simulated delay
-                
-                const projects = JSON.parse(localStorage.getItem('projects') || '[]');
-                projects.push(project);
-                localStorage.setItem('projects', JSON.stringify(projects));
-                
-                projectForm.reset();
-                formGroups.forEach(group => group.classList.remove('success', 'error'));
-                loadProjects();
-                
-                toast.show('Project added successfully!', 'success');
-            } catch (error) {
-                toast.show('Error adding project', 'error');
-            } finally {
-                loadingState.hide();
-            }
-        });
-
-        // Initialize auth form focus trap
-        const authForm = document.getElementById('authForm');
-        if (authForm) {
-            focusManager.trapFocus(authForm);
-        }
-    </script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="admin.js"></script>
     <script>
-        // Authentication handling
-        const VALID_USERNAME = 'teosushi-admin';
-        const VALID_PASSWORD = '.Quang1014...';
-        const authContainer = document.getElementById('authContainer');
-        const authForm = document.getElementById('authForm');
-        const userInfo = document.getElementById('userInfo');
-        const logoutBtn = document.getElementById('logoutBtn');
-
-        function showAuthForm() {
-            authContainer.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hideAuthForm() {
-            authContainer.style.display = 'none';
-            document.body.style.overflow = '';
-        }
-
-        function updateUserInterface(isLoggedIn) {
-            if (isLoggedIn) {
-                hideAuthForm();
-                userInfo.style.display = 'flex';
-                logoutBtn.style.display = 'block';
-                userInfo.textContent = `Logged in as: ${localStorage.getItem('adminUsername')}`;
-            } else {
-                showAuthForm();
-                userInfo.style.display = 'none';
-                logoutBtn.style.display = 'none';
-            }
-        }
-
-        // Check authentication status
-        if (!localStorage.getItem('isAdmin')) {
-            showAuthForm();
-        } else {
-            updateUserInterface(true);
-        }
-
-        // Handle login
-        authForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-                localStorage.setItem('isAdmin', 'true');
-                localStorage.setItem('adminUsername', username);
-                localStorage.setItem('lastLogin', new Date().toISOString());
-                updateUserInterface(true);
-            } else {
-                const errorField = username !== VALID_USERNAME ? 'username' : 'password';
-                document.getElementById(errorField).parentElement.classList.add('error');
-            }
-        });
-
-        // Handle logout
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('isAdmin');
-            localStorage.removeItem('adminUsername');
-            localStorage.removeItem('lastLogin');
-            updateUserInterface(false);
-        });
-
-        // Clear form errors on input
-        document.querySelectorAll('.form-group input').forEach(input => {
-            input.addEventListener('input', () => {
-                input.parentElement.classList.remove('error');
-            });
-        });
+        feather.replace();
     </script>
-    <script type="module" src="../assets/js/theme.js"></script>
-    <script type="module" src="../assets/js/admin.js"></script>
 </body>
-</html>
+</html> 

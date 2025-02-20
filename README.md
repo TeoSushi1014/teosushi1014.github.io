@@ -1,59 +1,102 @@
-# Portfolio Website - teosushi1014.github.io
+# Portfolio Website
 
-## 🌟 Tổng quan
-Portfolio website được xây dựng trên nền tảng GitHub Pages, với giao diện hiện đại và độc đáo sử dụng hiệu ứng glassmorphism. Website được thiết kế với màu sắc chủ đạo là xanh da trời và hồng nhạt, tạo cảm giác nhẹ nhàng và chuyên nghiệp.
+## 🌟 Overview
 
-## 🎨 Thiết kế & Giao diện
-- **Màu sắc chủ đạo:**
-  - Xanh da trời: `#87CEEB`
-  - Hồng nhạt: `#FFB6C1`
-- **Hiệu ứng:** Glassmorphism tạo cảm giác trong suốt, hiện đại
-- **Responsive:** Tương thích với mọi thiết bị
+A modern portfolio website built with GitHub Pages, featuring a stunning glassmorphism design. The website uses a beautiful color scheme of sky blue and soft pink, creating a professional and elegant appearance with both light and dark modes.
 
-## 📋 Tính năng chính
-1. **Trang Portfolio**
-   - Hiển thị các dự án đã thực hiện
-   - Thông tin cá nhân và kỹ năng
-   - Phần giới thiệu và liên hệ
+## 🎨 Design & Interface
 
-2. **Trang Admin**
-   - Hệ thống quản lý dự án
-   - Thêm/sửa/xóa dự án mới
-   - Tự động cập nhật portfolio mà không cần code
+* **Primary Colors:**  
+   * Sky Blue: `#0EA5E9`  
+   * Soft Pink: `#EC4899`
+* **Effects:** Modern glassmorphism with blur effects
+* **Theme:** Light/Dark mode support
+* **Responsive:** Compatible with all devices
 
-## 💻 Cấu trúc
+## 📋 Key Features
+
+1. **Portfolio Section**  
+   * Project showcase with glassmorphism cards
+   * Personal information and skills
+   * About me and contact sections
+
+2. **Admin Dashboard**  
+   * Project management system
+   * Secure authentication
+   * Add/Edit/Delete projects without coding
+   * Encrypted credentials for security
+
+## 💻 Project Structure
+
 ```
-teosuhi1014.github.io/
-├── index.html        # Trang chủ
-├── admin/            # Phần quản trị
+portfolio/
+├── index.html          # Main page
+├── admin/             # Admin section
 ├── assets/          
-│   ├── css/         # Style sheets
-│   ├── js/          # JavaScript files
-│   └── images/      # Hình ảnh
-└── projects/        # Dữ liệu dự án
+│   ├── css/          # Stylesheets
+│   ├── js/           # JavaScript files
+│   └── images/       # Image assets
+└── projects/         # Project data
 ```
 
-## 🔧 Công nghệ sử dụng
-- GitHub Pages (hosting)
-- HTML5/CSS3
-- Vanilla JavaScript
-- Local Storage (lưu trữ dữ liệu admin)
+## 🔧 Technologies Used
 
-## 🚀 Hướng dẫn sử dụng
-1. **Xem Portfolio**
-   - Truy cập: https://teosushi1014.github.io
+* HTML5/CSS3
+* Vanilla JavaScript
+* GitHub Pages (hosting)
+* Local Storage (admin data)
+* CryptoJS (credential encryption)
 
-2. **Quản lý dự án (Admin)**
-   - Truy cập: https://teosushi1014.github.io/admin
-   - Đăng nhập với thông tin admin
-   - Thêm/sửa/xóa dự án qua giao diện
+## 🎯 Features
 
-## 📝 Lưu ý
-- Website sử dụng các công nghệ có sẵn, không cần cài đặt thêm
-- Dữ liệu được lưu trữ trong Local Storage
-- Tối ưu hóa cho tốc độ tải trang
-- Bảo mật admin page với basic authentication
+### Light/Dark Mode
+* Automatic system preference detection
+* Manual toggle option
+* Smooth transition effects
+* Persistent user preference
 
-## 🔗 Liên kết
-- Website: https://teosushi1014.github.io
-- GitHub Repository: https://github.com/teosushi1014/teosushi1014.github.io
+### Glassmorphism UI
+* Blur effects: `backdrop-filter: blur(12px)`
+* Transparent gradients
+* Smooth animations
+* Modern card design
+
+### Admin Panel
+* Secure login system
+* Encrypted credentials
+* Project management interface
+* Real-time preview
+
+## 🚀 Getting Started
+
+1. **View Portfolio**
+   * Visit: https://teosushi1014.github.io
+
+2. **Admin Access**
+   * Go to: https://teosushi1014.github.io/admin
+   * Use encrypted credentials
+   * Manage projects through the interface
+
+## 📝 Security Notes
+
+* Admin credentials are encrypted
+* Uses secure local storage
+* Open-source safe implementation
+* Regular security updates
+
+## 🔗 Links
+
+* **Live Site:** https://teosushi1014.github.io
+* **Repository:** https://github.com/TeoSushi1014/teosushi1014.github.io
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details. 
