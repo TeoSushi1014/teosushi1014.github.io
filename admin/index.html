@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Portfolio Manager</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .admin-form {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #333;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: var(--primary-blue);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: var(--primary-pink);
+        }
+        .projects-list {
+            margin-top: 30px;
+        }
+        .project-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: var(--glass-bg);
+            border-radius: 5px;
+        }
+        .delete-btn {
+            background: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <h1>Portfolio Admin</h1>
+            <a href="../index.html" class="btn">Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="glass-section">
+            <h2>Add New Project</h2>
+            <form id="projectForm" class="admin-form">
+                <div class="form-group">
+                    <label for="title">Project Title</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="technologies">Technologies (comma separated)</label>
+                    <input type="text" id="technologies" placeholder="HTML, CSS, JavaScript">
+                </div>
+                <div class="form-group">
+                    <label for="link">Project Link</label>
+                    <input type="url" id="link" required>
+                </div>
+                <button type="submit" class="btn">Add Project</button>
+            </form>
+        </section>
+
+        <section class="glass-section">
+            <h2>Manage Projects</h2>
+            <div id="projectsList" class="projects-list"></div>
+        </section>
+    </main>
+
+    <script>
+        // Simple authentication
+        if (!localStorage.getItem('isAdmin')) {
+            const password = prompt('Enter admin password:');
+            if (password === 'admin123') {
+                localStorage.setItem('isAdmin', 'true');
+            } else {
+                window.location.href = '../index.html';
+            }
+        }
+
+        const projectForm = document.getElementById('projectForm');
+        const projectsList = document.getElementById('projectsList');
+
+        function loadProjects() {
+            const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+            projectsList.innerHTML = projects.map(project => `
+                <div class="project-item">
+                    <div>
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                    </div>
+                    <button class="btn delete-btn" onclick="deleteProject(${project.id})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        projectForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const project = {
+                id: Date.now(),
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                technologies: document.getElementById('technologies').value.split(',').map(t => t.trim()),
+                link: document.getElementById('link').value
+            };
+            
+            const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+            projects.push(project);
+            localStorage.setItem('projects', JSON.stringify(projects));
+            
+            projectForm.reset();
+            loadProjects();
+        });
+
+        function deleteProject(id) {
+            let projects = JSON.parse(localStorage.getItem('projects'));
+            projects = projects.filter(project => project.id !== id);
+            localStorage.setItem('projects', JSON.stringify(projects));
+            loadProjects();
+        }
+
+        // Load projects when page loads
+        loadProjects();
+    </script>
+</body>
+</html>

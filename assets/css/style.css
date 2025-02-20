@@ -66,6 +66,9 @@ main {
 
 .glass-section {
     margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
 }
 
 #projects-grid {
@@ -79,12 +82,53 @@ main {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
     border-radius: 10px;
-    padding: 15px;
-    transition: transform 0.3s;
+    padding: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .project-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-pink);
+}
+
+.technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.technologies span {
+    background: rgba(135, 206, 235, 0.2);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-card a {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--primary-blue);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.project-card a:hover {
+    background: var(--primary-pink);
+    transform: scale(1.05);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (max-width: 768px) {
@@ -99,3 +143,8 @@ main {
         justify-content: center;
     }
 }
+
+#home { animation-delay: 0.2s; }
+#projects { animation-delay: 0.4s; }
+#about { animation-delay: 0.6s; }
+#contact { animation-delay: 0.8s; }

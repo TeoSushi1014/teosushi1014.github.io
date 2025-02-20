@@ -1,0 +1,23 @@
+backend:
+  name: github
+  repo: teosuhi1014/teosuhi1014.github.io
+  branch: main
+  base_url: https://teosuhi1014.github.io
+  auth_endpoint: admin/callback
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "projects"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Technologies", name: "technologies", widget: "list"}
+      - {label: "Link", name: "link", widget: "string"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
