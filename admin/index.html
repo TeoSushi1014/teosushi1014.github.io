@@ -4,12 +4,68 @@
     <meta charset="utf-8" />
     <title>TeoSushi Blog Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/admin/admin.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <style>
+        .nc-app-header {
+            @apply bg-gradient-to-r from-blue-500 to-pink-400 !important;
+        }
+        .nc-app-header-content {
+            @apply glass !important;
+        }
+        .nc-button-primary {
+            @apply bg-blue-500 hover:bg-blue-600 !important;
+        }
+        .nc-githubAuthenticationPage {
+            @apply bg-gradient-to-br from-blue-50 to-pink-50 dark:from-blue-900 dark:to-pink-900;
+        }
+        .nc-login-button {
+            @apply ios-card !important;
+        }
+    </style>
+    <script>
+        // Check for dark mode
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        }
+    </script>
 </head>
-<body>
+<body class="bg-gradient-to-br from-blue-50 to-pink-50 dark:from-blue-900 dark:to-pink-900">
+    <script>
+        window.CMS_MANUAL_INIT = true;
+    </script>
     <script src="https://unpkg.com/@staticcms/app@^3.4.5/dist/static-cms-app.js"></script>
     <script>
-        window.CMS.init();
+        const config = {
+            backend: {
+                name: 'github',
+                repo: 'TeoSushi1014/teosushi1014.github.io',
+                branch: 'main',
+                base_url: 'https://api.github.com',
+                auth_endpoint: 'oauth/authorize',
+                auth_type: 'pkce'
+            },
+            media_folder: "images",
+            public_folder: "/images",
+            collections: [
+                {
+                    name: "posts",
+                    label: "Blog Posts",
+                    folder: "_posts",
+                    create: true,
+                    slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+                    fields: [
+                        {label: "Layout", name: "layout", widget: "hidden", default: "post"},
+                        {label: "Title", name: "title", widget: "string"},
+                        {label: "Publish Date", name: "date", widget: "datetime"},
+                        {label: "Featured Image", name: "thumbnail", widget: "image", required: false},
+                        {label: "Body", name: "body", widget: "markdown"}
+                    ]
+                }
+            ]
+        };
+
+        window.CMS.init({ config });
     </script>
 </body>
 </html>
