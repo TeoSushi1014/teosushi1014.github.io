@@ -1,0 +1,23 @@
+backend:
+  name: github
+  repo: TeoSushi1014/teosushi1014.github.io
+  branch: main
+  base_url: https://teosushi1014.github.io
+  auth_type: pkce
+
+media_folder: "_posts/images"
+public_folder: "/images"
+site_url: https://teosushi1014.github.io
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "post"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "thumbnail", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
