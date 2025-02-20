@@ -3,358 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TeoSushi - Portfolio</title>
+    <title>Portfolio | Creative Developer</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
-    <!-- Enhanced Navigation -->
-    <nav class="nav-container glass fixed top-0 left-0 right-0 z-50">
-        <div class="nav-content container mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="nav-left flex items-center gap-8">
-                <div class="logo-container">
-                    <a href="#" class="logo font-display text-xl font-bold">
-                        <span class="gradient-text">TeoSushi</span>
-                        <div class="logo-underline"></div>
-                    </a>
-                </div>
-                <div class="nav-links hidden md:flex items-center gap-6">
-                    <a href="#projects" class="nav-link">Projects</a>
-                    <a href="#about" class="nav-link">About</a>
-                    <a href="#contact" class="nav-link">Contact</a>
-                </div>
-            </div>
-            <div class="nav-right flex items-center gap-4">
-                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-                    <div class="theme-toggle-circle">
-                        <i data-feather="sun" class="light-icon"></i>
-                        <i data-feather="moon" class="dark-icon hidden"></i>
-                    </div>
-                </button>
-                <button class="menu-toggle md:hidden" aria-label="Toggle menu">
-                    <i data-feather="menu"></i>
-                </button>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div class="mobile-menu hidden">
-            <div class="container mx-auto px-4 py-4">
-                <div class="flex flex-col gap-4">
-                    <a href="#projects" class="mobile-nav-link">Projects</a>
-                    <a href="#about" class="mobile-nav-link">About</a>
-                    <a href="#contact" class="mobile-nav-link">Contact</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body class="light-mode">
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
 
-    <!-- Enhanced Hero Section -->
-    <main class="container mx-auto px-4">
-        <header class="hero-section min-h-screen flex items-center justify-center">
-            <div class="hero-content text-center">
-                <h1 class="hero-title mb-6">
-                    <span class="gradient-text">Welcome to My Portfolio</span>
-                </h1>
-                <p class="hero-subtitle text-secondary text-lg max-w-2xl mx-auto mb-8">
-                    Full-stack developer passionate about creating beautiful and functional web applications
-                </p>
-                <div class="hero-cta flex flex-wrap justify-center gap-4">
-                    <a href="#projects" class="btn-primary">
-                        <i data-feather="code" class="w-5 h-5 mr-2"></i>
-                        View Projects
-                    </a>
-                    <a href="#contact" class="btn-secondary">
-                        <i data-feather="mail" class="w-5 h-5 mr-2"></i>
-                        Contact Me
-                    </a>
-                </div>
-                <div class="hero-scroll-indicator">
-                    <div class="scroll-mouse"></div>
-                    <span class="scroll-text">Scroll to explore</span>
-                </div>
-            </div>
-        </header>
+    <header class="glass-header">
+        <nav>
+            <div class="logo">Portfolio</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <section id="projects" class="section-projects mb-16">
-            <h2 class="section-title mb-8">
-                <span class="gradient-text">Image to PDF Converter</span>
-            </h2>
-            <div class="card p-8">
-                <div class="dropzone mb-8">
-                    <i data-feather="plus" class="w-12 h-12 mx-auto mb-4 text-secondary-light"></i>
-                    <p class="text-lg mb-2">Choose Images or Drop Here</p>
-                    <p class="text-secondary-light text-sm">Supported formats: JPG, PNG, WEBP</p>
-                </div>
-                
-                <div class="radio-group justify-center">
-                    <label class="radio-button active">
-                        <input type="radio" name="orientation" value="portrait" class="hidden" checked>
-                        <i data-feather="smartphone" class="w-4 h-4 mr-2"></i>
-                        Portrait
-                    </label>
-                    <label class="radio-button">
-                        <input type="radio" name="orientation" value="landscape" class="hidden">
-                        <i data-feather="monitor" class="w-4 h-4 mr-2"></i>
-                        Landscape
-                    </label>
-                </div>
-                
-                <div class="flex justify-center gap-4 mt-8">
-                    <button class="action-button">
-                        <i data-feather="file" class="w-4 h-4 mr-2"></i>
-                        Convert Each Image
-                    </button>
-                    <button class="action-button">
-                        <i data-feather="layers" class="w-4 h-4 mr-2"></i>
-                        Merge All Images
-                    </button>
+    <main>
+        <section id="home" class="hero-section">
+            <div class="glass-card hero-content">
+                <h1>Creative Developer</h1>
+                <p class="gradient-text">Crafting Digital Experiences</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn primary">View Projects</a>
+                    <a href="#contact" class="btn secondary">Contact Me</a>
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="glass p-8 rounded-2xl mb-16">
-            <h2 class="section-title mb-8">Skills & Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3 class="skill-category-title mb-6">Frontend Development</h3>
-                    <div class="skills-list">
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">HTML/CSS</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="95"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">JavaScript</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="90"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">React</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="85"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3 class="skill-category-title mb-6">Backend Development</h3>
-                    <div class="skills-list">
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">Node.js</span>
-                                <span class="skill-percentage">88%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="88"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">Python</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="85"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">SQL</span>
-                                <span class="skill-percentage">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="80"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3 class="skill-category-title mb-6">Tools & Technologies</h3>
-                    <div class="skills-list">
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">Git</span>
-                                <span class="skill-percentage">92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="92"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">Docker</span>
-                                <span class="skill-percentage">75%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="75"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header flex justify-between mb-2">
-                                <span class="skill-name">AWS</span>
-                                <span class="skill-percentage">70%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="70"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <section id="projects" class="projects-section">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <!-- Project cards will be dynamically added here -->
             </div>
         </section>
 
-        <section id="about" class="glass p-8 rounded-2xl mb-16">
-            <h2 class="section-title mb-8">About Me</h2>
-            <div class="about-content grid md:grid-cols-2 gap-8">
+        <section id="about" class="about-section glass-card">
+            <h2>About Me</h2>
+            <div class="about-content">
                 <div class="about-text">
-                    <p class="text-secondary mb-6">
-                        I'm a passionate developer focused on creating innovative solutions using modern web technologies.
-                        My expertise includes full-stack development, responsive design, and user experience optimization.
-                    </p>
-                    <div class="achievements grid grid-cols-2 gap-4 mb-6">
-                        <div class="achievement-card glass p-4 rounded-lg text-center">
-                            <div class="achievement-icon mb-2">
-                                <i data-feather="code" class="w-6 h-6 mx-auto text-sky-blue"></i>
-                            </div>
-                            <div class="achievement-number font-bold text-xl mb-1">50+</div>
-                            <div class="achievement-label text-sm text-secondary">Projects Completed</div>
-                        </div>
-                        <div class="achievement-card glass p-4 rounded-lg text-center">
-                            <div class="achievement-icon mb-2">
-                                <i data-feather="users" class="w-6 h-6 mx-auto text-soft-pink"></i>
-                            </div>
-                            <div class="achievement-number font-bold text-xl mb-1">20+</div>
-                            <div class="achievement-label text-sm text-secondary">Happy Clients</div>
-                        </div>
-                    </div>
-                    <div class="tech-stack">
-                        <h3 class="text-lg font-semibold mb-4">Current Tech Stack</h3>
-                        <div class="tech-tags flex flex-wrap gap-2">
-                            <span class="tech-tag glass px-3 py-1 rounded-full text-sm">React</span>
-                            <span class="tech-tag glass px-3 py-1 rounded-full text-sm">Node.js</span>
-                            <span class="tech-tag glass px-3 py-1 rounded-full text-sm">TypeScript</span>
-                            <span class="tech-tag glass px-3 py-1 rounded-full text-sm">Python</span>
-                            <span class="tech-tag glass px-3 py-1 rounded-full text-sm">MongoDB</span>
-                            <span class="tech-tag glass px-3 py-1 rounded-full text-sm">AWS</span>
-                        </div>
-                    </div>
+                    <p>Creative developer passionate about building beautiful and functional web experiences.</p>
                 </div>
-                
-                <div class="experience-timeline">
-                    <h3 class="text-lg font-semibold mb-6">Experience Timeline</h3>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass p-4 rounded-lg mb-4">
-                                <div class="timeline-date text-sm text-secondary mb-2">2023 - Present</div>
-                                <h4 class="font-medium mb-1">Full Stack Developer</h4>
-                                <p class="text-sm text-secondary">Leading development of web applications using modern technologies.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass p-4 rounded-lg mb-4">
-                                <div class="timeline-date text-sm text-secondary mb-2">2021 - 2023</div>
-                                <h4 class="font-medium mb-1">Frontend Developer</h4>
-                                <p class="text-sm text-secondary">Specialized in creating responsive and interactive user interfaces.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass p-4 rounded-lg mb-4">
-                                <div class="timeline-date text-sm text-secondary mb-2">2019 - 2021</div>
-                                <h4 class="font-medium mb-1">Web Developer Intern</h4>
-                                <p class="text-sm text-secondary">Started journey in web development, learning fundamentals.</p>
-                            </div>
-                        </div>
+                <div class="skills">
+                    <h3>Skills</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML5/CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Responsive Design</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="glass p-8 rounded-2xl mb-16">
-            <h2 class="section-title mb-8">Contact Me</h2>
-            <div class="contact-content grid md:grid-cols-2 gap-8">
-                <div class="contact-info">
-                    <div class="contact-methods space-y-4">
-                        <div class="contact-method flex items-center gap-4">
-                            <div class="contact-icon glass p-3 rounded-full">
-                                <i data-feather="mail" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Email</h4>
-                                <a href="mailto:contact@teosushi.dev" class="text-secondary hover:text-sky-blue transition-colors">contact@teosushi.dev</a>
-                            </div>
-                        </div>
-                        <div class="contact-method flex items-center gap-4">
-                            <div class="contact-icon glass p-3 rounded-full">
-                                <i data-feather="github" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">GitHub</h4>
-                                <a href="https://github.com/TeoSushi1014" target="_blank" class="text-secondary hover:text-sky-blue transition-colors">@TeoSushi1014</a>
-                            </div>
-                        </div>
-                        <div class="contact-method flex items-center gap-4">
-                            <div class="contact-icon glass p-3 rounded-full">
-                                <i data-feather="map-pin" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Location</h4>
-                                <span class="text-secondary">Ho Chi Minh City, Vietnam</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <form id="contactForm" class="contact-form space-y-4">
+        <section id="contact" class="contact-section">
+            <div class="glass-card contact-form">
+                <h2>Get in Touch</h2>
+                <form id="contactForm">
                     <div class="form-group">
-                        <label for="name" class="block text-sm font-medium mb-2">Name</label>
-                        <input type="text" id="name" name="name" class="form-input" required>
+                        <input type="text" id="name" required placeholder="Your Name">
                     </div>
                     <div class="form-group">
-                        <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                        <input type="email" id="email" name="email" class="form-input" required>
+                        <input type="email" id="email" required placeholder="Your Email">
                     </div>
                     <div class="form-group">
-                        <label for="message" class="block text-sm font-medium mb-2">Message</label>
-                        <textarea id="message" name="message" rows="4" class="form-input" required></textarea>
+                        <textarea id="message" required placeholder="Your Message"></textarea>
                     </div>
-                    <button type="submit" class="btn-primary w-full">
-                        <i data-feather="send" class="w-4 h-4 mr-2"></i>
-                        Send Message
-                    </button>
+                    <button type="submit" class="btn primary">Send Message</button>
                 </form>
             </div>
         </section>
     </main>
 
-    <footer class="glass mt-auto py-6">
-        <div class="container mx-auto px-4 text-center text-secondary">
-            <p>&copy; 2024 TeoSushi. All rights reserved.</p>
+    <footer class="glass-footer">
+        <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
         </div>
+        <p>&copy; 2024 Portfolio. All rights reserved.</p>
     </footer>
 
-    <script src="assets/js/theme.js"></script>
     <script src="assets/js/main.js"></script>
-    <script>
-        feather.replace();
-    </script>
 </body>
 </html> 
