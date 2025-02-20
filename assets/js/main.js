@@ -383,6 +383,11 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: 0.6,
         stagger: 0.2
     });
+
+    initDropzone();
+    initRadioButtons();
+    initConvertButtons();
+    feather.replace();
 });
 
 // Refresh projects when localStorage changes
@@ -390,4 +395,142 @@ window.addEventListener('storage', (e) => {
     if (e.key === 'projects') {
         loadProjects();
     }
-}); 
+});
+
+// Dropzone functionality
+function initDropzone() {
+    const dropzone = document.querySelector('.dropzone');
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    let files = [];
+
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    // Highlight dropzone on drag over
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, unhighlight, false);
+    });
+
+    // Handle dropped files
+    dropzone.addEventListener('drop', handleDrop, false);
+
+    // Handle click to choose files
+    dropzone.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.multiple = true;
+        input.accept = 'image/jpeg,image/png,image/webp';
+        
+        input.onchange = (e) => {
+            handleFiles(Array.from(e.target.files));
+        };
+        
+        input.click();
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function highlight(e) {
+        dropzone.classList.add('border-primary-blue');
+    }
+
+    function unhighlight(e) {
+        dropzone.classList.remove('border-primary-blue');
+    }
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const droppedFiles = Array.from(dt.files);
+        
+        handleFiles(droppedFiles);
+    }
+
+    function handleFiles(newFiles) {
+        const validFiles = newFiles.filter(file => validTypes.includes(file.type));
+        
+        if (validFiles.length === 0) {
+            showToast('Please upload only image files (JPG, PNG, WEBP)', 'error');
+            return;
+        }
+
+        files = [...files, ...validFiles];
+        updateDropzoneContent(files);
+    }
+
+    function updateDropzoneContent(files) {
+        if (files.length > 0) {
+            dropzone.innerHTML = `
+                <div class="flex flex-col items-center">
+                    <i data-feather="image" class="w-12 h-12 mb-4 text-primary-blue"></i>
+                    <p class="text-lg mb-2">${files.length} ${files.length === 1 ? 'image' : 'images'} selected</p>
+                    <p class="text-secondary-light text-sm">Click or drop to add more</p>
+                </div>
+            `;
+            feather.replace();
+        }
+    }
+}
+
+// Radio buttons functionality
+function initRadioButtons() {
+    const radioGroup = document.querySelector('.radio-group');
+    const radioButtons = radioGroup.querySelectorAll('.radio-button');
+
+    radioButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            radioButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+            // Check the radio input
+            button.querySelector('input').checked = true;
+        });
+    });
+}
+
+// Convert buttons functionality
+function initConvertButtons() {
+    const convertEachBtn = document.querySelector('.action-button:first-child');
+    const mergeAllBtn = document.querySelector('.action-button:last-child');
+
+    convertEachBtn.addEventListener('click', () => {
+        showLoading(convertEachBtn);
+        // Simulate conversion process
+        setTimeout(() => {
+            hideLoading(convertEachBtn);
+            showToast('Images converted successfully!', 'success');
+        }, 2000);
+    });
+
+    mergeAllBtn.addEventListener('click', () => {
+        showLoading(mergeAllBtn);
+        // Simulate merging process
+        setTimeout(() => {
+            hideLoading(mergeAllBtn);
+            showToast('Images merged successfully!', 'success');
+        }, 2000);
+    });
+}
+
+// Loading state
+function showLoading(button) {
+    const originalContent = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<div class="loading-spinner"></div>';
+    button.dataset.originalContent = originalContent;
+}
+
+function hideLoading(button) {
+    button.disabled = false;
+    button.innerHTML = button.dataset.originalContent;
+} 

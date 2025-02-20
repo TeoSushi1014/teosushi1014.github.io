@@ -79,9 +79,39 @@
         </header>
 
         <section id="projects" class="section-projects mb-16">
-            <h2 class="section-title mb-8">My Projects</h2>
-            <div class="preview-grid" id="projectGrid">
-                <!-- Projects will be dynamically loaded here -->
+            <h2 class="section-title mb-8">
+                <span class="gradient-text">Image to PDF Converter</span>
+            </h2>
+            <div class="card p-8">
+                <div class="dropzone mb-8">
+                    <i data-feather="plus" class="w-12 h-12 mx-auto mb-4 text-secondary-light"></i>
+                    <p class="text-lg mb-2">Choose Images or Drop Here</p>
+                    <p class="text-secondary-light text-sm">Supported formats: JPG, PNG, WEBP</p>
+                </div>
+                
+                <div class="radio-group justify-center">
+                    <label class="radio-button active">
+                        <input type="radio" name="orientation" value="portrait" class="hidden" checked>
+                        <i data-feather="smartphone" class="w-4 h-4 mr-2"></i>
+                        Portrait
+                    </label>
+                    <label class="radio-button">
+                        <input type="radio" name="orientation" value="landscape" class="hidden">
+                        <i data-feather="monitor" class="w-4 h-4 mr-2"></i>
+                        Landscape
+                    </label>
+                </div>
+                
+                <div class="flex justify-center gap-4 mt-8">
+                    <button class="action-button">
+                        <i data-feather="file" class="w-4 h-4 mr-2"></i>
+                        Convert Each Image
+                    </button>
+                    <button class="action-button">
+                        <i data-feather="layers" class="w-4 h-4 mr-2"></i>
+                        Merge All Images
+                    </button>
+                </div>
             </div>
         </section>
 
