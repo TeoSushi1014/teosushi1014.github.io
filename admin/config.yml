@@ -4,6 +4,8 @@ backend:
   branch: main
   base_url: https://teosushi1014.github.io
   auth_endpoint: admin/callback
+  auth_type: github
+  username: teosushi-admin
 
 media_folder: "assets/images"
 public_folder: "/assets/images"
