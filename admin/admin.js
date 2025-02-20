@@ -1,7 +1,7 @@
-// Encrypted credentials (using CryptoJS)
-const ENCRYPTED_CREDENTIALS = {
-    username: 'U2FsdGVkX1+9X9kZ5/bw5QY7iZJ3vZ5X5Y5L5q5X5Y4=', // teosushi-admin
-    password: 'U2FsdGVkX1+9X9kZ5/bw5QY7iZJ3vZ5X5Y5L5q5X5Y5=', // .Quang1014...
+// Credentials config
+const CREDENTIALS = {
+    username: 'teosushi-admin',
+    password: '.Quang1014...',
     salt: 'portfolio-salt-2024'
 };
 
@@ -27,12 +27,7 @@ loginForm.addEventListener('submit', (e) => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     
-    // Encrypt input credentials for comparison
-    const encryptedInputUsername = encryptText(username, ENCRYPTED_CREDENTIALS.salt);
-    const encryptedInputPassword = encryptText(password, ENCRYPTED_CREDENTIALS.salt);
-    
-    if (encryptedInputUsername === ENCRYPTED_CREDENTIALS.username && 
-        encryptedInputPassword === ENCRYPTED_CREDENTIALS.password) {
+    if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
         loginSection.style.display = 'none';
         dashboardSection.style.display = 'block';
         loadProjects();
