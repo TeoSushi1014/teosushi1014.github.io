@@ -99,6 +99,44 @@
         var(--soft-pink-light) 75%,
         var(--sky-blue-light) 100%
     );
+
+    /* Typography Scale (Perfect Fourth - 1.333) */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.333rem;
+    --font-size-xl: 1.777rem;
+    --font-size-2xl: 2.369rem;
+    --font-size-3xl: 3.157rem;
+    
+    /* Spacing Scale (8pt Grid) */
+    --space-1: 0.25rem;  /* 4px */
+    --space-2: 0.5rem;   /* 8px */
+    --space-3: 1rem;     /* 16px */
+    --space-4: 1.5rem;   /* 24px */
+    --space-5: 2rem;     /* 32px */
+    --space-6: 3rem;     /* 48px */
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-full: 9999px;
+    
+    /* Font Weights */
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    
+    /* Line Heights */
+    --leading-none: 1;
+    --leading-tight: 1.25;
+    --leading-snug: 1.375;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.625;
+    --leading-loose: 2;
 }
 
 [data-theme="dark"] {
@@ -121,6 +159,8 @@ body {
     background: var(--bg-gradient-light);
     color: var(--text-primary-light);
     transition: var(--transition-base);
+    font-size: var(--font-size-base);
+    line-height: var(--leading-normal);
 }
 
 .dark body {
@@ -139,6 +179,9 @@ body {
     border: 1px solid var(--glass-border-light);
     box-shadow: var(--button-shadow-light);
     transition: var(--transition-base);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    margin: var(--space-3);
 }
 
 .dark .glass-nav, .dark .glass-section {
@@ -159,6 +202,7 @@ nav {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    padding: var(--space-2) var(--space-4);
 }
 
 nav ul {
@@ -210,6 +254,9 @@ main {
     will-change: transform, opacity;
     backface-visibility: hidden;
     perspective: 1000px;
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-4);
 }
 
 .dark .project-card {
@@ -269,6 +316,10 @@ main {
     transition: var(--transition-base);
     position: relative;
     overflow: hidden;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-medium);
+    border-radius: var(--radius-md);
 }
 
 .dark .btn {
@@ -376,4 +427,83 @@ main {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Base Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-3);
+}
+
+h1 { font-size: var(--font-size-3xl); }
+h2 { font-size: var(--font-size-2xl); }
+h3 { font-size: var(--font-size-xl); }
+h4 { font-size: var(--font-size-lg); }
+
+p { margin-bottom: var(--space-3); }
+
+/* Form Refinements */
+.form-group {
+    margin-bottom: var(--space-4);
+}
+
+.form-group label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-medium);
+    margin-bottom: var(--space-2);
+    color: var(--text-secondary-light);
+}
+
+.dark .form-group label {
+    color: var(--text-secondary-dark);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: var(--space-3);
+    font-size: var(--font-size-base);
+    border-radius: var(--radius-md);
+    background: var(--glass-light);
+    border: 1px solid var(--glass-border-light);
+    transition: var(--transition-base);
+}
+
+.dark .form-group input,
+.dark .form-group textarea {
+    background: var(--glass-dark);
+    border-color: var(--glass-border-dark);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--sky-blue);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.dark .form-group input:focus,
+.dark .form-group textarea:focus {
+    border-color: var(--soft-pink);
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
+}
+
+/* Project Card Refinements */
+.project-card h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+}
+
+.project-card p {
+    font-size: var(--font-size-base);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-3);
+}
+
+/* Navigation Refinements */
+.nav-content h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-bold);
 }

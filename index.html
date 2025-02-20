@@ -16,37 +16,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>Portfolio - Tèo Sushi</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
     <nav class="glass-nav">
         <div class="nav-content">
             <h1 class="gradient-text">Tèo Sushi</h1>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" data-section="home">Home</a></li>
+                <li><a href="#projects" data-section="projects">Projects</a></li>
+                <li><a href="#about" data-section="about">About</a></li>
+                <li><a href="#contact" data-section="contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
     <main>
-        <section id="home" class="glass-section">
+        <section id="home" class="glass-section" data-aos="fade-up">
             <h2>Welcome to My Portfolio</h2>
             <p>Creative Developer & Designer</p>
         </section>
 
-        <section id="projects" class="glass-section">
+        <section id="projects" class="glass-section" data-aos="fade-up" data-aos-delay="100">
             <h2>My Projects</h2>
             <div id="projects-grid"></div>
         </section>
 
-        <section id="about" class="glass-section">
+        <section id="about" class="glass-section" data-aos="fade-up" data-aos-delay="200">
             <h2>About Me</h2>
             <p>A passionate developer focused on creating interactive and user-friendly applications.</p>
         </section>
 
-        <section id="contact" class="glass-section">
+        <section id="contact" class="glass-section" data-aos="fade-up" data-aos-delay="300">
             <h2>Contact</h2>
             <p>Get in touch with me</p>
             <div class="contact-links">
@@ -64,6 +65,51 @@
         </svg>
     </button>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="module">
+        import { pageTransition, loadingState, toast } from './assets/js/utils.js';
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out',
+            once: true
+        });
+
+        // Initialize page transition
+        pageTransition.init();
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const section = document.querySelector(this.getAttribute('href'));
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Active section highlighting
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.7
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    document.querySelectorAll('.nav-content a').forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section[id]').forEach((section) => {
+            observer.observe(section);
+        });
+    </script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/theme.js"></script>
 </body>
