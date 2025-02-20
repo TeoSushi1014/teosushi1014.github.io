@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,15 +12,20 @@
         <i class="fas fa-moon"></i>
     </div>
 
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="vi">VI</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+
     <header class="glass-header">
         <nav>
             <div class="logo">Portfolio</div>
             <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="/admin" class="admin-link"><i class="fas fa-lock"></i> Admin</a></li>
+                <li><a href="#home" class="active" data-vi="Trang Chủ" data-en="Home">Trang Chủ</a></li>
+                <li><a href="#projects" data-vi="Dự Án" data-en="Projects">Dự Án</a></li>
+                <li><a href="#about" data-vi="Giới Thiệu" data-en="About">Giới Thiệu</a></li>
+                <li><a href="#contact" data-vi="Liên Hệ" data-en="Contact">Liên Hệ</a></li>
+                <li><a href="/admin" class="admin-link"><i class="fas fa-lock"></i> <span data-vi="Quản Trị" data-en="Admin">Quản Trị</span></a></li>
             </ul>
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -30,41 +35,50 @@
 
     <div class="mobile-menu">
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="/admin" class="admin-link"><i class="fas fa-lock"></i> Admin</a></li>
+            <li><a href="#home" data-vi="Trang Chủ" data-en="Home">Trang Chủ</a></li>
+            <li><a href="#projects" data-vi="Dự Án" data-en="Projects">Dự Án</a></li>
+            <li><a href="#about" data-vi="Giới Thiệu" data-en="About">Giới Thiệu</a></li>
+            <li><a href="#contact" data-vi="Liên Hệ" data-en="Contact">Liên Hệ</a></li>
+            <li><a href="/admin" class="admin-link"><i class="fas fa-lock"></i> <span data-vi="Quản Trị" data-en="Admin">Quản Trị</span></a></li>
         </ul>
     </div>
 
     <main>
         <section id="home" class="hero-section">
             <div class="glass-card hero-content">
-                <h1>Creative Developer</h1>
-                <p class="gradient-text">Crafting Digital Experiences</p>
+                <h1 data-vi="Nhà Phát Triển Sáng Tạo" data-en="Creative Developer">Nhà Phát Triển Sáng Tạo</h1>
+                <p class="gradient-text" data-vi="Kiến Tạo Trải Nghiệm Số" data-en="Crafting Digital Experiences">Kiến Tạo Trải Nghiệm Số</p>
                 <div class="cta-buttons">
-                    <a href="#projects" class="btn primary">View Projects</a>
-                    <a href="#contact" class="btn secondary">Contact Me</a>
+                    <a href="#projects" class="btn primary" data-vi="Xem Dự Án" data-en="View Projects">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Xem Dự Án</span>
+                    </a>
+                    <a href="#contact" class="btn secondary" data-vi="Liên Hệ" data-en="Contact Me">
+                        <i class="fas fa-envelope"></i>
+                        <span>Liên Hệ</span>
+                    </a>
                 </div>
             </div>
         </section>
 
         <section id="projects" class="projects-section">
-            <h2>Featured Projects</h2>
+            <h2 data-vi="Dự Án Nổi Bật" data-en="Featured Projects">Dự Án Nổi Bật</h2>
             <div class="projects-grid">
                 <!-- Project cards will be dynamically added here -->
             </div>
         </section>
 
         <section id="about" class="about-section glass-card">
-            <h2>About Me</h2>
+            <h2 data-vi="Giới Thiệu" data-en="About Me">Giới Thiệu</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Creative developer passionate about building beautiful and functional web experiences.</p>
+                    <p data-vi="Tôi là một nhà phát triển đam mê về việc tạo ra những trải nghiệm web đẹp và chức năng." 
+                       data-en="Creative developer passionate about building beautiful and functional web experiences.">
+                        Tôi là một nhà phát triển đam mê về việc tạo ra những trải nghiệm web đẹp và chức năng.
+                    </p>
                 </div>
                 <div class="skills">
-                    <h3>Skills</h3>
+                    <h3 data-vi="Kỹ Năng" data-en="Skills">Kỹ Năng</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">HTML5/CSS3</span>
                         <span class="skill-tag">JavaScript</span>
@@ -77,18 +91,21 @@
 
         <section id="contact" class="contact-section">
             <div class="glass-card contact-form">
-                <h2>Get in Touch</h2>
+                <h2 data-vi="Liên Hệ" data-en="Get in Touch">Liên Hệ</h2>
                 <form id="contactForm">
                     <div class="form-group">
-                        <input type="text" id="name" required placeholder="Your Name">
+                        <input type="text" id="name" required placeholder="Họ và tên" data-en-placeholder="Your Name">
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" required placeholder="Your Email">
+                        <input type="email" id="email" required placeholder="Email" data-en-placeholder="Your Email">
                     </div>
                     <div class="form-group">
-                        <textarea id="message" required placeholder="Your Message"></textarea>
+                        <textarea id="message" required placeholder="Nội dung tin nhắn" data-en-placeholder="Your Message"></textarea>
                     </div>
-                    <button type="submit" class="btn primary">Send Message</button>
+                    <button type="submit" class="btn primary">
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-vi="Gửi Tin Nhắn" data-en="Send Message">Gửi Tin Nhắn</span>
+                    </button>
                 </form>
             </div>
         </section>
@@ -96,9 +113,9 @@
 
     <footer class="glass-footer">
         <div class="social-links">
-            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
         </div>
         <p>&copy; 2024 Portfolio. All rights reserved.</p>
     </footer>

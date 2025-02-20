@@ -1,3 +1,37 @@
+// Language handling
+const langBtns = document.querySelectorAll('.lang-btn');
+const langElements = document.querySelectorAll('[data-vi]');
+
+// Set initial language
+const savedLang = localStorage.getItem('lang') || 'vi';
+setLanguage(savedLang);
+
+// Language toggle
+langBtns.forEach(btn => {
+    if (btn.dataset.lang === savedLang) {
+        btn.classList.add('active');
+    }
+    
+    btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        langBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        setLanguage(lang);
+        localStorage.setItem('lang', lang);
+    });
+});
+
+function setLanguage(lang) {
+    langElements.forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = text;
+        } else {
+            el.textContent = text;
+        }
+    });
+}
+
 // Theme toggling
 const themeToggle = document.querySelector('.theme-toggle');
 const body = document.body;
@@ -91,24 +125,30 @@ const projectsGrid = document.querySelector('.projects-grid');
 function loadProjects() {
     const projects = JSON.parse(localStorage.getItem('projects')) || [
         {
-            title: 'Project 1',
-            description: 'A modern web application with stunning UI/UX design.',
+            title: 'Dự án 1',
+            titleEn: 'Project 1',
+            description: 'Ứng dụng web hiện đại với thiết kế UI/UX đẹp mắt.',
+            descriptionEn: 'A modern web application with stunning UI/UX design.',
             tags: ['React', 'Node.js', 'MongoDB'],
             image: 'https://via.placeholder.com/300x200',
             liveLink: '#',
             githubLink: '#'
         },
         {
-            title: 'Project 2',
-            description: 'Innovative mobile-first responsive design implementation.',
+            title: 'Dự án 2',
+            titleEn: 'Project 2',
+            description: 'Thiết kế responsive ưu tiên mobile sáng tạo.',
+            descriptionEn: 'Innovative mobile-first responsive design implementation.',
             tags: ['HTML5', 'CSS3', 'JavaScript'],
             image: 'https://via.placeholder.com/300x200',
             liveLink: '#',
             githubLink: '#'
         },
         {
-            title: 'Project 3',
-            description: 'Full-stack application with real-time features.',
+            title: 'Dự án 3',
+            titleEn: 'Project 3',
+            description: 'Ứng dụng full-stack với tính năng thời gian thực.',
+            descriptionEn: 'Full-stack application with real-time features.',
             tags: ['Vue.js', 'Express', 'Socket.io'],
             image: 'https://via.placeholder.com/300x200',
             liveLink: '#',
@@ -116,23 +156,28 @@ function loadProjects() {
         }
     ];
 
+    const currentLang = localStorage.getItem('lang') || 'vi';
     projectsGrid.innerHTML = '';
+    
     projects.forEach(project => {
         const projectCard = document.createElement('div');
         projectCard.className = 'glass-card project-card';
         projectCard.innerHTML = `
             <div class="project-card-image">
-                <img src="${project.image}" alt="${project.title}">
+                <img src="${project.image}" alt="${currentLang === 'vi' ? project.title : project.titleEn}">
             </div>
             <div class="project-card-content">
-                <h3>${project.title}</h3>
-                <p class="project-description">${project.description}</p>
+                <h3>${currentLang === 'vi' ? project.title : project.titleEn}</h3>
+                <p class="project-description">${currentLang === 'vi' ? project.description : project.descriptionEn}</p>
                 <div class="project-tags">
                     ${project.tags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
                 </div>
                 <div class="project-links">
                     <a href="${project.liveLink}" target="_blank" class="btn primary btn-sm">
-                        <i class="fas fa-external-link-alt"></i> Live Demo
+                        <i class="fas fa-external-link-alt"></i> 
+                        <span data-vi="Xem Demo" data-en="Live Demo">
+                            ${currentLang === 'vi' ? 'Xem Demo' : 'Live Demo'}
+                        </span>
                     </a>
                     <a href="${project.githubLink}" target="_blank" class="btn secondary btn-sm">
                         <i class="fab fa-github"></i> GitHub
@@ -144,36 +189,35 @@ function loadProjects() {
     });
 }
 
-// Load projects on page load
+// Load projects on page load and language change
 loadProjects();
+langBtns.forEach(btn => {
+    btn.addEventListener('click', loadProjects);
+});
 
 // Form handling with validation
 const contactForm = document.getElementById('contactForm');
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // Get form data
     const formData = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         message: document.getElementById('message').value
     };
     
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-        alert('Please enter a valid email address.');
+        const currentLang = localStorage.getItem('lang') || 'vi';
+        alert(currentLang === 'vi' ? 'Vui lòng nhập email hợp lệ.' : 'Please enter a valid email address.');
         return;
     }
     
-    // Here you would typically send the form data to a server
     console.log('Form submitted:', formData);
-    
-    // Clear form
     contactForm.reset();
     
-    // Show success message
-    alert('Message sent successfully!');
+    const currentLang = localStorage.getItem('lang') || 'vi';
+    alert(currentLang === 'vi' ? 'Gửi tin nhắn thành công!' : 'Message sent successfully!');
 });
 
 // Intersection Observer for fade-in animations
