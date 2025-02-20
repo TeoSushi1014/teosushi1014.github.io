@@ -18,6 +18,10 @@
         }
       });
     }
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      const token = window.location.hash.match(/access_token=([\w/\-]+)/)[1];
+      window.localStorage.setItem('githubToken', token);
+    }
   </script>
 </body>
 </html>
