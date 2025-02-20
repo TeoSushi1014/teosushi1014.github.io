@@ -7,47 +7,52 @@
 </head>
 <body>
   <script>
-    try {
-      // Handle both hash and search parameters
-      const params = {};
-      const hash = window.location.hash.substring(1);
-      const search = window.location.search.substring(1);
-      
-      // Parse hash parameters
-      if (hash) {
-        hash.split('&').forEach(pair => {
-          const [key, value] = pair.split('=');
-          params[key] = decodeURIComponent(value);
-        });
-      }
-      
-      // Parse search parameters
-      if (search) {
-        search.split('&').forEach(pair => {
-          const [key, value] = pair.split('=');
-          params[key] = decodeURIComponent(value);
-        });
-      }
-
-      // If we have a token, send it back to the CMS
-      if (params.access_token || params.token) {
-        const token = params.access_token || params.token;
-        if (window.opener) {
-          window.opener.postMessage(
-            {
-              type: 'oauth',
-              provider: 'github',
-              token: token,
-              ...params
+    // Function to handle the OAuth callback
+    async function handleCallback() {
+      try {
+        const code = new URLSearchParams(window.location.search).get('code');
+        
+        if (code) {
+          // Get the token using the code
+          const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
             },
-            window.location.origin
-          );
-          window.close();
+            body: JSON.stringify({
+              client_id: 'Ov23liSyMU0un5r2RpN4',
+              client_secret: 'cefd504eef04a853ec43bad84659e643306b2acb',
+              code: code
+            })
+          });
+
+          const data = await tokenResponse.json();
+          
+          if (data.access_token) {
+            // Send the token back to the CMS
+            if (window.opener) {
+              window.opener.postMessage(
+                {
+                  type: 'oauth',
+                  provider: 'github',
+                  token: data.access_token
+                },
+                window.location.origin
+              );
+            }
+          }
         }
+      } catch (error) {
+        console.error('Auth callback error:', error);
+      } finally {
+        // Close the popup window
+        window.close();
       }
-    } catch (error) {
-      console.error('Auth callback error:', error);
     }
+
+    // Run the handler when the page loads
+    handleCallback();
   </script>
 </body>
 </html>
