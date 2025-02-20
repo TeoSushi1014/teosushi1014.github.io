@@ -6,7 +6,7 @@ if (!localStorage.getItem('projects')) {
             title: 'Portfolio Website',
             description: 'Personal portfolio with glassmorphism effect',
             technologies: ['HTML', 'CSS', 'JavaScript'],
-            link: 'https://teosuhi1014.github.io'
+            link: 'https://teosushi1014.github.io'
         }
     ];
     localStorage.setItem('projects', JSON.stringify(sampleProjects));

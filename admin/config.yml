@@ -1,8 +1,8 @@
 backend:
   name: github
-  repo: teosuhi1014/teosuhi1014.github.io
+  repo: teosushi1014/teosushi1014.github.io
   branch: main
-  base_url: https://teosuhi1014.github.io
+  base_url: https://teosushi1014.github.io
   auth_endpoint: admin/callback
 
 media_folder: "assets/images"

@@ -1,4 +1,4 @@
-# Portfolio Website - teosuhi1014.github.io
+# Portfolio Website - teosushi1014.github.io
 
 ## 🌟 Tổng quan
 Portfolio website được xây dựng trên nền tảng GitHub Pages, với giao diện hiện đại và độc đáo sử dụng hiệu ứng glassmorphism. Website được thiết kế với màu sắc chủ đạo là xanh da trời và hồng nhạt, tạo cảm giác nhẹ nhàng và chuyên nghiệp.
@@ -41,10 +41,10 @@ teosuhi1014.github.io/
 
 ## 🚀 Hướng dẫn sử dụng
 1. **Xem Portfolio**
-   - Truy cập: https://teosuhi1014.github.io
+   - Truy cập: https://teosushi1014.github.io
 
 2. **Quản lý dự án (Admin)**
-   - Truy cập: https://teosuhi1014.github.io/admin
+   - Truy cập: https://teosushi1014.github.io/admin
    - Đăng nhập với thông tin admin
    - Thêm/sửa/xóa dự án qua giao diện
 
@@ -55,5 +55,5 @@ teosuhi1014.github.io/
 - Bảo mật admin page với basic authentication
 
 ## 🔗 Liên kết
-- Website: https://teosuhi1014.github.io
-- GitHub Repository: https://github.com/teosuhi1014/teosuhi1014.github.io
+- Website: https://teosushi1014.github.io
+- GitHub Repository: https://github.com/teosushi1014/teosushi1014.github.io
