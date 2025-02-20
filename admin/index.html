@@ -4,13 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-  <!-- Remove Netlify Identity widget as we're using GitHub directly -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
-    // Initialize Decap CMS
-    window.CMS.init();
+    // Initialize CMS with specific configuration
+    window.CMS.init({
+      config: {
+        backend: {
+          name: 'github',
+          repo: 'TeoSushi1014/teosushi1014.github.io',
+          branch: 'main',
+          client_id: 'Ov23liSyMU0un5r2RpN4',
+          proxy_url: 'https://api.netlify.com/auth'
+        }
+      }
+    });
   </script>
 </body>
 </html>
