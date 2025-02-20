@@ -6,7 +6,34 @@ const langElements = document.querySelectorAll('[data-vi]');
 const savedLang = localStorage.getItem('lang') || 'vi';
 setLanguage(savedLang);
 
-// Language toggle
+// Enhanced Language Toggle Animation
+function animateLanguageSwitch(lang) {
+    const elements = document.querySelectorAll('[data-vi], [data-en]');
+    
+    // Add transition class to all elements
+    elements.forEach(el => {
+        el.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(10px)';
+    });
+    
+    // Wait for fade out
+    setTimeout(() => {
+        setLanguage(lang);
+        localStorage.setItem('lang', lang);
+        loadProjects();
+        
+        // Animate elements back in
+        elements.forEach((el, index) => {
+            setTimeout(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, index * 50);
+        });
+    }, 300);
+}
+
+// Enhanced Language Toggle
 langBtns.forEach(btn => {
     if (btn.dataset.lang === savedLang) {
         btn.classList.add('active');
@@ -16,8 +43,13 @@ langBtns.forEach(btn => {
         const lang = btn.dataset.lang;
         langBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        setLanguage(lang);
-        localStorage.setItem('lang', lang);
+        
+        document.body.classList.add('lang-switching');
+        animateLanguageSwitch(lang);
+        
+        setTimeout(() => {
+            document.body.classList.remove('lang-switching');
+        }, 800);
     });
 });
 
@@ -25,9 +57,18 @@ function setLanguage(lang) {
     langElements.forEach(el => {
         const text = el.getAttribute(`data-${lang}`);
         if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-            el.placeholder = text;
+            el.placeholder = el.getAttribute(`data-${lang}-placeholder`) || text;
         } else {
             el.textContent = text;
+            
+            // Add animation for text elements
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(10px)';
+            
+            requestAnimationFrame(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
         }
     });
 }
@@ -120,8 +161,7 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Load projects from localStorage
-const projectsGrid = document.querySelector('.projects-grid');
+// Enhanced Project Card Loading
 function loadProjects() {
     const projects = JSON.parse(localStorage.getItem('projects')) || [
         {
@@ -159,12 +199,26 @@ function loadProjects() {
     const currentLang = localStorage.getItem('lang') || 'vi';
     projectsGrid.innerHTML = '';
     
-    projects.forEach(project => {
+    projects.forEach((project, index) => {
         const projectCard = document.createElement('div');
         projectCard.className = 'glass-card project-card';
+        projectCard.style.setProperty('--card-index', index);
+        
+        // Add hover animation
+        projectCard.addEventListener('mouseenter', () => {
+            projectCard.style.transform = 'translateY(-8px) scale(1.02)';
+            projectCard.style.boxShadow = 'var(--shadow-lg)';
+        });
+        
+        projectCard.addEventListener('mouseleave', () => {
+            projectCard.style.transform = 'translateY(0) scale(1)';
+            projectCard.style.boxShadow = 'var(--shadow-md)';
+        });
+        
         projectCard.innerHTML = `
             <div class="project-card-image">
-                <img src="${project.image}" alt="${currentLang === 'vi' ? project.title : project.titleEn}">
+                <img src="${project.image}" alt="${currentLang === 'vi' ? project.title : project.titleEn}"
+                     loading="lazy">
             </div>
             <div class="project-card-content">
                 <h3>${currentLang === 'vi' ? project.title : project.titleEn}</h3>
@@ -173,13 +227,15 @@ function loadProjects() {
                     ${project.tags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
                 </div>
                 <div class="project-links">
-                    <a href="${project.liveLink}" target="_blank" class="btn primary btn-sm">
+                    <a href="${project.liveLink}" target="_blank" class="btn primary btn-sm" 
+                       rel="noopener noreferrer">
                         <i class="fas fa-external-link-alt"></i> 
                         <span data-vi="Xem Demo" data-en="Live Demo">
                             ${currentLang === 'vi' ? 'Xem Demo' : 'Live Demo'}
                         </span>
                     </a>
-                    <a href="${project.githubLink}" target="_blank" class="btn secondary btn-sm">
+                    <a href="${project.githubLink}" target="_blank" class="btn secondary btn-sm"
+                       rel="noopener noreferrer">
                         <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
@@ -195,47 +251,74 @@ langBtns.forEach(btn => {
     btn.addEventListener('click', loadProjects);
 });
 
-// Form handling with validation
+// Enhanced Form Validation
 const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        message: document.getElementById('message').value
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        message: document.getElementById('message').value.trim()
     };
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const currentLang = localStorage.getItem('lang') || 'vi';
+    
+    if (!formData.name) {
+        alert(currentLang === 'vi' ? 'Vui lòng nhập họ tên.' : 'Please enter your name.');
+        return;
+    }
+    
     if (!emailRegex.test(formData.email)) {
-        const currentLang = localStorage.getItem('lang') || 'vi';
         alert(currentLang === 'vi' ? 'Vui lòng nhập email hợp lệ.' : 'Please enter a valid email address.');
         return;
     }
     
-    console.log('Form submitted:', formData);
-    contactForm.reset();
+    if (!formData.message) {
+        alert(currentLang === 'vi' ? 'Vui lòng nhập tin nhắn.' : 'Please enter your message.');
+        return;
+    }
     
-    const currentLang = localStorage.getItem('lang') || 'vi';
-    alert(currentLang === 'vi' ? 'Gửi tin nhắn thành công!' : 'Message sent successfully!');
+    // Simulate form submission
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLang === 'vi' ? 'Đang gửi...' : 'Sending...'}`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log('Form submitted:', formData);
+        contactForm.reset();
+        alert(currentLang === 'vi' ? 'Gửi tin nhắn thành công!' : 'Message sent successfully!');
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        alert(currentLang === 'vi' ? 'Có lỗi xảy ra. Vui lòng thử lại.' : 'An error occurred. Please try again.');
+    } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = `<i class="fas fa-paper-plane"></i> <span data-vi="Gửi Tin Nhắn" data-en="Send Message">${currentLang === 'vi' ? 'Gửi Tin Nhắn' : 'Send Message'}</span>`;
+    }
 });
 
-// Intersection Observer for fade-in animations
+// Enhanced Intersection Observer
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.style.transform = 'translateY(0) scale(1)';
+            observer.unobserve(entry.target);
         }
     });
-}, {
-    threshold: 0.1
-});
+}, observerOptions);
 
-// Observe all sections
-document.querySelectorAll('section').forEach(section => {
+// Observe all sections with enhanced animation
+document.querySelectorAll('section').forEach((section, index) => {
     section.style.opacity = '0';
-    section.style.transform = 'translateY(20px)';
-    section.style.transition = 'all 0.6s ease-out';
+    section.style.transform = 'translateY(30px) scale(0.95)';
+    section.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
     observer.observe(section);
 }); 

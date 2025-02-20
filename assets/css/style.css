@@ -2,8 +2,8 @@
     --sky-blue: #0EA5E9;
     --soft-pink: #EC4899;
     --gradient: linear-gradient(135deg, var(--sky-blue), var(--soft-pink));
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.25);
     --text-primary: #2D3748;
     --text-secondary: #4A5568;
     --bg-primary: #f7fafc;
@@ -11,12 +11,13 @@
     --shadow-md: 0 8px 15px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.15);
     --border-radius: 16px;
-    --transition: all 0.3s ease;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --blur: 12px;
 }
 
 .dark-mode {
-    --glass-bg: rgba(0, 0, 0, 0.2);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(0, 0, 0, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.15);
     --text-primary: #F7FAFC;
     --text-secondary: #E2E8F0;
     --bg-primary: #1A202C;
@@ -50,28 +51,56 @@ body {
     border-radius: 50px;
     backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease;
+}
+
+.lang-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .lang-btn {
     background: none;
     border: none;
     color: var(--text-secondary);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.2rem;
     border-radius: 25px;
     cursor: pointer;
     font-weight: 600;
-    transition: var(--transition);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.lang-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.lang-btn:hover::before {
+    opacity: 0.1;
 }
 
 .lang-btn.active {
     background: var(--gradient);
     color: white;
+    transform: scale(1.05);
 }
 
 /* Glassmorphism Effects */
 .glass-card, .glass-header, .glass-footer {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
@@ -85,14 +114,15 @@ body {
 /* Header Styles */
 .glass-header {
     position: fixed;
-    top: 1rem;
+    top: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 2rem);
+    width: calc(100% - 4rem);
     max-width: 1400px;
     z-index: 1000;
-    padding: 1rem 2rem;
+    padding: 1.2rem 2.5rem;
     border-radius: 50px;
+    box-shadow: var(--shadow-md);
 }
 
 nav {
@@ -112,17 +142,18 @@ nav {
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     list-style: none;
+    margin-right: 1rem;
 }
 
 .nav-links a {
     color: var(--text-primary);
     text-decoration: none;
     font-weight: 500;
-    transition: var(--transition);
+    transition: all 0.3s ease;
     position: relative;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0;
 }
 
 .nav-links a::after {
@@ -134,12 +165,12 @@ nav {
     left: 50%;
     transform: translateX(-50%);
     background: var(--gradient);
-    transition: var(--transition);
+    transition: width 0.3s ease;
 }
 
 .nav-links a:hover::after,
 .nav-links a.active::after {
-    width: calc(100% - 2rem);
+    width: 100%;
 }
 
 .admin-link {
@@ -165,37 +196,56 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 6rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
     background: 
-        radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+        radial-gradient(circle at 0% 0%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
 }
 
 .hero-content {
     text-align: center;
     padding: 4rem;
-    max-width: 900px;
+    max-width: 1000px;
+    position: relative;
+    z-index: 1;
     background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur));
+    border: 1px solid var(--glass-border);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
 }
 
 .hero-content h1 {
-    font-size: 4.5rem;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
     margin-bottom: 1.5rem;
     background: var(--gradient);
     -webkit-background-clip: text;
     color: transparent;
     line-height: 1.2;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
 }
 
 .gradient-text {
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    color: transparent;
-    font-size: 1.8rem;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
     margin-bottom: 3rem;
-    font-weight: 500;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards 0.2s;
+}
+
+/* Language Transition Animations */
+[data-vi], [data-en] {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lang-switching [data-vi],
+.lang-switching [data-en] {
+    opacity: 0;
+    transform: translateY(10px);
 }
 
 /* Buttons */
@@ -257,7 +307,7 @@ nav {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2.5rem;
-    padding: 2rem 0;
+    padding: 2rem;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -271,10 +321,20 @@ nav {
     height: 100%;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    animation-delay: calc(var(--card-index) * 0.1s);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur));
+    border: 1px solid var(--glass-border);
+    transform-origin: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-lg);
 }
 
 .project-card-image {
@@ -282,6 +342,8 @@ nav {
     height: 250px;
     overflow: hidden;
     border-radius: var(--border-radius) var(--border-radius) 0 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .project-card-image img {
@@ -293,6 +355,22 @@ nav {
 
 .project-card:hover .project-card-image img {
     transform: scale(1.05);
+}
+
+.project-card-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.project-card:hover .project-card-image::after {
+    opacity: 1;
 }
 
 .project-card-content {
@@ -396,14 +474,15 @@ input, textarea {
     border-radius: 12px;
     background: var(--glass-bg);
     color: var(--text-primary);
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 1rem;
 }
 
 input:focus, textarea:focus {
     outline: none;
     border-color: var(--sky-blue);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+    transform: translateY(-2px);
 }
 
 textarea {
@@ -456,8 +535,8 @@ textarea {
 }
 
 .theme-toggle:hover {
-    transform: rotate(45deg);
-    box-shadow: var(--shadow-sm);
+    transform: rotate(180deg) scale(1.1);
+    box-shadow: var(--shadow-md);
 }
 
 /* Mobile Menu */
@@ -474,22 +553,24 @@ textarea {
 .mobile-menu {
     display: none;
     position: fixed;
-    top: 80px;
+    top: 6rem;
     left: 1rem;
     right: 1rem;
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(var(--blur));
     padding: 1.5rem;
     border-radius: var(--border-radius);
     border: 1px solid var(--glass-border);
     box-shadow: var(--shadow-lg);
     z-index: 999;
-    transform: translateY(-100%);
-    transition: var(--transition);
+    transform: translateY(-20px) scale(0.98);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mobile-menu.active {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    opacity: 1;
 }
 
 .mobile-menu ul {
@@ -514,6 +595,35 @@ textarea {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    :root {
+        --blur: 8px;
+    }
+
+    .glass-header {
+        top: 1rem;
+        width: calc(100% - 2rem);
+        padding: 1rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(var(--blur));
+    }
+    
+    .lang-toggle {
+        top: auto;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .hero-content {
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .projects-grid {
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+    
     .nav-links {
         display: none;
     }
@@ -523,61 +633,45 @@ textarea {
     }
     
     .mobile-menu {
-        display: block;
+        top: 5rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(var(--blur));
     }
-    
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-    
-    .hero-content {
-        padding: 2rem;
-    }
-    
-    .gradient-text {
-        font-size: 1.4rem;
-    }
-    
-    .about-section {
-        margin: 1rem;
-        padding: 2rem;
-    }
-    
-    .theme-toggle {
-        top: 1rem;
-        right: 1rem;
-    }
-    
-    .lang-toggle {
-        top: 1rem;
-        left: 1rem;
-    }
-    
-    .cta-buttons {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
+
     .btn {
         width: 100%;
         justify-content: center;
+        margin-bottom: 0.5rem;
     }
-    
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .contact-form {
-        padding: 2rem;
+
+    .cta-buttons {
+        flex-direction: column;
     }
 }
 
 /* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
 }
 
 .hero-content, .glass-card {
-    animation: fadeIn 1s ease-out;
+    animation: fadeInUp 1s ease-out;
 } 
