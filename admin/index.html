@@ -9,6 +9,7 @@
     <link href="https://api.fontshare.com/v2/css?f[]=cal-sans@400,700&display=swap" rel="stylesheet">
     <title>Admin Dashboard - Tèo Sushi</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="admin.css">
     <style>
         .auth-container {
             position: fixed;
@@ -152,17 +153,17 @@
     </style>
 </head>
 <body>
-    <div id="authContainer" class="auth-container" style="display: none;">
+    <div id="authContainer" class="auth-container">
         <form id="authForm" class="auth-form">
             <h2>Admin Login</h2>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" required placeholder="Enter username">
+                <input type="text" id="username" name="username" required placeholder="Enter username">
                 <div class="error-message">Invalid username</div>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" required placeholder="Enter password">
+                <input type="password" id="password" name="password" required placeholder="Enter password">
                 <div class="error-message">Invalid password</div>
             </div>
             <button type="submit" class="btn-login">Login</button>
@@ -173,85 +174,77 @@
         <div class="nav-content">
             <h1 class="gradient-text">Tèo Sushi Admin</h1>
             <div class="nav-actions">
-                <div id="userInfo" class="user-info" style="display: none;"></div>
-                <button id="logoutBtn" class="btn" style="display: none;">Logout</button>
+                <div id="userInfo" class="user-info"></div>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+                <button id="logoutBtn" class="btn">Logout</button>
                 <a href="../index.html" class="btn">Back to Portfolio</a>
             </div>
         </div>
     </nav>
 
-    <main>
+    <main id="adminContent" style="display: none;">
         <section class="glass-section">
             <h2 class="section-title">Add New Project</h2>
             <form id="projectForm" class="admin-form">
                 <div class="form-group">
                     <label for="title">Project Title</label>
                     <div class="input-wrapper">
-                        <input type="text" id="title" required 
+                        <input type="text" id="title" name="title" required 
                                minlength="3" 
                                placeholder="Enter project title"
                                pattern="^[a-zA-Z0-9\s\-_]+$"
                                title="Title can only contain letters, numbers, spaces, hyphens and underscores">
-                        <span class="input-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        </span>
+                        <span class="input-icon success-icon"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
                     <div class="input-wrapper">
-                        <textarea id="description" required 
+                        <textarea id="description" name="description" required 
                                 minlength="10" 
                                 maxlength="500"
                                 placeholder="Describe your project (10-500 characters)"
                                 rows="4"></textarea>
-                        <span class="input-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        </span>
+                        <span class="input-icon success-icon"></span>
                     </div>
                     <small class="char-count">0/500</small>
                 </div>
                 <div class="form-group">
                     <label for="technologies">Technologies (comma separated)</label>
                     <div class="input-wrapper">
-                        <input type="text" id="technologies" 
+                        <input type="text" id="technologies" name="technologies"
                                required
                                placeholder="e.g., HTML, CSS, JavaScript"
                                pattern="^[a-zA-Z0-9\s\-_+#,\.]+$"
                                title="Enter technologies separated by commas">
-                        <span class="input-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        </span>
+                        <span class="input-icon success-icon"></span>
                     </div>
-                    <small class="tech-preview"></small>
+                    <div class="tech-preview"></div>
                 </div>
                 <div class="form-group">
                     <label for="link">Project Link</label>
                     <div class="input-wrapper">
-                        <input type="url" id="link" required
+                        <input type="url" id="link" name="link" required
                                placeholder="https://example.com"
                                pattern="https?://.+"
                                title="Include http:// or https:// in the URL">
-                        <span class="input-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        </span>
+                        <span class="input-icon success-icon"></span>
                     </div>
                 </div>
-                <button type="submit" class="btn">Add Project</button>
+                <button type="submit" class="btn btn-primary">Add Project</button>
             </form>
         </section>
 
         <section class="glass-section">
             <h2 class="section-title">Manage Projects</h2>
-            <div id="projectsList" class="project-grid"></div>
+            <div id="projectsGrid" class="project-grid"></div>
         </section>
     </main>
 
@@ -422,6 +415,7 @@
             });
         });
     </script>
-    <script src="../assets/js/theme.js"></script>
+    <script type="module" src="../assets/js/theme.js"></script>
+    <script type="module" src="../assets/js/admin.js"></script>
 </body>
 </html>

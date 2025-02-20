@@ -99,6 +99,101 @@
         .dark .card:hover {
             box-shadow: var(--button-shadow-hover-dark);
         }
+
+        .about-contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-card, .contact-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .about-card h3, .contact-card h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .dark .about-card h3, .dark .contact-card h3 {
+            color: var(--text-primary-dark);
+        }
+
+        .skills {
+            margin-top: auto;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--glass-light);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid var(--glass-border-light);
+        }
+
+        .dark .skill-tag {
+            background: var(--glass-dark);
+            border-color: var(--glass-border-dark);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .contact-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--text-primary-light);
+        }
+
+        .dark .contact-icon {
+            color: var(--text-primary-dark);
+        }
+
+        .contact-item a {
+            color: var(--text-primary-light);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+
+        .dark .contact-item a {
+            color: var(--text-primary-dark);
+        }
+
+        .contact-item a:hover {
+            color: var(--accent-light);
+        }
+
+        .dark .contact-item a:hover {
+            color: var(--accent-dark);
+        }
+
+        @media (max-width: 768px) {
+            .about-contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -128,18 +223,39 @@
         </section>
 
         <section id="about" class="glass-section" data-aos="fade-up" data-aos-delay="200">
-            <h2 class="section-title">About Me</h2>
-            <div class="card">
-                <p>A passionate developer focused on creating interactive and user-friendly applications.</p>
-            </div>
-        </section>
-
-        <section id="contact" class="glass-section" data-aos="fade-up" data-aos-delay="300">
-            <h2 class="section-title">Contact</h2>
-            <div class="card">
-                <p>Get in touch with me</p>
-                <div class="contact-links">
-                    <a href="https://github.com/teosuhi1014" target="_blank" class="btn">GitHub</a>
+            <h2 class="section-title">About Me & Contact</h2>
+            <div class="about-contact-container">
+                <div class="card about-card">
+                    <h3>About Me</h3>
+                    <p>A passionate developer focused on creating interactive and user-friendly applications.</p>
+                    <div class="skills">
+                        <h4>Skills</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">UI/UX Design</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card contact-card">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                            <a href="mailto:contact@teosushi.com">contact@teosushi.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                            </svg>
+                            <a href="https://github.com/teosuhi1014" target="_blank" class="social-link">GitHub</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -16,11 +16,19 @@ const setThemePreference = () => {
 
     // Apply theme-specific CSS variables
     if (theme === 'dark') {
-        document.body.style.background = 'var(--bg-gradient-dark)';
-        document.body.style.color = 'var(--text-primary-dark)';
+        document.body.style.setProperty('--bg-gradient', 'var(--bg-gradient-dark)');
+        document.body.style.setProperty('--text-primary', 'var(--text-primary-dark)');
+        document.body.style.setProperty('--glass-bg', 'var(--glass-bg-dark)');
+        document.body.style.setProperty('--glass-border', 'var(--glass-border-dark)');
+        document.body.style.setProperty('--button-shadow', 'var(--button-shadow-dark)');
+        document.body.style.setProperty('--button-shadow-hover', 'var(--button-shadow-hover-dark)');
     } else {
-        document.body.style.background = 'var(--bg-gradient-light)';
-        document.body.style.color = 'var(--text-primary-light)';
+        document.body.style.setProperty('--bg-gradient', 'var(--bg-gradient-light)');
+        document.body.style.setProperty('--text-primary', 'var(--text-primary-light)');
+        document.body.style.setProperty('--glass-bg', 'var(--glass-bg-light)');
+        document.body.style.setProperty('--glass-border', 'var(--glass-border-light)');
+        document.body.style.setProperty('--button-shadow', 'var(--button-shadow-light)');
+        document.body.style.setProperty('--button-shadow-hover', 'var(--button-shadow-hover-light)');
     }
 }
 
@@ -47,6 +55,9 @@ const toggleTheme = () => {
     HTML.setAttribute('data-theme', newTheme);
     localStorage.setItem(STORAGE_KEY, newTheme);
     setThemePreference();
+
+    // Dispatch theme change event
+    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
 }
 
 // Event Listeners
@@ -114,15 +125,8 @@ const setupKeyboardNav = () => {
     });
 };
 
-// Add animation styles
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes rotateIn {
-        from { transform: rotate(-180deg); opacity: 0; }
-        to { transform: rotate(0); opacity: 1; }
-    }
-`;
-document.head.appendChild(style);
+// Initialize keyboard navigation
+document.addEventListener('DOMContentLoaded', setupKeyboardNav);
 
-// Export for module usage
+// Export functions for module usage
 export { getColorPreference, setThemePreference, toggleTheme };

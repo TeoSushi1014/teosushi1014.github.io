@@ -1,4 +1,6 @@
 // Khởi tạo dự án mẫu nếu chưa có dữ liệu
+import { loadingState, toast } from './utils.js';
+
 if (!localStorage.getItem('projects')) {
     const sampleProjects = [
         {
@@ -6,72 +8,106 @@ if (!localStorage.getItem('projects')) {
             title: 'Portfolio Website',
             description: 'Personal portfolio with glassmorphism effect',
             technologies: ['HTML', 'CSS', 'JavaScript'],
-            link: 'https://teosushi1014.github.io'
+            link: 'https://teosushi1014.github.io',
+            createdAt: new Date().toISOString()
         }
     ];
     localStorage.setItem('projects', JSON.stringify(sampleProjects));
 }
 
-// Project display and animation handling
-function displayProjects() {
+// Project display with loading state
+async function displayProjects() {
     const projectsGrid = document.getElementById('projects-grid');
-    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+    if (!projectsGrid) return;
 
-    projectsGrid.innerHTML = projects.map((project, index) => `
-        <div class="project-card" 
-             style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out forwards"
-             data-aos="fade-up" 
-             data-aos-delay="${index * 100}">
-            <h3 class="project-title">${project.title}</h3>
-            <p class="project-description">${project.description}</p>
-            <div class="tech-stack">
-                ${project.technologies.map(tech => 
-                    `<span class="tech-tag">${tech}</span>`
-                ).join('')}
-            </div>
-            <a href="${project.link}" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="project-link">
-                View Project
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                     width="16" height="16" 
-                     viewBox="0 0 24 24" 
-                     fill="none" 
-                     stroke="currentColor" 
-                     stroke-width="2" 
-                     stroke-linecap="round" 
-                     stroke-linejoin="round"
-                     class="link-icon">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-            </a>
-        </div>
-    `).join('');
+    loadingState.show('Loading projects...');
 
-    // Add hover effects
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', (e) => {
-            const { left, top } = card.getBoundingClientRect();
-            const x = e.clientX - left;
-            const y = e.clientY - top;
-
-            card.style.background = `
-                radial-gradient(
-                    circle at ${x}px ${y}px,
-                    var(--glass-light) 0%,
-                    var(--glass-bg) 50%
-                )
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simulated loading
+        const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+        
+        if (projects.length === 0) {
+            projectsGrid.innerHTML = `
+                <div class="no-projects">
+                    <p>No projects found</p>
+                </div>
             `;
-        });
+            return;
+        }
 
-        card.addEventListener('mouseleave', () => {
-            card.style.background = 'var(--glass-light)';
+        projectsGrid.innerHTML = projects.map((project, index) => `
+            <div class="project-card" 
+                 data-aos="fade-up" 
+                 data-aos-delay="${index * 100}"
+                 data-id="${project.id}">
+                <div class="project-header">
+                    <h3 class="project-title">${project.title}</h3>
+                    ${project.createdAt ? `<small class="project-date">${new Date(project.createdAt).toLocaleDateString()}</small>` : ''}
+                </div>
+                <p class="project-description">${project.description}</p>
+                <div class="tech-stack">
+                    ${project.technologies.map(tech => 
+                        `<span class="tech-tag">${tech}</span>`
+                    ).join('')}
+                </div>
+                <a href="${project.link}" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="project-link">
+                    View Project
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                         width="16" height="16" 
+                         viewBox="0 0 24 24" 
+                         fill="none" 
+                         stroke="currentColor" 
+                         stroke-width="2" 
+                         stroke-linecap="round" 
+                         stroke-linejoin="round"
+                         class="link-icon">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+        `).join('');
+
+        // Add hover effects
+        const cards = document.querySelectorAll('.project-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', (e) => {
+                const { left, top } = card.getBoundingClientRect();
+                const x = e.clientX - left;
+                const y = e.clientY - top;
+
+                card.style.background = `
+                    radial-gradient(
+                        circle at ${x}px ${y}px,
+                        var(--glass-light) 0%,
+                        var(--glass-bg) 50%
+                    )
+                `;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.background = 'var(--glass-light)';
+            });
+
+            // Add keyboard navigation
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const link = card.querySelector('.project-link');
+                    if (link) link.click();
+                }
+            });
         });
-    });
+    } catch (error) {
+        console.error('Error displaying projects:', error);
+        toast.show('Error loading projects', 'error');
+    } finally {
+        loadingState.hide();
+    }
 }
 
 // Kiểm tra xem có phải trang admin không
