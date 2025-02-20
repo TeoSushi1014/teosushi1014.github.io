@@ -4,24 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+  <!-- Remove Netlify Identity widget as we're using GitHub directly -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-    if (window.location.hash && window.location.hash.includes('access_token')) {
-      const token = window.location.hash.match(/access_token=([\w/\-]+)/)[1];
-      window.localStorage.setItem('githubToken', token);
-    }
+    // Initialize Decap CMS
+    window.CMS.init();
   </script>
 </body>
 </html>

@@ -2,8 +2,9 @@ backend:
   name: github
   repo: TeoSushi1014/teosushi1014.github.io
   branch: main
+  base_url: https://api.github.com
+  site_domain: teosushi1014.github.io
   auth_endpoint: https://github.com/login/oauth/authorize
-  token_endpoint: https://github.com/login/oauth/access_token
   client_id: Ov23liSyMU0un5r2RpN4
 
 media_folder: "images/uploads"
