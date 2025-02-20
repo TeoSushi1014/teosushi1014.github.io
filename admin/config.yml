@@ -2,13 +2,10 @@ backend:
   name: github
   repo: TeoSushi1014/teosushi1014.github.io
   branch: main
-  client_id: Ov23liSyMU0un5r2RpN4
-  client_secret: cefd504eef04a853ec43bad84659e643306b2acb
+  api_root: https://api.github.com
   auth_endpoint: https://github.com/login/oauth/authorize
-  token_endpoint: https://github.com/login/oauth/access_token
-
-site_url: https://teosushi1014.github.io
-display_url: https://teosushi1014.github.io
+  app_id: teosushi-cms
+  client_id: Ov23liSyMU0un5r2RpN4
 
 publish_mode: editorial_workflow
 media_folder: "images/uploads"
