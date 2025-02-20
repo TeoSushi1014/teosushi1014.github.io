@@ -7,16 +7,23 @@ async function loadPosts() {
         const content = document.getElementById('content');
         content.innerHTML = '';
 
-        for (const post of posts) {
+        for (const [index, post] of posts.entries()) {
             const postContent = await fetch(post.download_url);
             const postText = await postContent.text();
             const postData = parseMarkdown(postText);
             
             content.innerHTML += `
-                <article class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-xl font-bold mb-4">${postData.title}</h2>
-                    <div class="prose max-w-none">${marked.parse(postData.content)}</div>
-                    <div class="text-sm text-gray-500 mt-4">${new Date(postData.date).toLocaleDateString()}</div>
+                <article class="ios-card glass animate-slide p-6 dark:text-gray-100"
+                         style="animation-delay: ${index * 100}ms">
+                    <h2 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-pink-400 bg-clip-text text-transparent">
+                        ${postData.title}
+                    </h2>
+                    <div class="prose dark:prose-invert max-w-none">
+                        ${marked.parse(postData.content)}
+                    </div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                        ${new Date(postData.date).toLocaleDateString()}
+                    </div>
                 </article>
             `;
         }
