@@ -3,34 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TeoSushi Blog</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="css/style.css" rel="stylesheet">
+    <title>Portfolio - Teo Sushi</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-gray-100">
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between">
-                <div class="flex space-x-7">
-                    <div>
-                        <a href="#" class="flex items-center py-4">
-                            <span class="font-semibold text-gray-500 text-lg">TeoSushi Blog</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="flex items-center py-4">
-                    <a href="/admin" class="text-gray-500 hover:text-gray-700">Admin Panel</a>
-                </div>
-            </div>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <h1>Teo Sushi</h1>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-8">
-        <div id="content" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Content will be dynamically loaded here -->
-        </div>
+    <main>
+        <section id="home" class="glass-section">
+            <h2>Welcome to My Portfolio</h2>
+            <p>Creative Developer & Designer</p>
+        </section>
+
+        <section id="projects" class="glass-section">
+            <h2>My Projects</h2>
+            <div id="projects-grid"></div>
+        </section>
+
+        <section id="about" class="glass-section">
+            <h2>About Me</h2>
+            <p>A passionate developer focused on creating interactive and user-friendly applications.</p>
+        </section>
+
+        <section id="contact" class="glass-section">
+            <h2>Contact</h2>
+            <p>Get in touch with me</p>
+            <div class="contact-links">
+                <a href="https://github.com/teosuhi1014" target="_blank">GitHub</a>
+            </div>
+        </section>
     </main>
 
-    <script src="js/main.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
