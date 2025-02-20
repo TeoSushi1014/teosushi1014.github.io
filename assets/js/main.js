@@ -23,11 +23,39 @@ themeToggle.addEventListener('click', () => {
     }
 });
 
+// Mobile menu handling
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const mobileMenu = document.querySelector('.mobile-menu');
+
+mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    const icon = mobileMenuBtn.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.add('fa-bars');
+        icon.classList.remove('fa-times');
+    }
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
+        
+        // Close mobile menu if open
+        if (mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            mobileMenuBtn.querySelector('i').classList.replace('fa-times', 'fa-bars');
+        }
+        
         target.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
@@ -35,45 +63,73 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Sample projects data
-const projects = [
-    {
-        title: 'Project 1',
-        description: 'A modern web application with stunning UI/UX design.',
-        tags: ['React', 'Node.js', 'MongoDB'],
-        image: 'https://via.placeholder.com/300x200'
-    },
-    {
-        title: 'Project 2',
-        description: 'Innovative mobile-first responsive design implementation.',
-        tags: ['HTML5', 'CSS3', 'JavaScript'],
-        image: 'https://via.placeholder.com/300x200'
-    },
-    {
-        title: 'Project 3',
-        description: 'Full-stack application with real-time features.',
-        tags: ['Vue.js', 'Express', 'Socket.io'],
-        image: 'https://via.placeholder.com/300x200'
-    }
-];
+// Active link highlighting
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
 
-// Populate projects grid
-const projectsGrid = document.querySelector('.projects-grid');
-projects.forEach(project => {
-    const projectCard = document.createElement('div');
-    projectCard.className = 'glass-card project-card';
-    projectCard.innerHTML = `
-        <img src="${project.image}" alt="${project.title}">
-        <h3>${project.title}</h3>
-        <p>${project.description}</p>
-        <div class="project-tags">
-            ${project.tags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
-        </div>
-    `;
-    projectsGrid.appendChild(projectCard);
+window.addEventListener('scroll', () => {
+    let current = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= sectionTop - 60) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').slice(1) === current) {
+            link.classList.add('active');
+        }
+    });
 });
 
-// Form handling
+// Load projects from localStorage
+const projectsGrid = document.querySelector('.projects-grid');
+function loadProjects() {
+    const projects = JSON.parse(localStorage.getItem('projects')) || [
+        {
+            title: 'Project 1',
+            description: 'A modern web application with stunning UI/UX design.',
+            tags: ['React', 'Node.js', 'MongoDB'],
+            image: 'https://via.placeholder.com/300x200'
+        },
+        {
+            title: 'Project 2',
+            description: 'Innovative mobile-first responsive design implementation.',
+            tags: ['HTML5', 'CSS3', 'JavaScript'],
+            image: 'https://via.placeholder.com/300x200'
+        },
+        {
+            title: 'Project 3',
+            description: 'Full-stack application with real-time features.',
+            tags: ['Vue.js', 'Express', 'Socket.io'],
+            image: 'https://via.placeholder.com/300x200'
+        }
+    ];
+
+    projectsGrid.innerHTML = '';
+    projects.forEach(project => {
+        const projectCard = document.createElement('div');
+        projectCard.className = 'glass-card project-card';
+        projectCard.innerHTML = `
+            <img src="${project.image}" alt="${project.title}">
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
+            <div class="project-tags">
+                ${project.tags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+            </div>
+        `;
+        projectsGrid.appendChild(projectCard);
+    });
+}
+
+// Load projects on page load
+loadProjects();
+
+// Form handling with validation
 const contactForm = document.getElementById('contactForm');
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -84,6 +140,13 @@ contactForm.addEventListener('submit', (e) => {
         email: document.getElementById('email').value,
         message: document.getElementById('message').value
     };
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
     
     // Here you would typically send the form data to a server
     console.log('Form submitted:', formData);
