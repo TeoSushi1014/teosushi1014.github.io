@@ -34,7 +34,7 @@
     <script>
         window.CMS_MANUAL_INIT = true;
     </script>
-    <script src="https://unpkg.com/@staticcms/app@^3.4.5/dist/static-cms-app.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
         const config = {
             backend: {
@@ -42,8 +42,8 @@
                 repo: 'TeoSushi1014/teosushi1014.github.io',
                 branch: 'main',
                 base_url: 'https://api.github.com',
-                auth_endpoint: 'oauth/authorize',
-                auth_type: 'pkce'
+                auth_endpoint: 'https://github.com/login/oauth/authorize',
+                client_id: 'Ov23liSyMU0un5r2RpN4'
             },
             media_folder: "images",
             public_folder: "/images",
