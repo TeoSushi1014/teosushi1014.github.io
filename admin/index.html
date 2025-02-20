@@ -5,197 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>Tèo Sushi - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=cal-sans@400,700&display=swap" rel="stylesheet">
+    <title>Admin Dashboard - Tèo Sushi</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        .admin-form {
-            max-width: 600px;
-            margin: 20px auto;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-bg);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: var(--primary-blue);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(135, 206, 235, 0.2);
-        }
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background: var(--primary-blue);
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn:hover {
-            background: var(--primary-pink);
-        }
-        .projects-list {
-            margin-top: 30px;
-        }
-        .project-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            margin-bottom: 15px;
-            background: var(--glass-bg);
-            border-radius: 8px;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-        }
-        .project-item:hover {
-            transform: translateX(5px);
-            border-color: var(--primary-pink);
-        }
-        .project-info {
-            flex: 1;
-        }
-        .project-info h3 {
-            color: var(--text-color);
-            margin-bottom: 5px;
-        }
-        .project-info p {
-            color: var(--text-color);
-            opacity: 0.8;
-        }
-        .delete-btn {
-            background: #ff6b6b;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-        .delete-btn:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-        .nav-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .logout-btn {
-            background: #ff6b6b;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-        }
-
-        .user-info svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Loading spinner */
-        .loading {
-            display: none;
+        .auth-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .loading.active {
-            display: flex;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid var(--glass-bg);
-            border-top: 5px solid var(--primary-blue);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .char-count {
-            float: right;
-            font-size: 0.8em;
-            color: var(--text-color);
-            opacity: 0.7;
-        }
-
-        .tech-preview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
-        }
-
-        .tech-tag {
-            background: var(--primary-blue);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-group small {
-            display: block;
-            margin-top: 5px;
-            color: var(--text-color);
-            opacity: 0.7;
-        }
-
-        .error-message {
-            color: #ff6b6b;
-            font-size: 0.9em;
-            margin-top: 5px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .invalid-input {
-            border-color: #ff6b6b !important;
-        }
-
-        /* Auth Form Styles */
-        .auth-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: var(--glass-bg);
             backdrop-filter: blur(var(--blur-size));
             display: flex;
@@ -206,8 +23,8 @@
 
         .auth-form {
             background: var(--glass-light);
-            padding: var(--space-5);
-            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            border-radius: 1rem;
             border: 1px solid var(--glass-border-light);
             width: 100%;
             max-width: 400px;
@@ -221,30 +38,66 @@
         }
 
         .auth-form h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 2rem;
             text-align: center;
-            margin-bottom: var(--space-4);
             background: var(--title-gradient-light);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .dark .auth-form h2 {
-            background: var(--title-gradient-dark);
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .auth-form .form-group {
-            margin-bottom: var(--space-4);
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary-light);
         }
 
-        .form-error {
+        .dark .form-group label {
+            color: var(--text-primary-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--glass-border-light);
+            background: var(--glass-light);
+            color: var(--text-primary-light);
+            transition: var(--transition-base);
+        }
+
+        .dark .form-group input {
+            background: var(--glass-dark);
+            border-color: var(--glass-border-dark);
+            color: var(--text-primary-dark);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+
+        .dark .form-group input:focus {
+            border-color: var(--soft-pink);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
+        }
+
+        .error-message {
             color: #ef4444;
-            font-size: var(--font-size-sm);
-            margin-top: var(--space-1);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
             display: none;
         }
 
-        .form-group.error .form-error {
+        .form-group.error .error-message {
             display: block;
         }
 
@@ -252,174 +105,76 @@
             border-color: #ef4444;
         }
 
-        .auth-form .btn {
+        .btn-login {
             width: 100%;
-            margin-top: var(--space-4);
-        }
-
-        /* User Info Styles */
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-            padding: var(--space-2) var(--space-3);
-            border-radius: var(--radius-md);
-            background: var(--glass-light);
-            border: 1px solid var(--glass-border-light);
-            font-size: var(--font-size-sm);
-            font-weight: var(--font-medium);
-        }
-
-        .dark .user-info {
-            background: var(--glass-dark);
-            border-color: var(--glass-border-dark);
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-full);
+            padding: 0.75rem;
             background: var(--gradient-primary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: white;
-            font-weight: var(--font-bold);
-            font-size: var(--font-size-sm);
-        }
-
-        .dark .user-avatar {
-            background: var(--gradient-primary-dark);
-        }
-
-        /* Project Card Animations */
-        .project-card {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.5s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Form Feedback */
-        .form-group .input-wrapper {
-            position: relative;
-        }
-
-        .form-group .input-icon {
-            position: absolute;
-            right: var(--space-3);
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary-light);
-            opacity: 0;
-            transition: var(--transition-base);
-        }
-
-        .form-group.success .input-icon {
-            color: #10B981;
-            opacity: 1;
-        }
-
-        .form-group.error .input-icon {
-            color: #EF4444;
-            opacity: 1;
-        }
-
-        /* Loading Overlay */
-        .loading-overlay {
-            position: fixed;
-            inset: 0;
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur-size));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition-base);
-            z-index: 1000;
-        }
-
-        .loading-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .loading-content {
-            text-align: center;
-            color: var(--text-primary-light);
-        }
-
-        .dark .loading-content {
-            color: var(--text-primary-dark);
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--glass-border-light);
-            border-top-color: var(--sky-blue);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto var(--space-3);
-        }
-
-        .dark .loading-spinner {
-            border-color: var(--glass-border-dark);
-            border-top-color: var(--soft-pink);
-        }
-
-        /* Project Actions */
-        .project-actions {
-            display: flex;
-            gap: var(--space-2);
-            margin-top: var(--space-3);
-        }
-
-        .action-btn {
-            padding: var(--space-2);
-            border-radius: var(--radius-md);
-            background: var(--glass-light);
-            border: 1px solid var(--glass-border-light);
-            color: var(--text-primary-light);
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition-base);
         }
 
-        .dark .action-btn {
-            background: var(--glass-dark);
-            border-color: var(--glass-border-dark);
-            color: var(--text-primary-dark);
+        .dark .btn-login {
+            background: var(--gradient-primary-dark);
         }
 
-        .action-btn:hover {
-            transform: translateY(-1px);
+        .btn-login:hover {
+            transform: translateY(-2px);
             box-shadow: var(--button-shadow-hover-light);
         }
 
-        .dark .action-btn:hover {
+        .dark .btn-login:hover {
             box-shadow: var(--button-shadow-hover-dark);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .project-card {
+            background: var(--glass-light);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border-light);
+            transition: var(--transition-base);
+        }
+
+        .dark .project-card {
+            background: var(--glass-dark);
+            border-color: var(--glass-border-dark);
         }
     </style>
 </head>
 <body>
+    <div id="authContainer" class="auth-container" style="display: none;">
+        <form id="authForm" class="auth-form">
+            <h2>Admin Login</h2>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required placeholder="Enter username">
+                <div class="error-message">Invalid username</div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Enter password">
+                <div class="error-message">Invalid password</div>
+            </div>
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+    </div>
+
     <nav class="glass-nav">
         <div class="nav-content">
             <h1 class="gradient-text">Tèo Sushi Admin</h1>
             <div class="nav-actions">
-                <div class="user-info">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    <span id="userDisplay"></span>
-                </div>
-                <button onclick="logout()" class="btn logout-btn">Logout</button>
+                <div id="userInfo" class="user-info" style="display: none;"></div>
+                <button id="logoutBtn" class="btn" style="display: none;">Logout</button>
                 <a href="../index.html" class="btn">Back to Portfolio</a>
             </div>
         </div>
@@ -427,7 +182,7 @@
 
     <main>
         <section class="glass-section">
-            <h2>Add New Project</h2>
+            <h2 class="section-title">Add New Project</h2>
             <form id="projectForm" class="admin-form">
                 <div class="form-group">
                     <label for="title">Project Title</label>
@@ -495,8 +250,8 @@
         </section>
 
         <section class="glass-section">
-            <h2>Manage Projects</h2>
-            <div id="projectsList" class="projects-list"></div>
+            <h2 class="section-title">Manage Projects</h2>
+            <div id="projectsList" class="project-grid"></div>
         </section>
     </main>
 
@@ -595,6 +350,77 @@
         if (authForm) {
             focusManager.trapFocus(authForm);
         }
+    </script>
+    <script>
+        // Authentication handling
+        const VALID_USERNAME = 'teosushi-admin';
+        const VALID_PASSWORD = '.Quang1014...';
+        const authContainer = document.getElementById('authContainer');
+        const authForm = document.getElementById('authForm');
+        const userInfo = document.getElementById('userInfo');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        function showAuthForm() {
+            authContainer.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideAuthForm() {
+            authContainer.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        function updateUserInterface(isLoggedIn) {
+            if (isLoggedIn) {
+                hideAuthForm();
+                userInfo.style.display = 'flex';
+                logoutBtn.style.display = 'block';
+                userInfo.textContent = `Logged in as: ${localStorage.getItem('adminUsername')}`;
+            } else {
+                showAuthForm();
+                userInfo.style.display = 'none';
+                logoutBtn.style.display = 'none';
+            }
+        }
+
+        // Check authentication status
+        if (!localStorage.getItem('isAdmin')) {
+            showAuthForm();
+        } else {
+            updateUserInterface(true);
+        }
+
+        // Handle login
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                localStorage.setItem('isAdmin', 'true');
+                localStorage.setItem('adminUsername', username);
+                localStorage.setItem('lastLogin', new Date().toISOString());
+                updateUserInterface(true);
+            } else {
+                const errorField = username !== VALID_USERNAME ? 'username' : 'password';
+                document.getElementById(errorField).parentElement.classList.add('error');
+            }
+        });
+
+        // Handle logout
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('isAdmin');
+            localStorage.removeItem('adminUsername');
+            localStorage.removeItem('lastLogin');
+            updateUserInterface(false);
+        });
+
+        // Clear form errors on input
+        document.querySelectorAll('.form-group input').forEach(input => {
+            input.addEventListener('input', () => {
+                input.parentElement.classList.remove('error');
+            });
+        });
     </script>
     <script src="../assets/js/theme.js"></script>
 </body>

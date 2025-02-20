@@ -14,7 +14,92 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=cal-sans@400,700&display=swap" rel="stylesheet">
     <title>Portfolio - Tèo Sushi</title>
+    <style>
+        .nav-content {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-content ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-content a {
+            color: var(--text-primary-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-base);
+            position: relative;
+        }
+
+        .nav-content a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--gradient-primary-light);
+            transition: width 0.3s ease;
+        }
+
+        .nav-content a:hover::after {
+            width: 100%;
+        }
+
+        .dark .nav-content a {
+            color: var(--text-primary-dark);
+        }
+
+        .dark .nav-content a::after {
+            background: var(--gradient-primary-dark);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: var(--title-gradient-light);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .dark .section-title {
+            background: var(--title-gradient-dark);
+        }
+
+        .card {
+            background: var(--glass-light);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--glass-border-light);
+            transition: var(--transition-base);
+        }
+
+        .dark .card {
+            background: var(--glass-dark);
+            border-color: var(--glass-border-dark);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--button-shadow-hover-light);
+        }
+
+        .dark .card:hover {
+            box-shadow: var(--button-shadow-hover-dark);
+        }
+    </style>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
@@ -33,25 +118,29 @@
 
     <main>
         <section id="home" class="glass-section" data-aos="fade-up">
-            <h2>Welcome to My Portfolio</h2>
-            <p>Creative Developer & Designer</p>
+            <h2 class="section-title">Welcome to My Portfolio</h2>
+            <p class="lead">Creative Developer & Designer</p>
         </section>
 
         <section id="projects" class="glass-section" data-aos="fade-up" data-aos-delay="100">
-            <h2>My Projects</h2>
-            <div id="projects-grid"></div>
+            <h2 class="section-title">My Projects</h2>
+            <div id="projects-grid" class="card-grid"></div>
         </section>
 
         <section id="about" class="glass-section" data-aos="fade-up" data-aos-delay="200">
-            <h2>About Me</h2>
-            <p>A passionate developer focused on creating interactive and user-friendly applications.</p>
+            <h2 class="section-title">About Me</h2>
+            <div class="card">
+                <p>A passionate developer focused on creating interactive and user-friendly applications.</p>
+            </div>
         </section>
 
         <section id="contact" class="glass-section" data-aos="fade-up" data-aos-delay="300">
-            <h2>Contact</h2>
-            <p>Get in touch with me</p>
-            <div class="contact-links">
-                <a href="https://github.com/teosuhi1014" target="_blank">GitHub</a>
+            <h2 class="section-title">Contact</h2>
+            <div class="card">
+                <p>Get in touch with me</p>
+                <div class="contact-links">
+                    <a href="https://github.com/teosuhi1014" target="_blank" class="btn">GitHub</a>
+                </div>
             </div>
         </section>
     </main>

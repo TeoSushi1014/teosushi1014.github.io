@@ -1,38 +1,71 @@
-// Get saved theme or default to light
-const getTheme = () => localStorage.getItem('theme') || 'light';
+// Theme handling
+const STORAGE_KEY = 'theme-preference';
+const HTML = document.documentElement;
 
-// Update theme
-const setTheme = (theme) => {
-    document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('theme', theme);
-    updateThemeIcon(theme);
-    
-    // Update ARIA labels
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`);
-        themeToggle.setAttribute('aria-pressed', theme === 'dark');
+const getColorPreference = () => {
+    if (localStorage.getItem(STORAGE_KEY)) {
+        return localStorage.getItem(STORAGE_KEY);
     }
-};
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
 
-// Update theme icon and animations
+const setThemePreference = () => {
+    const theme = getColorPreference();
+    HTML.setAttribute('data-theme', theme);
+    updateThemeIcon(theme);
+
+    // Apply theme-specific CSS variables
+    if (theme === 'dark') {
+        document.body.style.background = 'var(--bg-gradient-dark)';
+        document.body.style.color = 'var(--text-primary-dark)';
+    } else {
+        document.body.style.background = 'var(--bg-gradient-light)';
+        document.body.style.color = 'var(--text-primary-light)';
+    }
+}
+
 const updateThemeIcon = (theme) => {
     const sunIcon = document.querySelector('.sun-icon');
     const moonIcon = document.querySelector('.moon-icon');
     
-    if (!sunIcon || !moonIcon) return;
-    
-    if (theme === 'dark') {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-        moonIcon.style.animation = 'rotateIn 0.5s ease-out';
-    } else {
-        moonIcon.style.display = 'none';
-        sunIcon.style.display = 'block';
-        sunIcon.style.animation = 'rotateIn 0.5s ease-out';
+    if (sunIcon && moonIcon) {
+        if (theme === 'dark') {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        } else {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        }
     }
-};
+}
+
+// Theme toggle functionality
+const toggleTheme = () => {
+    const current = getColorPreference();
+    const newTheme = current === 'light' ? 'dark' : 'light';
+    
+    HTML.setAttribute('data-theme', newTheme);
+    localStorage.setItem(STORAGE_KEY, newTheme);
+    setThemePreference();
+}
+
+// Event Listeners
+window.addEventListener('DOMContentLoaded', () => {
+    setThemePreference();
+
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+});
+
+// Watch for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
+    const theme = isDark ? 'dark' : 'light';
+    HTML.setAttribute('data-theme', theme);
+    localStorage.setItem(STORAGE_KEY, theme);
+    setThemePreference();
+});
 
 // Setup keyboard navigation
 const setupKeyboardNav = () => {
@@ -41,8 +74,7 @@ const setupKeyboardNav = () => {
         themeToggle.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                const currentTheme = getTheme();
-                setTheme(currentTheme === 'light' ? 'dark' : 'light');
+                toggleTheme();
             }
         });
     }
@@ -82,31 +114,15 @@ const setupKeyboardNav = () => {
     });
 };
 
-// Initialize theme
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = getTheme();
-    setTheme(savedTheme);
-    setupKeyboardNav();
-
-    // Theme toggle click handler
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = getTheme();
-            setTheme(currentTheme === 'light' ? 'dark' : 'light');
-        });
+// Add animation styles
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes rotateIn {
+        from { transform: rotate(-180deg); opacity: 0; }
+        to { transform: rotate(0); opacity: 1; }
     }
-
-    // Add animation styles
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes rotateIn {
-            from { transform: rotate(-180deg); opacity: 0; }
-            to { transform: rotate(0); opacity: 1; }
-        }
-    `;
-    document.head.appendChild(style);
-});
+`;
+document.head.appendChild(style);
 
 // Export for module usage
-export { getTheme, setTheme };
+export { getColorPreference, setThemePreference, toggleTheme };
