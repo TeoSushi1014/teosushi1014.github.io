@@ -2,16 +2,13 @@ backend:
   name: github
   repo: TeoSushi1014/teosushi1014.github.io
   branch: main
+  base_url: https://api.github.com
+  auth_endpoint: https://github.com/login/oauth/authorize
   client_id: Ov23liSyMU0un5r2RpN4
-  proxy_url: https://api.netlify.com/auth
-  api_root: https://api.github.com
-
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
-
-local_backend: true
 
 publish_mode: editorial_workflow
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
   - name: "blog"
