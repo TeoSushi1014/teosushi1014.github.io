@@ -13,12 +13,48 @@
     width: 100%;
     max-width: 1200px;
     margin: 2rem;
-    padding: 2rem;
+    padding: 2.5rem;
+}
+
+.admin-section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .admin-form {
-    max-width: 500px;
+    max-width: 800px;
     margin: 0 auto;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
 }
 
 .password-group {
@@ -29,7 +65,7 @@
     position: absolute;
     right: 1rem;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-25%);
     cursor: pointer;
     color: var(--text-secondary);
 }
@@ -38,29 +74,51 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .project-management {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .admin-projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .project-card {
     position: relative;
+    padding: 0;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.project-card-header h4 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.2rem;
 }
 
 .project-card .delete-btn {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
     background: none;
     border: none;
     color: var(--soft-pink);
@@ -68,37 +126,68 @@
     font-size: 1.2rem;
     opacity: 0.7;
     transition: opacity 0.3s ease;
+    padding: 0.5rem;
 }
 
 .project-card .delete-btn:hover {
     opacity: 1;
 }
 
-.project-card img {
+.project-card-image {
     width: 100%;
-    height: 150px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-card-image img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
 }
 
-.project-card h4 {
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
+.project-card:hover .project-card-image img {
+    transform: scale(1.05);
 }
 
-.project-card p {
-    font-size: 0.9rem;
+.project-card-content {
+    padding: 1.5rem;
+}
+
+.project-description {
     color: var(--text-secondary);
     margin-bottom: 1rem;
+    line-height: 1.6;
 }
 
 .project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
+.project-links {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Button Styles */
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.btn i {
+    margin-right: 0.5rem;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .admin-section {
         margin: 1rem;
@@ -109,5 +198,13 @@
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-projects-grid {
+        grid-template-columns: 1fr;
     }
 } 

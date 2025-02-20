@@ -60,14 +60,28 @@ function loadProjects() {
         const projectCard = document.createElement('div');
         projectCard.className = 'glass-card project-card';
         projectCard.innerHTML = `
-            <button class="delete-btn" onclick="deleteProject(${index})">
-                <i class="fas fa-times"></i>
-            </button>
-            <img src="${project.image}" alt="${project.title}">
-            <h4>${project.title}</h4>
-            <p>${project.description}</p>
-            <div class="project-tags">
-                ${project.tags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+            <div class="project-card-header">
+                <h4>${project.title}</h4>
+                <button class="delete-btn" onclick="deleteProject(${index})">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="project-card-image">
+                <img src="${project.image}" alt="${project.title}">
+            </div>
+            <div class="project-card-content">
+                <p class="project-description">${project.description}</p>
+                <div class="project-tags">
+                    ${project.tags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+                </div>
+                <div class="project-links">
+                    <a href="${project.liveLink}" target="_blank" class="btn primary btn-sm">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                    <a href="${project.githubLink}" target="_blank" class="btn secondary btn-sm">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
             </div>
         `;
         projectsList.appendChild(projectCard);
@@ -82,7 +96,9 @@ projectForm.addEventListener('submit', (e) => {
         title: document.getElementById('projectTitle').value,
         description: document.getElementById('projectDescription').value,
         tags: document.getElementById('projectTags').value.split(',').map(tag => tag.trim()),
-        image: document.getElementById('projectImage').value
+        image: document.getElementById('projectImage').value,
+        liveLink: document.getElementById('projectLiveLink').value,
+        githubLink: document.getElementById('projectGithubLink').value
     };
     
     const projects = JSON.parse(localStorage.getItem('projects')) || [];
