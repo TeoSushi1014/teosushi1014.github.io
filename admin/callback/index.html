@@ -7,24 +7,46 @@
 </head>
 <body>
   <script>
-    // Get the authentication token from the URL
-    const hash = window.location.hash.substring(1);
-    const params = {};
-    hash.split('&').forEach(pair => {
-      const [key, value] = pair.split('=');
-      params[key] = value;
-    });
+    try {
+      // Handle both hash and search parameters
+      const params = {};
+      const hash = window.location.hash.substring(1);
+      const search = window.location.search.substring(1);
+      
+      // Parse hash parameters
+      if (hash) {
+        hash.split('&').forEach(pair => {
+          const [key, value] = pair.split('=');
+          params[key] = decodeURIComponent(value);
+        });
+      }
+      
+      // Parse search parameters
+      if (search) {
+        search.split('&').forEach(pair => {
+          const [key, value] = pair.split('=');
+          params[key] = decodeURIComponent(value);
+        });
+      }
 
-    // Send the token back to the CMS
-    if (window.opener) {
-      window.opener.postMessage(
-        {
-          type: 'oauth',
-          provider: 'github',
-          ...params
-        },
-        window.location.origin
-      );
+      // If we have a token, send it back to the CMS
+      if (params.access_token || params.token) {
+        const token = params.access_token || params.token;
+        if (window.opener) {
+          window.opener.postMessage(
+            {
+              type: 'oauth',
+              provider: 'github',
+              token: token,
+              ...params
+            },
+            window.location.origin
+          );
+          window.close();
+        }
+      }
+    } catch (error) {
+      console.error('Auth callback error:', error);
     }
   </script>
 </body>

@@ -2,15 +2,13 @@ backend:
   name: github
   repo: TeoSushi1014/teosushi1014.github.io
   branch: main
-  base_url: https://api.github.com
-  auth_endpoint: https://github.com/login/oauth/authorize
+  auth_type: github
+  app_id: TeoSushi Blog CMS
   client_id: Ov23liSyMU0un5r2RpN4
 
-site_url: https://teosushi1014.github.io
-display_url: https://teosushi1014.github.io
-logo_url: https://teosushi1014.github.io/images/logo.png
-
+local_backend: false
 publish_mode: editorial_workflow
+
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 

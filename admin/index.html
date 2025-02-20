@@ -4,11 +4,46 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
+  <link href="https://unpkg.com/@tailwindcss/typography@0.5.0/dist/typography.min.css" rel="stylesheet" />
+  <style>
+    .error-message {
+      color: red;
+      padding: 1rem;
+      margin: 1rem;
+      border: 1px solid red;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <div id="error" class="error-message"></div>
+  <!-- Include the script that builds the page and powers Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js" defer></script>
   <script>
-    window.CMS.init();
+    // Handle potential errors
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+      const errorDiv = document.getElementById('error');
+      errorDiv.style.display = 'block';
+      errorDiv.textContent = 'Error: ' + msg;
+      console.error('CMS Error:', error);
+      return false;
+    };
+
+    // Wait for DOM content to be loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize CMS with configuration
+      window.CMS.init({
+        config: {
+          backend: {
+            name: 'github',
+            repo: 'TeoSushi1014/teosushi1014.github.io',
+            branch: 'main',
+            auth_type: 'github',
+            client_id: 'Ov23liSyMU0un5r2RpN4'
+          }
+        }
+      });
+    });
   </script>
 </body>
 </html>
