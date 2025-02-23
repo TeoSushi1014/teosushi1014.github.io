@@ -165,12 +165,29 @@
                         },
                         'glow-pulse': {
                             '0%, 100%': {
-                                'box-shadow': '0 0 20px rgba(14,165,233,0.2), 0 0 40px rgba(236,72,153,0.1)',
-                                'transform': 'scale(1)'
+                                'box-shadow': '0 0 15px rgba(14,165,233,0.3), 0 0 30px rgba(236,72,153,0.2)'
                             },
                             '50%': {
-                                'box-shadow': '0 0 30px rgba(14,165,233,0.3), 0 0 60px rgba(236,72,153,0.2)',
-                                'transform': 'scale(1.02)'
+                                'box-shadow': '0 0 25px rgba(14,165,233,0.4), 0 0 50px rgba(236,72,153,0.3)'
+                            }
+                        },
+                        gradientBorder: {
+                            '0%': { 
+                                'background-position': '0% 50%'
+                            },
+                            '50%': { 
+                                'background-position': '100% 50%'
+                            },
+                            '100%': { 
+                                'background-position': '0% 50%'
+                            }
+                        },
+                        glowPulse: {
+                            '0%, 100%': {
+                                'box-shadow': '0 0 15px rgba(14,165,233,0.3), 0 0 30px rgba(236,72,153,0.2)'
+                            },
+                            '50%': {
+                                'box-shadow': '0 0 25px rgba(14,165,233,0.4), 0 0 50px rgba(236,72,153,0.3)'
                             }
                         }
                     }
@@ -185,6 +202,14 @@
                 @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)];
             }
 
+            /* Logo style with glow effect */
+            .logo {
+                @apply text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 
+                       bg-clip-text text-transparent hover:scale-105 transition-all duration-200
+                       relative;
+                text-shadow: 0 0 20px rgba(14, 165, 233, 0.3), 0 0 40px rgba(236, 72, 153, 0.2);
+            }
+
             /* Layout & Structure */
             .glass-card {
                 @apply relative overflow-visible bg-white/10 dark:bg-gray-900/10 backdrop-blur-lg 
@@ -195,8 +220,18 @@
 
             /* Navigation */
             .nav-link {
-                @apply relative px-4 py-2 text-gray-700 dark:text-gray-300 base-transition
-                       hover:text-primary-500 dark:hover:text-primary-400 z-[1000];
+                @apply relative px-4 py-2 text-gray-700 dark:text-gray-300 transition-colors duration-300
+                       hover:text-primary-500 dark:hover:text-primary-400;
+            }
+
+            .nav-link::after {
+                @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5
+                       bg-gradient-to-r from-primary-500 to-secondary-500
+                       transition-all duration-300 ease-out;
+            }
+
+            .nav-link:hover::after {
+                @apply w-full;
             }
 
             /* Buttons */
@@ -230,12 +265,45 @@
             .avatar-container {
                 @apply relative w-10 h-10 rounded-full overflow-hidden 
                        base-transition focus:outline-none cursor-pointer z-[9999];
+                background: linear-gradient(45deg, #0ea5e9, #ec4899, #0ea5e9);
+                background-size: 200% 200%;
+                padding: 2px;
+                animation: gradientBorder 3s ease infinite, glowPulse 2s ease-in-out infinite;
+                box-shadow: 0 0 15px rgba(14,165,233,0.3), 0 0 30px rgba(236,72,153,0.2);
+            }
+
+            .avatar-content {
+                @apply w-full h-full rounded-full overflow-hidden;
+                background: theme('colors.gray.50');
+                .dark & {
+                    background: theme('colors.gray.900');
+                }
+            }
+
+            .avatar-image {
+                @apply w-full h-full object-cover;
+            }
+
+            @keyframes glowPulse {
+                0%, 100% {
+                    box-shadow: 0 0 15px rgba(14,165,233,0.3), 0 0 30px rgba(236,72,153,0.2);
+                }
+                50% {
+                    box-shadow: 0 0 25px rgba(14,165,233,0.4), 0 0 50px rgba(236,72,153,0.3);
+                }
+            }
+
+            .avatar-container:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(14,165,233,0.5), 0 0 60px rgba(236,72,153,0.4);
+                animation: gradientBorder 2s ease infinite, glowPulse 1.5s ease-in-out infinite;
             }
 
             /* Text Styles */
             .gradient-text {
                 @apply font-bold bg-gradient-to-r from-primary-500 to-secondary-500 
-                       bg-clip-text text-transparent relative z-[1000];
+                       bg-clip-text text-transparent inline-block;
+                transform: none !important;
             }
 
             /* Animations */
@@ -291,50 +359,43 @@
                 @apply fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
                        w-full max-w-md transition-all duration-200 z-[6001];
             }
+
+            /* Text Styles */
+            .gradient-heading {
+                @apply font-bold relative inline-block;
+                background: linear-gradient(to right, #0ea5e9, #ec4899);
+                background-size: 200% auto;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: gradientMove 5s ease-in-out infinite;
+                z-index: 9999 !important;
+            }
         }
 
         /* iOS-style smooth scrolling */
         html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 5rem;
             -webkit-overflow-scrolling: touch;
-        }
-
-        /* Enhanced touch feedback */
-        @media (hover: none) {
-            .btn-primary:active, .btn-secondary:active {
-                transform: scale(0.96);
-                transition-duration: 100ms;
-            }
-            
-            .glass-card:active {
-                transform: scale(0.98);
-                transition-duration: 100ms;
-            }
         }
 
         /* iOS-style transitions */
         * {
-            @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)];
+            @apply transition-colors duration-300;
         }
 
         /* Enhanced focus styles */
         *:focus-visible {
             @apply outline-none ring-2 ring-primary-500 ring-offset-2 
-                   ring-offset-white dark:ring-offset-gray-900 
-                   transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
-                   scale-[1.02];
+                   ring-offset-white dark:ring-offset-gray-900;
         }
 
         /* iOS-style background transitions */
         body {
-            @apply transition-all duration-500 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)];
+            @apply bg-gray-50 dark:bg-gray-900;
         }
 
         /* Enhanced hover effects */
         .hover-lift {
-            @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
-                   hover:-translate-y-1 hover:shadow-lg active:translate-y-0;
+            @apply hover:-translate-y-1 hover:shadow-lg;
         }
 
         /* iOS-style touch ripple effect */
@@ -343,13 +404,11 @@
         }
         
         .touch-ripple::after {
-            @apply content-[''] absolute inset-0 bg-current opacity-0
-                   scale-[2] transition-all duration-500
-                   ease-[cubic-bezier(0.68,-0.6,0.32,1.6)];
+            @apply content-[''] absolute inset-0 bg-current opacity-0;
         }
         
         .touch-ripple:active::after {
-            @apply opacity-20 scale-100 transition-none;
+            @apply opacity-20;
         }
 
         .glass-card {
@@ -466,13 +525,13 @@
     <header class="fixed top-0 left-0 right-0 z-50 px-4 py-4">
         <nav class="mx-auto max-w-7xl">
             <div class="flex items-center justify-between px-6 py-3 bg-white/5 dark:bg-gray-900/5 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-[0_0_0_1.5px_rgba(0,0,0,0.08)]">
-                <a href="#" class="logo">
+                <a href="../../" class="logo">
                     Tèo Sushi
                 </a>
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="nav-link active" data-vi="Trang Chủ" data-en="Home">Trang Chủ</a>
+                    <a href="#home" class="nav-link" data-vi="Trang Chủ" data-en="Home">Trang Chủ</a>
                     <a href="#projects" class="nav-link" data-vi="Dự Án" data-en="Projects">Dự Án</a>
                     <a href="#about" class="nav-link" data-vi="Giới Thiệu" data-en="About">Giới Thiệu</a>
                     <a href="#contact" class="nav-link" data-vi="Liên Hệ" data-en="Contact">Liên Hệ</a>
@@ -483,11 +542,9 @@
                     <!-- Language Toggle -->
                     <button id="langToggle" class="relative group p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)]">
                         <div class="relative w-6 h-6 transform transition-transform duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] group-hover:scale-110">
-                            <!-- Language Icon -->
                             <svg class="w-6 h-6 text-primary-500 dark:text-primary-400 transform transition-all duration-500 ease-[cubic-bezier(0.4, 0, 0.2, 1)] opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                             </svg>
-                            <!-- Language Indicator -->
                             <div class="lang-indicator absolute -bottom-2 -right-1 flex items-center justify-center w-[18px] h-[18px] text-[8px] font-bold rounded-[6px] bg-gradient-to-r from-[#00B0FF] to-[#EC4899] text-white transform transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] group-hover:scale-110 z-10 shadow-sm">
                                 <span class="lang-text transform transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] translate-y-[0.5px]">EN</span>
                             </div>
@@ -495,25 +552,45 @@
                     </button>
 
                     <!-- Theme Toggle -->
-                    <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                        <i class="fas fa-moon text-gray-600 dark:text-gray-400"></i>
+                    <button id="themeToggle" class="relative p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-primary-500 dark:hidden transform hover:rotate-180 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="w-6 h-6 text-primary-400 hidden dark:block transform hover:rotate-180 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                        </svg>
                     </button>
 
-                    <!-- Admin Link -->
-                    <a href="/admin/login" class="hidden md:flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#00B0FF] to-[#EC4899] bg-[length:200%_200%] animate-gradient text-white backdrop-blur-sm hover:shadow-lg transition-all duration-200 group">
-                        <svg class="w-5 h-5 transform group-hover:rotate-12 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                        <span data-vi="Quản Trị" data-en="Admin" class="font-medium">Quản Trị</span>
-                    </a>
-
                     <!-- Profile Dropdown -->
-                    <div class="relative">
-                        <button class="avatar-container">
-                            <img src="assets/images/avatar.jpg" alt="Profile" class="w-full h-full object-cover">
+                    <div class="profile-dropdown-container" style="z-index: 9999;">
+                        <button id="profileDropdownBtn" class="avatar-container group">
+                            <div class="avatar-gradient"></div>
+                            <div class="avatar-glow"></div>
+                            <div class="avatar-content">
+                                <img src="../../assets/ico/Avt.ico" alt="Profile" class="avatar-image">
+                            </div>
                         </button>
+                        
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl overflow-hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border border-white/20 dark:border-gray-700/20" style="z-index: 9999;">
+                            <div class="p-4">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Hoàng Việt Quang</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">teosushi1014@gmail.com</p>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- Admin Button -->
+                    <a href="/admin/login" class="relative px-4 py-1.5 rounded-lg bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-medium hover:shadow-lg hover:scale-105 transition-all duration-200">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>Admin</span>
+                        </span>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
                     <button id="mobileMenuBtn" class="md:hidden relative p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-colors duration-200">
                         <svg class="w-6 h-6 text-primary-500 transform transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 6h16M4 12h16m-7 6h7"/>
@@ -530,15 +607,6 @@
                         <a href="#projects" class="nav-link" data-vi="Dự Án" data-en="Projects">Dự Án</a>
                         <a href="#about" class="nav-link" data-vi="Giới Thiệu" data-en="About">Giới Thiệu</a>
                         <a href="#contact" class="nav-link" data-vi="Liên Hệ" data-en="Contact">Liên Hệ</a>
-                        <div class="pt-4 border-t border-gray-200/20 dark:border-gray-700/20">
-                            <!-- Mobile Menu Admin Link -->
-                            <a href="/admin/login" class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#00B0FF] to-[#EC4899] bg-[length:200%_200%] animate-gradient text-white">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                                </svg>
-                                <span data-vi="Quản Trị" data-en="Admin">Quản Trị</span>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -577,7 +645,24 @@
         <section id="projects" class="py-20 relative">
             <div class="container mx-auto px-4">
                 <div class="section-content text-center mb-12">
-                    <h2 class="text-3xl font-bold mb-4" data-vi="Dự Án" data-en="Projects">Projects</h2>
+                    <svg width="200" height="60" class="mx-auto">
+                        <defs>
+                            <linearGradient id="projectsGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#0ea5e9">
+                                    <animate attributeName="stop-color" values="#0ea5e9; #ec4899; #0ea5e9" dur="5s" repeatCount="indefinite" />
+                                </stop>
+                                <stop offset="100%" style="stop-color:#ec4899">
+                                    <animate attributeName="stop-color" values="#ec4899; #0ea5e9; #ec4899" dur="5s" repeatCount="indefinite" />
+                                </stop>
+                            </linearGradient>
+                        </defs>
+                        <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" 
+                              fill="url(#projectsGradient)" 
+                              style="font-size: 30px; font-weight: bold;" 
+                              data-vi="Dự Án" data-en="Projects">
+                            Projects
+                        </text>
+                    </svg>
                     <p class="text-muted" data-vi="Những dự án tôi đã thực hiện" data-en="Projects I've worked on">
                         Projects I've worked on
                     </p>
@@ -671,6 +756,7 @@
     </footer>
 
     <!-- Load scripts -->
+    <script src="assets/js/auth-check.js"></script>
     <script src="assets/js/modals.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/projects.js"></script>

@@ -288,7 +288,7 @@
                     </button>
 
                     <!-- Profile Dropdown -->
-                    <div class="relative">
+                    <div class="profile-dropdown-container" style="z-index: 9999;">
                         <button id="profileDropdownBtn" class="avatar-container group">
                             <div class="avatar-gradient"></div>
                             <div class="avatar-glow"></div>
@@ -297,8 +297,7 @@
                             </div>
                         </button>
                         
-                        <!-- Dropdown Menu -->
-                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl overflow-hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border border-white/20 dark:border-gray-700/20 z-50">
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl overflow-hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border border-white/20 dark:border-gray-700/20" style="z-index: 9999;">
                             <div class="p-4">
                                 <p class="text-sm font-medium text-gray-900 dark:text-white">Hoàng Việt Quang</p>
                                 <p class="text-sm text-gray-500 dark:text-gray-400">teosushi1014@gmail.com</p>
@@ -306,7 +305,6 @@
                         </div>
                     </div>
 
-                    <!-- Mobile Menu Button -->
                     <button id="mobileMenuBtn" class="md:hidden relative p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-colors duration-200">
                         <svg class="w-6 h-6 text-primary-500 transform transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 6h16M4 12h16m-7 6h7"/>

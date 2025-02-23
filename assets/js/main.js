@@ -1,14 +1,20 @@
 // Global functions
-window.handleLogout = function() {
+window.handleLogout = async function() {
     try {
-        // Clear admin token
-        localStorage.removeItem('adminToken');
-        localStorage.removeItem('user');
-        
-        // Close the modal
+        // Close the modal first
         if (window.logoutModal) {
             window.logoutModal.close();
         }
+
+        // Clear all auth related data
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('user');
+        sessionStorage.clear(); // Clear any session data
+        
+        // Clear any auth cookies if they exist
+        document.cookie.split(";").forEach(function(c) { 
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
         
         // Show success message
         alert('Đăng xuất thành công!');
@@ -156,8 +162,8 @@ function updateContent(lang) {
         });
         
         // Update projects if they exist
-        if (typeof loadProjects === 'function') {
-            loadProjects();
+        if (typeof renderProjects === 'function') {
+            renderProjects();
         }
         
         PERFORMANCE.isAnimating = false;
@@ -640,21 +646,46 @@ function renderProjects() {
     });
 }
 
-// Optimized event listeners
-function addOptimizedEventListeners() {
-    // Throttled scroll listener
-    window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
+// Layout management
+function updateLayout() {
+    // Update dropdown position if open
+    if (typeof updateDropdownPosition === 'function') {
+        updateDropdownPosition();
+    }
     
-    // Optimized resize handler
+    // Update active link
+    if (typeof updateActiveLink === 'function') {
+        updateActiveLink();
+    }
+    
+    // Update any responsive elements
+    const viewportWidth = window.innerWidth;
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    
+    // Recalculate any dynamic positions
+    if (typeof renderProjects === 'function') {
+        renderProjects();
+    }
+}
+
+// Optimized resize handler
+function setupResizeHandler() {
     let resizeTimeout;
     window.addEventListener('resize', () => {
         if (resizeTimeout) {
             cancelAnimationFrame(resizeTimeout);
         }
-        resizeTimeout = requestAnimationFrame(() => {
-            updateLayout();
-        });
+        resizeTimeout = requestAnimationFrame(updateLayout);
     }, { passive: true });
+}
+
+// Update optimized event listeners
+function addOptimizedEventListeners() {
+    // Throttled scroll listener
+    window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
+    
+    // Setup resize handler
+    setupResizeHandler();
     
     // Optimized intersection observer
     sections.forEach(section => {
@@ -700,7 +731,28 @@ document.addEventListener('DOMContentLoaded', () => {
     initGradientEffects();
 });
 
-// Profile dropdown
+// Global dropdown position management
+window.updateDropdownPosition = function() {
+    const profileDropdownBtn = document.querySelector('.avatar-container');
+    const dropdownContent = document.getElementById('profileDropdown');
+    
+    if (!profileDropdownBtn || !dropdownContent || !dropdownContent.classList.contains('scale-100')) {
+        return;
+    }
+
+    const buttonRect = profileDropdownBtn.getBoundingClientRect();
+    
+    // Calculate position relative to viewport
+    const top = buttonRect.bottom + 8;
+    const left = buttonRect.right - dropdownContent.offsetWidth;
+    
+    // Apply position
+    dropdownContent.style.position = 'fixed';
+    dropdownContent.style.top = `${top}px`;
+    dropdownContent.style.left = `${left}px`;
+};
+
+// Profile dropdown setup
 function setupProfileDropdown() {
     const profileDropdownBtn = document.querySelector('.avatar-container');
     if (!profileDropdownBtn) {
@@ -708,64 +760,40 @@ function setupProfileDropdown() {
         return;
     }
 
-    // Create dropdown content
-    const dropdownContent = document.createElement('div');
-    dropdownContent.id = 'profileDropdown';
-    dropdownContent.className = 'fixed mt-2 w-48 rounded-xl overflow-hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border border-white/20 dark:border-gray-700/20 z-[9999] hidden transform-gpu transition-all duration-200 ease-out opacity-0 translate-y-[-10px]';
-    dropdownContent.innerHTML = `
-        <div class="p-4">
-            <p class="text-sm font-medium text-gray-900 dark:text-white">Hoàng Việt Quang</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">teosushi1014@gmail.com</p>
-        </div>
-        <div class="border-t border-gray-200 dark:border-gray-700">
-            <button type="button" 
-                    id="logoutBtn"
-                    class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors">
-                <i class="fas fa-sign-out-alt mr-2"></i>
-                Đăng xuất
-            </button>
-        </div>
-    `;
-
-    // Add dropdown to DOM
-    document.body.appendChild(dropdownContent);
-
-    let isDropdownOpen = false;
-
-    function updateDropdownPosition() {
-        const buttonRect = profileDropdownBtn.getBoundingClientRect();
-        const dropdownRect = dropdownContent.getBoundingClientRect();
-        
-        // Calculate position
-        let top = buttonRect.bottom + 8;
-        let right = window.innerWidth - buttonRect.right;
-        
-        // Ensure dropdown doesn't go off screen
-        if (top + dropdownRect.height > window.innerHeight) {
-            top = buttonRect.top - dropdownRect.height - 8;
-        }
-        
-        if (right + dropdownRect.width > window.innerWidth) {
-            right = window.innerWidth - dropdownRect.width - 8;
-        }
-        
-        dropdownContent.style.top = `${top}px`;
-        dropdownContent.style.right = `${right}px`;
+    // Create dropdown content if it doesn't exist
+    let dropdownContent = document.getElementById('profileDropdown');
+    if (!dropdownContent) {
+        dropdownContent = document.createElement('div');
+        dropdownContent.id = 'profileDropdown';
+        dropdownContent.className = 'fixed mt-2 w-48 rounded-xl overflow-hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border border-white/20 dark:border-gray-700/20 z-[9999] hidden transform-gpu transition-all duration-200 ease-out opacity-0 scale-95';
+        dropdownContent.innerHTML = `
+            <div class="p-4">
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Hoàng Việt Quang</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">teosushi1014@gmail.com</p>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-700">
+                <button type="button" 
+                        id="logoutBtn"
+                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors">
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    Đăng xuất
+                </button>
+            </div>
+        `;
+        document.body.appendChild(dropdownContent);
     }
 
     function toggleDropdown(show) {
-        isDropdownOpen = show;
-        
         if (show) {
             dropdownContent.classList.remove('hidden');
-            updateDropdownPosition();
+            window.updateDropdownPosition();
             requestAnimationFrame(() => {
-                dropdownContent.style.opacity = '1';
-                dropdownContent.style.transform = 'translateY(0)';
+                dropdownContent.classList.remove('scale-95', 'opacity-0');
+                dropdownContent.classList.add('scale-100', 'opacity-100');
             });
         } else {
-            dropdownContent.style.opacity = '0';
-            dropdownContent.style.transform = 'translateY(-10px)';
+            dropdownContent.classList.add('scale-95', 'opacity-0');
+            dropdownContent.classList.remove('scale-100', 'opacity-100');
             setTimeout(() => {
                 dropdownContent.classList.add('hidden');
             }, 200);
@@ -776,28 +804,21 @@ function setupProfileDropdown() {
     profileDropdownBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
+        const isDropdownOpen = dropdownContent.classList.contains('scale-100');
         toggleDropdown(!isDropdownOpen);
     });
 
     // Click outside handler
     document.addEventListener('click', (e) => {
+        const isDropdownOpen = dropdownContent.classList.contains('scale-100');
         if (isDropdownOpen && !dropdownContent.contains(e.target) && !profileDropdownBtn.contains(e.target)) {
             toggleDropdown(false);
         }
     });
 
     // Update position on scroll and resize
-    window.addEventListener('scroll', () => {
-        if (isDropdownOpen) {
-            updateDropdownPosition();
-        }
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
-        if (isDropdownOpen) {
-            updateDropdownPosition();
-        }
-    }, { passive: true });
+    window.addEventListener('scroll', window.updateDropdownPosition, { passive: true });
+    window.addEventListener('resize', window.updateDropdownPosition, { passive: true });
 
     // Setup logout button click handler
     const logoutBtn = dropdownContent.querySelector('#logoutBtn');
@@ -861,32 +882,117 @@ function setupContactForm() {
 
 // Setup add project button
 function setupAddProject() {
-    const addProjectBtn = document.querySelector('a[href="#projects"]');
+    const addProjectBtn = document.querySelector('.btn-primary[href="#projects"]');
     if (!addProjectBtn) return;
 
     addProjectBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (window.addProjectModal) {
             window.addProjectModal.open();
+        } else {
+            console.error('Add project modal not found');
         }
     });
 }
 
 // Initialize all components
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Wait for modals to be initialized
-    setTimeout(() => {
-        initTheme();
-        setupThemeToggle();
-        setupLanguageToggle();
-        setupProfileDropdown();
-        setupMobileMenu();
-        setupContactForm();
-        setupAddProject();
-        initGradientEffects();
-        initGradientButtons();
-    }, 100);
+    await new Promise(resolve => {
+        const checkModals = () => {
+            if (window.logoutModal && window.addProjectModal) {
+                resolve();
+            } else {
+                setTimeout(checkModals, 50);
+            }
+        };
+        checkModals();
+    });
+
+    console.log('Modals are ready');
+
+    // Initialize elements first
+    const elements = initializeElements();
+    if (!elements) {
+        console.error('Failed to initialize required elements');
+        return;
+    }
+
+    // Initialize core functionality
+    initTheme();
+    setupThemeToggle();
+    setupLanguageToggle();
+
+    // Initialize UI components
+    setupProfileDropdown();
+    setupMobileMenu();
+    setupContactForm();
+    setupAddProject();
+    initGradientEffects();
+    initGradientButtons();
 });
+
+// DOM Elements initialization
+function initializeElements() {
+    const elements = {
+        langToggle: document.getElementById('langToggle'),
+        themeToggle: document.getElementById('themeToggle'),
+        mobileMenuBtn: document.getElementById('mobileMenuBtn'),
+        mobileMenu: document.getElementById('mobileMenu'),
+        html: document.documentElement
+    };
+
+    // Log missing elements
+    Object.entries(elements).forEach(([key, element]) => {
+        if (!element) {
+            console.error(`${key} element not found`);
+        }
+    });
+
+    return elements;
+}
+
+// Theme management
+function initTheme() {
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+}
+
+function setupThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return;
+
+    themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+}
+
+// Language toggle
+function setupLanguageToggle() {
+    const langToggle = document.getElementById('langToggle');
+    if (!langToggle) return;
+
+    langToggle.addEventListener('click', () => {
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        const newLang = currentLang === 'en' ? 'vi' : 'en';
+        document.documentElement.setAttribute('lang', newLang);
+        
+        // Update content based on language
+        document.querySelectorAll('[data-en]').forEach(el => {
+            const viText = el.getAttribute('data-vi');
+            const enText = el.getAttribute('data-en');
+            el.textContent = newLang === 'en' ? enText : viText;
+        });
+
+        // Update placeholders
+        document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+            const viPlaceholder = el.getAttribute('data-vi-placeholder');
+            const enPlaceholder = el.getAttribute('data-en-placeholder');
+            el.setAttribute('placeholder', newLang === 'en' ? enPlaceholder : viPlaceholder);
+        });
+    });
+}
 
 // Theme management
 function initTheme() {
