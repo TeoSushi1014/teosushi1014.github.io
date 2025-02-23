@@ -1,125 +1,679 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Creative Developer</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Tèo Sushi | Creative Developer</title>
+    <script>
+        // Check and apply theme before page loads
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <link rel="icon" type="image/x-icon" href="assets/ico/Avt.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        },
+                        secondary: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'slide-down': 'slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'bounce-soft': 'bounceSoft 2s cubic-bezier(0.68, -0.6, 0.32, 1.6) infinite',
+                        'float': 'float 3s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+                        'pulse-soft': 'pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scale': 'scale 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'spring': 'spring 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+                        'elastic': 'elastic 1s cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+                        'rubber': 'rubber 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+                        'jello': 'jello 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+                        'gradient': 'gradientMove 5s ease-in-out infinite',
+                        'gradient-xy': 'gradient-xy 3s ease infinite',
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { 
+                                opacity: '0',
+                                transform: 'scale(0.96) translateY(10px)'
+                            },
+                            '100%': { 
+                                opacity: '1',
+                                transform: 'scale(1) translateY(0)'
+                            },
+                        },
+                        slideUp: {
+                            '0%': { 
+                                opacity: '0',
+                                transform: 'translateY(30px) scale(0.96)'
+                            },
+                            '100%': { 
+                                opacity: '1',
+                                transform: 'translateY(0) scale(1)'
+                            },
+                        },
+                        slideDown: {
+                            '0%': { 
+                                opacity: '0',
+                                transform: 'translateY(-30px) scale(0.96)'
+                            },
+                            '100%': { 
+                                opacity: '1',
+                                transform: 'translateY(0) scale(1)'
+                            },
+                        },
+                        bounceSoft: {
+                            '0%, 100%': { transform: 'translateY(0) scale(1)' },
+                            '50%': { transform: 'translateY(-15px) scale(0.97)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { 
+                                opacity: '1',
+                                transform: 'scale(1)'
+                            },
+                            '50%': { 
+                                opacity: '0.8',
+                                transform: 'scale(0.98)'
+                            },
+                        },
+                        scale: {
+                            '0%': { 
+                                transform: 'scale(0.96)',
+                                opacity: '0'
+                            },
+                            '100%': { 
+                                transform: 'scale(1)',
+                                opacity: '1'
+                            },
+                        },
+                        spring: {
+                            '0%': { transform: 'scale(0.8)' },
+                            '50%': { transform: 'scale(1.1)' },
+                            '70%': { transform: 'scale(0.95)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        elastic: {
+                            '0%': { transform: 'scale(1)' },
+                            '25%': { transform: 'scale(0.95)' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '75%': { transform: 'scale(0.98)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        rubber: {
+                            '0%': { transform: 'scale(1)' },
+                            '30%': { transform: 'scale(1.15)' },
+                            '40%': { transform: 'scale(0.95)' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '65%': { transform: 'scale(0.98)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        jello: {
+                            '0%, 100%': { transform: 'scale(1, 1)' },
+                            '30%': { transform: 'scale(1.15, 0.85)' },
+                            '40%': { transform: 'scale(0.95, 1.05)' },
+                            '50%': { transform: 'scale(1.05, 0.95)' },
+                            '65%': { transform: 'scale(0.98, 1.02)' },
+                            '75%': { transform: 'scale(1.02, 0.98)' },
+                        },
+                        gradientMove: {
+                            '0%, 100%': { 
+                                'background-position': '0% 50%'
+                            },
+                            '50%': { 
+                                'background-position': '100% 50%'
+                            },
+                        },
+                        'gradient-xy': {
+                            '0%, 100%': {
+                                'background-size': '400% 400%',
+                                'background-position': 'left center',
+                                'transform': 'scale(1)'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center',
+                                'transform': 'scale(1.02)'
+                            }
+                        },
+                        'glow-pulse': {
+                            '0%, 100%': {
+                                'box-shadow': '0 0 20px rgba(14,165,233,0.2), 0 0 40px rgba(236,72,153,0.1)',
+                                'transform': 'scale(1)'
+                            },
+                            '50%': {
+                                'box-shadow': '0 0 30px rgba(14,165,233,0.3), 0 0 60px rgba(236,72,153,0.2)',
+                                'transform': 'scale(1.02)'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer components {
+            /* Base styles */
+            .base-transition {
+                @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)];
+            }
+
+            /* Layout & Structure */
+            .glass-card {
+                @apply relative overflow-visible bg-white/10 dark:bg-gray-900/10 backdrop-blur-lg 
+                       rounded-2xl border border-white/20 dark:border-gray-700/20 
+                       shadow-xl shadow-primary-500/5
+                       p-8 z-[2];
+            }
+
+            /* Navigation */
+            .nav-link {
+                @apply relative px-4 py-2 text-gray-700 dark:text-gray-300 base-transition
+                       hover:text-primary-500 dark:hover:text-primary-400 z-[1000];
+            }
+
+            /* Buttons */
+            .btn-primary {
+                @apply relative overflow-hidden px-6 py-3 
+                       text-white rounded-xl z-[1000]
+                       bg-gradient-to-r from-[#00B0FF] to-[#EC4899]
+                       bg-[length:200%_200%]
+                       animate-gradient;
+            }
+
+            .btn-secondary {
+                @apply relative overflow-hidden px-6 py-3 z-[1000]
+                       text-gray-800 dark:text-white rounded-xl
+                       border-2 border-primary-500/30
+                       bg-transparent;
+            }
+
+            /* Form Elements */
+            .form-input {
+                @apply w-full px-4 py-3 rounded-xl z-[1000]
+                       bg-white/5 dark:bg-gray-800/5 
+                       backdrop-blur-sm border-2 border-primary-500/20 
+                       focus:border-primary-500/50 focus:ring-0 focus:outline-none 
+                       base-transition
+                       text-gray-800 dark:text-gray-100
+                       placeholder-gray-500 dark:placeholder-gray-400;
+            }
+
+            /* Profile Dropdown */
+            .avatar-container {
+                @apply relative w-10 h-10 rounded-full overflow-hidden 
+                       base-transition focus:outline-none cursor-pointer z-[9999];
+            }
+
+            /* Text Styles */
+            .gradient-text {
+                @apply font-bold bg-gradient-to-r from-primary-500 to-secondary-500 
+                       bg-clip-text text-transparent relative z-[1000];
+            }
+
+            /* Animations */
+            .animate-gradient {
+                animation: gradientMove 5s ease-in-out infinite;
+                background-size: 200% 200%;
+            }
+
+            /* Remove duplicate keyframes and keep only unique ones */
+            @keyframes gradientMove {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+            }
+
+            /* Clean up z-index hierarchy */
+            .background-decoration { z-index: 1; }
+            .content-layer { z-index: 1000; }
+            .overlay-layer { z-index: 2000; }
+            .modal-layer { z-index: 3000; }
+            .dropdown-layer { z-index: 4000; }
+            .header-layer { z-index: 5000; }
+
+            /* Add these new styles */
+            .animate-fade-in {
+                animation: fadeIn 0.2s ease-out forwards;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .profile-dropdown {
+                @apply absolute right-0 mt-2 w-48 rounded-xl overflow-hidden 
+                       bg-white dark:bg-gray-800 shadow-lg 
+                       border border-gray-200 dark:border-gray-700 
+                       transform transition-all duration-200 ease-out 
+                       z-[9999];
+            }
+
+            .modal-overlay {
+                @apply fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm 
+                       transition-opacity duration-200 z-[6000];
+            }
+
+            .modal-content {
+                @apply fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                       w-full max-w-md transition-all duration-200 z-[6001];
+            }
+        }
+
+        /* iOS-style smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Enhanced touch feedback */
+        @media (hover: none) {
+            .btn-primary:active, .btn-secondary:active {
+                transform: scale(0.96);
+                transition-duration: 100ms;
+            }
+            
+            .glass-card:active {
+                transform: scale(0.98);
+                transition-duration: 100ms;
+            }
+        }
+
+        /* iOS-style transitions */
+        * {
+            @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)];
+        }
+
+        /* Enhanced focus styles */
+        *:focus-visible {
+            @apply outline-none ring-2 ring-primary-500 ring-offset-2 
+                   ring-offset-white dark:ring-offset-gray-900 
+                   transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                   scale-[1.02];
+        }
+
+        /* iOS-style background transitions */
+        body {
+            @apply transition-all duration-500 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)];
+        }
+
+        /* Enhanced hover effects */
+        .hover-lift {
+            @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                   hover:-translate-y-1 hover:shadow-lg active:translate-y-0;
+        }
+
+        /* iOS-style touch ripple effect */
+        .touch-ripple {
+            @apply relative overflow-hidden;
+        }
+        
+        .touch-ripple::after {
+            @apply content-[''] absolute inset-0 bg-current opacity-0
+                   scale-[2] transition-all duration-500
+                   ease-[cubic-bezier(0.68,-0.6,0.32,1.6)];
+        }
+        
+        .touch-ripple:active::after {
+            @apply opacity-20 scale-100 transition-none;
+        }
+
+        .glass-card {
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card::before {
+            z-index: 1;
+        }
+
+        .absolute {
+            z-index: -1;
+        }
+
+        /* Content z-index structure */
+        .background-decoration {
+            z-index: 1;
+        }
+
+        .glass-card {
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card::before {
+            z-index: 1;
+        }
+
+        .text-content,
+        .text-muted,
+        .gradient-text,
+        h1, h2, h3, p,
+        .nav-link,
+        .btn {
+            position: relative;
+            z-index: 1000;
+        }
+
+        header {
+            z-index: 9999;
+        }
+
+        /* Ensure text is visible */
+        .section-content {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Floating elements should be behind content */
+        .floating-circles {
+            z-index: 1;
+        }
+
+        .animate-float {
+            z-index: 1;
+        }
+
+        /* Ensure form elements are above backgrounds */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Project cards */
+        .project-card {
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-card-content {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Navigation menu */
+        .nav-menu {
+            position: relative;
+            z-index: 9999;
+        }
+
+        /* Mobile menu */
+        #mobileMenu {
+            position: relative;
+            z-index: 9999;
+        }
+
+        /* Buttons and interactive elements */
+        .btn-primary,
+        .btn-secondary {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Language and theme toggles */
+        #langToggle,
+        #themeToggle {
+            position: relative;
+            z-index: 9999;
+        }
+
+        /* Admin button */
+        .admin-link {
+            position: relative;
+            z-index: 9999;
+        }
+    </style>
 </head>
-<body class="light-mode">
-    <div class="theme-toggle">
-        <i class="fas fa-moon"></i>
-    </div>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen transition-all duration-500 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)]">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 py-4">
+        <nav class="mx-auto max-w-7xl">
+            <div class="flex items-center justify-between px-6 py-3 bg-white/5 dark:bg-gray-900/5 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-[0_0_0_1.5px_rgba(0,0,0,0.08)]">
+                <a href="#" class="logo">
+                    Tèo Sushi
+                </a>
 
-    <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="vi">VI</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-    </div>
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link active" data-vi="Trang Chủ" data-en="Home">Trang Chủ</a>
+                    <a href="#projects" class="nav-link" data-vi="Dự Án" data-en="Projects">Dự Án</a>
+                    <a href="#about" class="nav-link" data-vi="Giới Thiệu" data-en="About">Giới Thiệu</a>
+                    <a href="#contact" class="nav-link" data-vi="Liên Hệ" data-en="Contact">Liên Hệ</a>
+                </div>
 
-    <header class="glass-header">
-        <nav>
-            <div class="logo">Portfolio</div>
-            <ul class="nav-links">
-                <li><a href="#home" class="active" data-vi="Trang Chủ" data-en="Home">Trang Chủ</a></li>
-                <li><a href="#projects" data-vi="Dự Án" data-en="Projects">Dự Án</a></li>
-                <li><a href="#about" data-vi="Giới Thiệu" data-en="About">Giới Thiệu</a></li>
-                <li><a href="#contact" data-vi="Liên Hệ" data-en="Contact">Liên Hệ</a></li>
-                <li><a href="/admin" class="admin-link"><i class="fas fa-lock"></i> <span data-vi="Quản Trị" data-en="Admin">Quản Trị</span></a></li>
-            </ul>
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
+                <!-- Control Buttons -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Toggle -->
+                    <button id="langToggle" class="relative group p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)]">
+                        <div class="relative w-6 h-6 transform transition-transform duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] group-hover:scale-110">
+                            <!-- Language Icon -->
+                            <svg class="w-6 h-6 text-primary-500 dark:text-primary-400 transform transition-all duration-500 ease-[cubic-bezier(0.4, 0, 0.2, 1)] opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                            <!-- Language Indicator -->
+                            <div class="lang-indicator absolute -bottom-2 -right-1 flex items-center justify-center w-[18px] h-[18px] text-[8px] font-bold rounded-[6px] bg-gradient-to-r from-[#00B0FF] to-[#EC4899] text-white transform transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] group-hover:scale-110 z-10 shadow-sm">
+                                <span class="lang-text transform transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] translate-y-[0.5px]">EN</span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-moon text-gray-600 dark:text-gray-400"></i>
+                    </button>
+
+                    <!-- Admin Link -->
+                    <a href="/admin/login" class="hidden md:flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#00B0FF] to-[#EC4899] bg-[length:200%_200%] animate-gradient text-white backdrop-blur-sm hover:shadow-lg transition-all duration-200 group">
+                        <svg class="w-5 h-5 transform group-hover:rotate-12 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <span data-vi="Quản Trị" data-en="Admin" class="font-medium">Quản Trị</span>
+                    </a>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <button class="avatar-container">
+                            <img src="assets/images/avatar.jpg" alt="Profile" class="w-full h-full object-cover">
+                        </button>
+                    </div>
+
+                    <button id="mobileMenuBtn" class="md:hidden relative p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-primary-500 transform transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16m-7 6h7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-2">
+                <div class="mx-4 p-4 animate-slide-down bg-white/5 dark:bg-gray-900/5 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/20">
+                    <div class="flex flex-col space-y-4">
+                        <a href="#home" class="nav-link" data-vi="Trang Chủ" data-en="Home">Trang Chủ</a>
+                        <a href="#projects" class="nav-link" data-vi="Dự Án" data-en="Projects">Dự Án</a>
+                        <a href="#about" class="nav-link" data-vi="Giới Thiệu" data-en="About">Giới Thiệu</a>
+                        <a href="#contact" class="nav-link" data-vi="Liên Hệ" data-en="Contact">Liên Hệ</a>
+                        <div class="pt-4 border-t border-gray-200/20 dark:border-gray-700/20">
+                            <!-- Mobile Menu Admin Link -->
+                            <a href="/admin/login" class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#00B0FF] to-[#EC4899] bg-[length:200%_200%] animate-gradient text-white">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                </svg>
+                                <span data-vi="Quản Trị" data-en="Admin">Quản Trị</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <div class="mobile-menu">
-        <ul>
-            <li><a href="#home" data-vi="Trang Chủ" data-en="Home">Trang Chủ</a></li>
-            <li><a href="#projects" data-vi="Dự Án" data-en="Projects">Dự Án</a></li>
-            <li><a href="#about" data-vi="Giới Thiệu" data-en="About">Giới Thiệu</a></li>
-            <li><a href="#contact" data-vi="Liên Hệ" data-en="Contact">Liên Hệ</a></li>
-            <li><a href="/admin" class="admin-link"><i class="fas fa-lock"></i> <span data-vi="Quản Trị" data-en="Admin">Quản Trị</span></a></li>
-        </ul>
-    </div>
-
-    <main>
-        <section id="home" class="hero-section">
-            <div class="glass-card hero-content">
-                <h1 data-vi="Nhà Phát Triển Sáng Tạo" data-en="Creative Developer">Nhà Phát Triển Sáng Tạo</h1>
-                <p class="gradient-text" data-vi="Kiến Tạo Trải Nghiệm Số" data-en="Crafting Digital Experiences">Kiến Tạo Trải Nghiệm Số</p>
-                <div class="cta-buttons">
-                    <a href="#projects" class="btn primary" data-vi="Xem Dự Án" data-en="View Projects">
-                        <i class="fas fa-project-diagram"></i>
-                        <span>Xem Dự Án</span>
-                    </a>
-                    <a href="#contact" class="btn secondary" data-vi="Liên Hệ" data-en="Contact Me">
-                        <i class="fas fa-envelope"></i>
-                        <span>Liên Hệ</span>
-                    </a>
+    <main class="pt-24 pb-12">
+        <section id="home" class="min-h-[90vh] flex items-center justify-center px-4 section-visible">
+            <div class="glass-card max-w-4xl mx-auto p-8 md:p-12 text-center">
+                <div class="background-decoration absolute inset-0 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 blur-3xl opacity-20 -z-[1]"></div>
+                
+                <div class="section-content relative z-[1000] overflow-visible">
+                    <div class="relative inline-block mb-8 overflow-visible">
+                        <h1 class="text-4xl md:text-6xl font-bold gradient-text relative z-[1000] leading-normal overflow-visible" style="line-height: 1.4;" data-vi="Nhà Phát Triển Sáng Tạo" data-en="Creative Developer">
+                            Nhà Phát Triển Sáng Tạo
+                        </h1>
+                        <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mt-4 relative z-[1000] leading-relaxed overflow-visible" data-vi="Tạo ra những trải nghiệm kỹ thuật số tuyệt vời" data-en="Crafting Digital Experiences">
+                            Tạo ra những trải nghiệm kỹ thuật số tuyệt vời
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 justify-center items-center relative z-[1000] overflow-visible">
+                        <a href="#projects" class="btn-primary overflow-visible">
+                            <i class="fas fa-project-diagram"></i>
+                            <span data-vi="Xem Dự Án" data-en="View Projects">Xem Dự Án</span>
+                        </a>
+                        <a href="#contact" class="btn-secondary overflow-visible">
+                            <i class="fas fa-envelope"></i>
+                            <span data-vi="Liên Hệ" data-en="Contact Me">Liên Hệ</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="projects-section">
-            <h2 data-vi="Dự Án Nổi Bật" data-en="Featured Projects">Dự Án Nổi Bật</h2>
-            <div class="projects-grid">
-                <!-- Project cards will be dynamically added here -->
-            </div>
-        </section>
-
-        <section id="about" class="about-section glass-card">
-            <h2 data-vi="Giới Thiệu" data-en="About Me">Giới Thiệu</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p data-vi="Tôi là một nhà phát triển đam mê về việc tạo ra những trải nghiệm web đẹp và chức năng." 
-                       data-en="Creative developer passionate about building beautiful and functional web experiences.">
-                        Tôi là một nhà phát triển đam mê về việc tạo ra những trải nghiệm web đẹp và chức năng.
+        <section id="projects" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="section-content text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4" data-vi="Dự Án" data-en="Projects">Projects</h2>
+                    <p class="text-muted" data-vi="Những dự án tôi đã thực hiện" data-en="Projects I've worked on">
+                        Projects I've worked on
                     </p>
                 </div>
-                <div class="skills">
-                    <h3 data-vi="Kỹ Năng" data-en="Skills">Kỹ Năng</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">HTML5/CSS3</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">UI/UX Design</span>
-                        <span class="skill-tag">Responsive Design</span>
+                
+                <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+            </div>
+            
+            <div class="background-decoration absolute inset-0">
+                <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-500/30 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-secondary-500/30 rounded-full blur-3xl"></div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 px-4 section-visible">
+            <div class="glass-card max-w-4xl mx-auto p-8 md:p-12">
+                <div class="section-content">
+                    <div class="relative inline-block mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold gradient-text" data-vi="Giới Thiệu" data-en="About Me">
+                            About Me
+                        </h2>
+                    </div>
+                    <div class="space-y-8">
+                        <p class="text-lg text-content" data-vi="Tôi là một nhà phát triển đam mê về việc tạo ra những trải nghiệm web đẹp và chức năng." data-en="Creative developer passionate about building beautiful and functional web experiences.">
+                            Creative developer passionate about building beautiful and functional web experiences.
+                        </p>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-4 text-content" data-vi="Kỹ Năng" data-en="Skills">Skills</h3>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="tag">HTML5/CSS3</span>
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">UI/UX Design</span>
+                                <span class="tag">Responsive Design</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="contact-section">
-            <div class="glass-card contact-form">
-                <h2 data-vi="Liên Hệ" data-en="Get in Touch">Liên Hệ</h2>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <input type="text" id="name" required placeholder="Họ và tên" data-en-placeholder="Your Name">
+        <section id="contact" class="py-20 px-4 section-visible">
+            <div class="glass-card max-w-2xl mx-auto p-8 md:p-12">
+                <div class="section-content">
+                    <div class="relative inline-block mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold text-center gradient-text" data-vi="Liên Hệ" data-en="Get in Touch">
+                            Get in Touch
+                        </h2>
                     </div>
-                    <div class="form-group">
-                        <input type="email" id="email" required placeholder="Email" data-en-placeholder="Your Email">
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" required placeholder="Nội dung tin nhắn" data-en-placeholder="Your Message"></textarea>
-                    </div>
-                    <button type="submit" class="btn primary">
-                        <i class="fas fa-paper-plane"></i>
-                        <span data-vi="Gửi Tin Nhắn" data-en="Send Message">Gửi Tin Nhắn</span>
-                    </button>
-                </form>
+                    <form id="contactForm" class="space-y-6">
+                        <div class="relative group">
+                            <input type="text" id="name" required
+                                class="form-input"
+                                placeholder="Họ và tên" data-en-placeholder="Your Name">
+                        </div>
+                        <div class="relative group">
+                            <input type="email" id="email" required
+                                class="form-input"
+                                placeholder="Email" data-en-placeholder="Your Email">
+                        </div>
+                        <div class="relative group">
+                            <textarea id="message" required rows="5"
+                                class="form-input"
+                                placeholder="Nội dung tin nhắn" data-en-placeholder="Your Message"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full group">
+                            <span class="relative z-10 flex items-center justify-center">
+                                <i class="fas fa-paper-plane mr-2 transform group-hover:rotate-12 transition-transform duration-200"></i>
+                                <span data-vi="Gửi Tin Nhắn" data-en="Send Message">Send Message</span>
+                            </span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="glass-footer">
-        <div class="social-links">
-            <a href="#" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+    <footer class="glass-card mt-12 mx-4 mb-4 p-8 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+            <a href="#" class="text-2xl text-gray-600 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-colors duration-200 hover:scale-110 transform">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="text-2xl text-gray-600 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-colors duration-200 hover:scale-110 transform">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="#" class="text-2xl text-gray-600 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-colors duration-200 hover:scale-110 transform">
+                <i class="fab fa-twitter"></i>
+            </a>
         </div>
-        <p>&copy; 2024 Portfolio. All rights reserved.</p>
+        <p class="text-muted">&copy; 2024 Tèo Sushi. All rights reserved.</p>
     </footer>
 
+    <!-- Load scripts -->
+    <script src="assets/js/modals.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/projects.js"></script>
+    <script src="assets/js/admin-redirect.js"></script>
 </body>
 </html> 

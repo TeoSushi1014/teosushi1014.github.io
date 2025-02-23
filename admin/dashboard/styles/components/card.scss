@@ -1,0 +1,122 @@
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    transition: $transition-base;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+    }
+    
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-md;
+        
+        .card-title {
+            font-size: $font-size-xl;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+        
+        .card-category {
+            font-size: $font-size-sm;
+            color: var(--text-secondary);
+            padding: $spacing-xs $spacing-sm;
+            background: var(--bg-secondary);
+            border-radius: $border-radius-full;
+        }
+    }
+    
+    .card-body {
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: $spacing-md;
+            line-height: $line-height-base;
+        }
+        
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: $spacing-xs;
+            margin-bottom: $spacing-md;
+            
+            .tag {
+                font-size: $font-size-sm;
+                color: var(--text-secondary);
+                background: var(--bg-tertiary);
+                padding: $spacing-xs $spacing-sm;
+                border-radius: $border-radius-full;
+                
+                &:hover {
+                    background: var(--bg-secondary);
+                }
+            }
+        }
+    }
+    
+    .card-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: $spacing-sm;
+        margin-top: $spacing-lg;
+        
+        button {
+            padding: $spacing-sm $spacing-md;
+            border-radius: $border-radius-base;
+            font-size: $font-size-sm;
+            font-weight: 500;
+            transition: $transition-base;
+            
+            &.edit-btn {
+                background: var(--primary-color);
+                color: white;
+                
+                &:hover {
+                    background: var(--primary-dark);
+                }
+            }
+            
+            &.delete-btn {
+                background: transparent;
+                color: var(--error-color);
+                border: 1px solid currentColor;
+                
+                &:hover {
+                    background: var(--error-color);
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+// Dark mode
+@media (prefers-color-scheme: dark) {
+    .glass-card {
+        background: rgba(0, 0, 0, 0.2);
+        
+        .card-header {
+            .card-category {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+        
+        .card-body {
+            .card-tags {
+                .tag {
+                    background: rgba(255, 255, 255, 0.1);
+                    
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.15);
+                    }
+                }
+            }
+        }
+    }
+} 

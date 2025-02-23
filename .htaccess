@@ -1,0 +1,39 @@
+RewriteEngine On
+
+# Set default index files
+DirectoryIndex index.html index.php index.htm
+
+# Remove trailing slashes and redirect
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [L,R=301]
+
+# Admin routes must be handled first
+RewriteRule ^admin/login/?$ admin/login.html [NC,L]
+RewriteRule ^admin/dashboard/?$ admin/dashboard.html [NC,L]
+
+# Then handle all other .html files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [NC,L]
+
+# Prevent access to .html files directly
+RewriteCond %{THE_REQUEST} \.html
+RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com;"
+
+# Prevent directory listing
+Options -Indexes
+Options -MultiViews
+
+# Protect .htaccess file
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files> 

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tèo Sushi | Creative Developer</title>
+    <script>
+        // Check and apply theme before page loads
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <link rel="icon" type="image/x-icon" href="../../assets/ico/Avt.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        },
+                        secondary: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                        'gradient-xy': 'gradient-xy 3s ease infinite',
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+                        'slide-in-down': 'slideInDown 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                        'slide-out-up': 'slideOutUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                    },
+                    keyframes: {
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+                        },
+                        slideInDown: {
+                            '0%': {
+                                transform: 'translateY(-100%)',
+                                opacity: '0'
+                            },
+                            '100%': {
+                                transform: 'translateY(0)',
+                                opacity: '1'
+                            }
+                        },
+                        slideOutUp: {
+                            '0%': {
+                                transform: 'translateY(0)',
+                                opacity: '1'
+                            },
+                            '100%': {
+                                transform: 'translateY(-100%)',
+                                opacity: '0'
+                            }
+                        },
+                        bounceSoft: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.8 },
+                        },
+                        slideInRight: {
+                            '0%': { transform: 'translateX(100%)', opacity: 0 },
+                            '100%': { transform: 'translateX(0)', opacity: 1 },
+                        },
+                        slideInLeft: {
+                            '0%': { transform: 'translateX(-100%)', opacity: 0 },
+                            '100%': { transform: 'translateX(0)', opacity: 1 },
+                        },
+                        'gradient-xy': {
+                            '0%, 100%': {
+                                'background-size': '400% 400%',
+                                'background-position': 'left center',
+                                'transform': 'scale(1)'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center',
+                                'transform': 'scale(1.02)'
+                            }
+                        },
+                        'glow-pulse': {
+                            '0%, 100%': {
+                                'box-shadow': '0 0 20px rgba(14,165,233,0.2), 0 0 40px rgba(236,72,153,0.1)',
+                                'transform': 'scale(1)'
+                            },
+                            '50%': {
+                                'box-shadow': '0 0 30px rgba(14,165,233,0.3), 0 0 60px rgba(236,72,153,0.2)',
+                                'transform': 'scale(1.02)'
+                            }
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer components {
+            .glass-card {
+                @apply relative overflow-visible bg-white/10 dark:bg-gray-900/10 backdrop-blur-lg 
+                       rounded-2xl border border-white/20 dark:border-gray-700/20 
+                       shadow-xl shadow-primary-500/5
+                       p-8;
+            }
+            .form-input {
+                @apply w-full px-4 py-3 rounded-xl 
+                       bg-white/5 dark:bg-gray-800/5 
+                       backdrop-blur-sm border-2 border-primary-500/20 
+                       focus:border-primary-500/50 focus:ring-0 focus:outline-none 
+                       transition-all duration-300
+                       text-gray-800 dark:text-gray-100
+                       placeholder-gray-500 dark:placeholder-gray-400;
+            }
+            .btn-primary {
+                @apply relative overflow-hidden px-6 py-3 
+                       text-white rounded-xl
+                       bg-gradient-to-r from-[#00B0FF] to-[#EC4899]
+                       bg-[length:200%_200%]
+                       animate-gradient;
+            }
+            .gradient-text {
+                @apply font-bold bg-gradient-to-r from-[#00B0FF] to-[#EC4899]
+                       bg-clip-text text-transparent relative;
+            }
+            .nav-link {
+                @apply relative px-4 py-2 text-gray-700 dark:text-gray-300 transition-colors duration-300
+                       hover:text-primary-500 dark:hover:text-primary-400;
+            }
+            .nav-link::after {
+                @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5
+                       bg-gradient-to-r from-primary-500 to-secondary-500
+                       transition-all duration-300 ease-out;
+            }
+            .nav-link:hover::after {
+                @apply w-full;
+            }
+            /* Logo style with glow effect */
+            .logo {
+                @apply text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 
+                       bg-clip-text text-transparent hover:scale-105 transition-all duration-200
+                       relative;
+                text-shadow: 0 0 20px rgba(14, 165, 233, 0.3), 0 0 40px rgba(236, 72, 153, 0.2);
+            }
+            @keyframes gradientMove {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+            }
+            .animate-gradient {
+                animation: gradientMove 5s ease-in-out infinite;
+                background-size: 200% 200%;
+            }
+            .avatar-container {
+                @apply relative w-10 h-10 rounded-full overflow-hidden transition-all duration-700 ease-in-out focus:outline-none;
+            }
+
+            .avatar-gradient {
+                @apply absolute inset-0 bg-gradient-to-r from-[#00B0FF] via-[#EC4899] to-[#00B0FF] animate-gradient-xy;
+            }
+
+            .avatar-glow {
+                @apply absolute inset-0 rounded-full;
+                animation: glow-pulse 4s ease-in-out infinite;
+            }
+
+            .avatar-content {
+                @apply absolute inset-[2px] rounded-full overflow-hidden bg-white dark:bg-gray-900 transition-all duration-700 ease-in-out;
+            }
+
+            .avatar-image {
+                @apply w-full h-full object-cover transform transition-transform duration-700 ease-in-out hover:scale-110;
+            }
+
+            .notification-container {
+                @apply fixed top-0 right-0 left-0 z-[9999] pointer-events-none;
+            }
+
+            .notification {
+                @apply max-w-md mx-auto my-4 px-6 py-4 rounded-xl shadow-lg 
+                       backdrop-blur-lg border border-white/20 
+                       flex items-center gap-3 pointer-events-auto
+                       transform transition-all duration-500;
+                animation: slideInDown 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .notification.success {
+                @apply bg-green-500/90 text-white;
+            }
+
+            .notification.error {
+                @apply bg-red-500/90 text-white;
+            }
+
+            .notification.info {
+                @apply bg-blue-500/90 text-white;
+            }
+
+            .notification.warning {
+                @apply bg-yellow-500/90 text-white;
+            }
+
+            .notification-icon {
+                @apply w-6 h-6 flex-shrink-0;
+            }
+
+            .notification-content {
+                @apply flex-1;
+            }
+
+            .notification-title {
+                @apply font-medium mb-1;
+            }
+
+            .notification-message {
+                @apply text-sm opacity-90;
+            }
+
+            .notification-progress {
+                @apply absolute bottom-0 left-0 h-1 bg-white/30 
+                       transform origin-left transition-transform;
+            }
+
+            .notification.slide-out {
+                animation: slideOutUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen transition-all duration-500 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)]">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 py-4">
+        <nav class="mx-auto max-w-7xl">
+            <div class="flex items-center justify-between px-6 py-3 bg-white/5 dark:bg-gray-900/5 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-[0_0_0_1.5px_rgba(0,0,0,0.08)]">
+                <a href="../../" class="logo">
+                    Tèo Sushi
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Toggle -->
+                    <button id="langToggle" class="relative group p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)]">
+                        <div class="relative w-6 h-6 transform transition-transform duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] group-hover:scale-110">
+                            <svg class="w-6 h-6 text-primary-500 dark:text-primary-400 transform transition-all duration-500 ease-[cubic-bezier(0.4, 0, 0.2, 1)] opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                            <div class="lang-indicator absolute -bottom-2 -right-1 flex items-center justify-center w-[18px] h-[18px] text-[8px] font-bold rounded-[6px] bg-gradient-to-r from-[#00B0FF] to-[#EC4899] text-white transform transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] group-hover:scale-110 z-10 shadow-sm">
+                                <span class="lang-text transform transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] translate-y-[0.5px]">EN</span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="relative p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-primary-500 dark:hidden transform hover:rotate-180 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="w-6 h-6 text-primary-400 hidden dark:block transform hover:rotate-180 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                        </svg>
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <button id="profileDropdownBtn" class="avatar-container group">
+                            <div class="avatar-gradient"></div>
+                            <div class="avatar-glow"></div>
+                            <div class="avatar-content">
+                                <img src="../../assets/ico/Avt.ico" alt="Profile" class="avatar-image">
+                            </div>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl overflow-hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border border-white/20 dark:border-gray-700/20 z-50">
+                            <div class="p-4">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Hoàng Việt Quang</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">teosushi1014@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden relative p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-primary-500 transform transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16m-7 6h7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-2">
+                <div class="mx-4 p-4 animate-slide-down bg-white/5 dark:bg-gray-900/5 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/20">
+                    <div class="flex flex-col space-y-4">
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-24 pb-12">
+        <!-- Login Section -->
+        <section id="login" class="min-h-[60vh] flex items-center justify-center px-4 mb-12">
+            <div class="glass-card max-w-md w-full mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold gradient-text mb-2" data-vi="Đăng Nhập" data-en="Login">Đăng Nhập</h2>
+                    <p class="text-gray-600 dark:text-gray-400" data-vi="Đăng nhập để truy cập trang quản trị" data-en="Login to access admin dashboard">
+                        Đăng nhập để truy cập trang quản trị
+                    </p>
+                </div>
+                
+                <form id="loginForm" class="space-y-6" onsubmit="handleLogin(event)">
+                    <div class="space-y-2">
+                        <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Username
+                        </label>
+                        <input type="text" id="username" name="username" required
+                            class="form-input"
+                            placeholder="Enter your username">
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Password
+                        </label>
+                        <input type="password" id="password" name="password" required
+                            class="form-input"
+                            placeholder="Enter your password">
+                    </div>
+
+                    <div id="errorMessage" class="hidden text-red-500 text-sm text-center"></div>
+                    
+                    <button type="submit" class="btn-primary w-full flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                        </svg>
+                        <span data-vi="Đăng Nhập" data-en="Login">Đăng Nhập</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="glass-card mt-12 mx-4 mb-4 p-8 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-2xl text-gray-600 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-colors duration-200 hover:scale-110 transform">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="text-2xl text-gray-600 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-colors duration-200 hover:scale-110 transform">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="text-2xl text-gray-600 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-colors duration-200 hover:scale-110 transform">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <p class="text-muted">&copy; 2024 Tèo Sushi. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/projects.js"></script>
+    <script>
+        const CORRECT_USERNAME = 'teosushi-admin';
+        const CORRECT_PASSWORD = '.Quang1014...';
+        
+        // Function to show error message
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+            console.error(message);
+        }
+
+        // Function to hide error message
+        function hideError() {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.classList.add('hidden');
+        }
+
+        // Check if user is already logged in
+        console.log('=== Debug: Checking Login State ===');
+        console.log('adminLoggedIn value:', sessionStorage.getItem('adminLoggedIn'));
+        console.log('auth_token exists:', !!localStorage.getItem('auth_token'));
+        
+        if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+            console.log('Debug: User is logged in, redirecting to dashboard...');
+            window.location.href = '../dashboard/';
+        } else {
+            console.log('Debug: User is not logged in, staying on login page');
+        }
+
+        async function handleLogin(event) {
+            console.log('=== Debug: Login Attempt Started ===');
+            event.preventDefault();
+            hideError();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            console.log('1. Login attempt for username:', username);
+
+            // Check credentials
+            if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
+                console.log('2. Login successful, setting up session...');
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('auth_token', 'dummy_token');
+                console.log('3. Session data set, redirecting...');
+                window.location.href = '../dashboard/';
+            } else {
+                console.log('2. Invalid credentials');
+                showError('Invalid username or password');
+                // Add shake animation
+                const loginForm = document.getElementById('loginForm');
+                loginForm.classList.add('animate-shake');
+                // Remove animation class after it completes
+                setTimeout(() => {
+                    loginForm.classList.remove('animate-shake');
+                }, 500);
+            }
+        }
+
+        // Profile Dropdown Toggle
+        const profileDropdownBtn = document.getElementById('profileDropdownBtn');
+        const profileDropdown = document.getElementById('profileDropdown');
+        let isDropdownOpen = false;
+
+        profileDropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isDropdownOpen = !isDropdownOpen;
+            if (isDropdownOpen) {
+                profileDropdown.classList.remove('hidden');
+                profileDropdown.classList.add('animate-fade-in');
+            } else {
+                profileDropdown.classList.add('hidden');
+                profileDropdown.classList.remove('animate-fade-in');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (isDropdownOpen && !profileDropdown.contains(e.target) && e.target !== profileDropdownBtn) {
+                isDropdownOpen = false;
+                profileDropdown.classList.add('hidden');
+                profileDropdown.classList.remove('animate-fade-in');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isDropdownOpen) {
+                isDropdownOpen = false;
+                profileDropdown.classList.add('hidden');
+                profileDropdown.classList.remove('animate-fade-in');
+            }
+        });
+
+        function showNotification(options = {}) {
+            const {
+                type = 'info',
+                title = '',
+                message = '',
+                duration = 3000,
+                progress = true
+            } = options;
+
+            // Create container if it doesn't exist
+            let container = document.querySelector('.notification-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'notification-container';
+                document.body.appendChild(container);
+            }
+
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            // Get icon based on type
+            const icons = {
+                success: '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>',
+                error: '<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>',
+                warning: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>',
+                info: '<path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'
+            };
+
+            notification.innerHTML = `
+                <svg class="notification-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    ${icons[type]}
+                </svg>
+                <div class="notification-content">
+                    ${title ? `<div class="notification-title">${title}</div>` : ''}
+                    <div class="notification-message">${message}</div>
+                </div>
+                ${progress ? '<div class="notification-progress w-full"></div>' : ''}
+            `;
+
+            // Add to container
+            container.appendChild(notification);
+
+            // Animate progress bar
+            if (progress) {
+                const progressBar = notification.querySelector('.notification-progress');
+                progressBar.style.transition = `transform ${duration}ms linear`;
+                requestAnimationFrame(() => {
+                    progressBar.style.transform = 'scaleX(0)';
+                });
+            }
+
+            // Remove notification after duration
+            setTimeout(() => {
+                notification.classList.add('slide-out');
+                notification.addEventListener('animationend', () => {
+                    notification.remove();
+                    if (container.children.length === 0) {
+                        container.remove();
+                    }
+                });
+            }, duration);
+
+            return notification;
+        }
+
+        function confirmLogout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            
+            // Show a sequence of notifications
+            showNotification({
+                type: 'info',
+                title: 'Đang đăng xuất',
+                message: 'Vui lòng đợi trong giây lát...',
+                duration: 1000
+            });
+
+            setTimeout(() => {
+                showNotification({
+                    type: 'success',
+                    title: 'Đăng xuất thành công!',
+                    message: 'Bạn sẽ được chuyển hướng trong giây lát...',
+                    duration: 2000
+                });
+            }, 1000);
+
+            // Add a small delay before redirecting
+            setTimeout(() => {
+                window.location.href = '../login/';
+            }, 3000);
+        }
+
+        function handleLogout() {
+            const confirmDialog = document.createElement('div');
+            confirmDialog.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[9999]';
+            confirmDialog.innerHTML = `
+                <div class="glass-card max-w-sm w-full mx-4 text-center transform transition-all duration-300 scale-95 opacity-0">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-primary-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    <h3 class="text-xl font-bold mb-4">Đăng Xuất</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Bạn có chắc chắn muốn đăng xuất?</p>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="closeLogoutDialog(this)" 
+                                class="px-6 py-2 rounded-xl border-2 border-primary-500/30 hover:bg-primary-500/10 transition-all duration-300 hover:scale-105">
+                            Hủy
+                        </button>
+                        <button onclick="confirmLogout()" 
+                                class="px-6 py-2 rounded-xl bg-gradient-to-r from-[#00B0FF] to-[#EC4899] text-white hover:opacity-90 transition-all duration-300 hover:scale-105">
+                            Đăng Xuất
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(confirmDialog);
+
+            // Animate dialog in
+            requestAnimationFrame(() => {
+                const dialog = confirmDialog.querySelector('.glass-card');
+                dialog.style.transform = 'scale(1)';
+                dialog.style.opacity = '1';
+            });
+
+            // Close on click outside
+            confirmDialog.addEventListener('click', (e) => {
+                if (e.target === confirmDialog) {
+                    closeLogoutDialog(confirmDialog);
+                }
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && document.body.contains(confirmDialog)) {
+                    closeLogoutDialog(confirmDialog);
+                }
+            });
+        }
+
+        function closeLogoutDialog(element) {
+            const dialog = element.closest('.fixed');
+            const card = dialog.querySelector('.glass-card');
+            
+            // Animate out
+            card.style.transform = 'scale(0.95)';
+            card.style.opacity = '0';
+            
+            setTimeout(() => {
+                dialog.remove();
+            }, 300);
+        }
+    </script>
+</body>
+</html> 

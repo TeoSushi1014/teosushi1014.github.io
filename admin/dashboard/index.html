@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tèo Sushi | Creative Developer</title>
+    <script>
+        // Check and apply theme before page loads
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <link rel="icon" type="image/x-icon" href="../../assets/ico/Avt.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        },
+                        secondary: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                        },
+                        success: {
+                            500: '#22c55e',
+                            600: '#16a34a',
+                        },
+                        warning: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        error: {
+                            500: '#ef4444',
+                            600: '#dc2626',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                        'gradient-xy': 'gradient-xy 3s ease infinite',
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+                        },
+                        slideInDown: {
+                            '0%': {
+                                transform: 'translateY(-100%)',
+                                opacity: '0'
+                            },
+                            '100%': {
+                                transform: 'translateY(0)',
+                                opacity: '1'
+                            }
+                        },
+                        slideOutUp: {
+                            '0%': {
+                                transform: 'translateY(0)',
+                                opacity: '1'
+                            },
+                            '100%': {
+                                transform: 'translateY(-100%)',
+                                opacity: '0'
+                            }
+                        },
+                        bounceSoft: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.8 },
+                        },
+                        slideInRight: {
+                            '0%': { transform: 'translateX(100%)', opacity: 0 },
+                            '100%': { transform: 'translateX(0)', opacity: 1 },
+                        },
+                        slideInLeft: {
+                            '0%': { transform: 'translateX(-100%)', opacity: 0 },
+                            '100%': { transform: 'translateX(0)', opacity: 1 },
+                        },
+                        'gradient-xy': {
+                            '0%, 100%': {
+                                'background-size': '400% 400%',
+                                'background-position': 'left center',
+                                'transform': 'scale(1)'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center',
+                                'transform': 'scale(1.02)'
+                            }
+                        },
+                        'glow-pulse': {
+                            '0%, 100%': {
+                                'box-shadow': '0 0 20px rgba(14,165,233,0.2), 0 0 40px rgba(236,72,153,0.1)',
+                                'transform': 'scale(1)'
+                            },
+                            '50%': {
+                                'box-shadow': '0 0 30px rgba(14,165,233,0.3), 0 0 60px rgba(236,72,153,0.2)',
+                                'transform': 'scale(1.02)'
+                            }
+                        },
+                        dropdownIn: {
+                            from: {
+                                opacity: 0,
+                                transform: 'scale(0.95) translateY(-10px)'
+                            },
+                            to: {
+                                opacity: 1,
+                                transform: 'scale(1) translateY(0)'
+                            }
+                        },
+                        dropdownOut: {
+                            from: {
+                                opacity: 1,
+                                transform: 'scale(1) translateY(0)'
+                            },
+                            to: {
+                                opacity: 0,
+                                transform: 'scale(0.95) translateY(-10px)'
+                            }
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer components {
+            /* Z-index Management */
+            :root {
+                --z-header: 50;
+                --z-dropdown: 60;
+                --z-modal: 70;
+                --z-notification: 80;
+            }
+
+            /* Profile Dropdown Container */
+            .profile-dropdown-container {
+                @apply relative;
+            }
+
+            /* Profile Dropdown */
+            #profileDropdown {
+                @apply fixed right-4 top-[calc(var(--header-height)+1rem)] md:absolute md:right-0 md:top-full 
+                       mt-2 w-48 rounded-xl overflow-hidden
+                       bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg
+                       shadow-lg border border-white/20 dark:border-gray-700/20
+                       transform-gpu transition-all duration-200 ease-out
+                       z-[9999];
+            }
+
+            #profileDropdown.hidden {
+                @apply opacity-0 -translate-y-2;
+                display: none;
+            }
+
+            #profileDropdown.animate-fade-in {
+                @apply opacity-100 translate-y-0;
+                display: block;
+            }
+
+            /* Profile Dropdown Items */
+            .profile-dropdown-item {
+                @apply flex items-center gap-2 w-full px-4 py-2.5 text-sm
+                       rounded-lg transition-colors duration-200
+                       hover:bg-primary-500/10 dark:hover:bg-primary-400/10;
+            }
+
+            .profile-dropdown-item.danger {
+                @apply text-red-600 dark:text-red-400
+                       hover:bg-red-50/10 dark:hover:bg-red-900/20;
+            }
+
+            /* Profile Dropdown Header */
+            .profile-dropdown-header {
+                @apply p-4 border-b border-gray-100/10 dark:border-gray-700/10
+                       backdrop-blur-lg;
+            }
+
+            /* Modal Z-index */
+            #projectModal,
+            #previewModal {
+                z-index: var(--z-modal);
+            }
+
+            /* Notification Z-index */
+            .notification-container {
+                z-index: var(--z-notification);
+            }
+
+            .glass-card {
+                @apply relative overflow-visible bg-white/10 dark:bg-gray-900/10 backdrop-blur-lg 
+                       rounded-2xl border border-white/20 dark:border-gray-700/20 
+                       shadow-xl shadow-primary-500/5
+                       p-8;
+            }
+            .form-input {
+                @apply w-full px-4 py-3 rounded-xl 
+                       bg-white/5 dark:bg-gray-800/5 
+                       backdrop-blur-sm border-2 border-primary-500/20 
+                       focus:border-primary-500/50 focus:ring-0 focus:outline-none 
+                       transition-all duration-300
+                       text-gray-800 dark:text-gray-100
+                       placeholder-gray-500 dark:placeholder-gray-400;
+            }
+            .btn-primary {
+                @apply relative overflow-hidden px-6 py-3 
+                       text-white rounded-xl
+                       bg-gradient-to-r from-[#00B0FF] to-[#EC4899]
+                       bg-[length:200%_200%]
+                       animate-gradient;
+            }
+            .btn-secondary {
+                @apply relative overflow-hidden px-6 py-3
+                       text-gray-800 dark:text-white rounded-xl
+                       border-2 border-primary-500/30
+                       hover:bg-primary-500/10
+                       active:scale-95
+                       transition-all duration-200;
+            }
+            .card-hover {
+                @apply transform transition-all duration-300
+                       hover:-translate-y-1 hover:shadow-lg
+                       hover:shadow-primary-500/20
+                       active:translate-y-0 active:shadow-md;
+            }
+            .input-group {
+                @apply flex items-center space-x-2;
+            }
+            .badge {
+                @apply px-2 py-1 text-sm font-medium rounded-lg;
+            }
+            .badge-success {
+                @apply bg-success-500/10 text-success-500;
+            }
+            .badge-warning {
+                @apply bg-warning-500/10 text-warning-500;
+            }
+            .badge-error {
+                @apply bg-error-500/10 text-error-500;
+            }
+            .tooltip {
+                @apply relative group;
+            }
+            .tooltip-text {
+                @apply absolute bottom-full left-1/2 -translate-x-1/2 px-3 py-1
+                       bg-gray-900 text-white text-sm rounded-lg
+                       opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                       transition-all duration-200 mb-2
+                       whitespace-nowrap;
+            }
+            .tooltip-text::after {
+                content: '';
+                @apply absolute top-full left-1/2 -translate-x-1/2
+                       border-4 border-transparent border-t-gray-900;
+            }
+            .breadcrumb {
+                @apply flex items-center space-x-2 text-sm text-gray-500;
+            }
+            .breadcrumb-item {
+                @apply hover:text-primary-500 transition-colors duration-200;
+            }
+            .breadcrumb-separator {
+                @apply text-gray-400;
+            }
+            .gradient-text {
+                @apply font-bold bg-gradient-to-r from-[#00B0FF] to-[#EC4899]
+                       bg-clip-text text-transparent relative;
+            }
+            .nav-link {
+                @apply relative px-4 py-2 text-gray-700 dark:text-gray-300 transition-colors duration-300
+                       hover:text-primary-500 dark:hover:text-primary-400;
+            }
+            .nav-link::after {
+                @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5
+                       bg-gradient-to-r from-primary-500 to-secondary-500
+                       transition-all duration-300 ease-out;
+            }
+            .nav-link:hover::after {
+                @apply w-full;
+            }
+            .logo {
+                @apply text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 
+                       bg-clip-text text-transparent hover:scale-105 transition-all duration-200
+                       relative;
+                text-shadow: 0 0 20px rgba(14, 165, 233, 0.3), 0 0 40px rgba(236, 72, 153, 0.2);
+            }
+            @keyframes gradientMove {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+            }
+            .animate-gradient {
+                animation: gradientMove 5s ease-in-out infinite;
+                background-size: 200% 200%;
+            }
+            .dropdown {
+                @apply absolute right-0 mt-2 w-48 rounded-xl overflow-hidden
+                       bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg
+                       shadow-lg border border-white/20 dark:border-gray-700/20
+                       transform transition-all duration-200 origin-top-right
+                       opacity-0 scale-95;
+            }
+            .dropdown.active {
+                @apply opacity-100 scale-100;
+            }
+            .dropdown-item {
+                @apply flex items-center space-x-2 px-4 py-2 text-sm
+                       text-gray-800 dark:text-gray-100
+                       hover:bg-primary-500/10 dark:hover:bg-primary-400/10
+                       transition-all duration-300;
+            }
+            .dropdown-header {
+                @apply p-4 border-b border-white/10 dark:border-gray-700/10
+                       backdrop-blur-lg
+                       text-gray-800 dark:text-gray-100;
+            }
+            .dropdown-divider {
+                @apply border-t border-white/10 dark:border-gray-700/10 my-1;
+            }
+            /* Glass effect for select dropdowns */
+            select:focus option {
+                @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg;
+            }
+            /* Hover effect for options */
+            select option:hover {
+                @apply bg-primary-500/10 dark:bg-primary-400/10;
+            }
+            /* Custom scrollbar for dropdowns */
+            select {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(14, 165, 233, 0.5) transparent;
+            }
+            select::-webkit-scrollbar {
+                @apply w-2;
+            }
+            select::-webkit-scrollbar-track {
+                @apply bg-transparent;
+            }
+            select::-webkit-scrollbar-thumb {
+                @apply bg-primary-500/50 dark:bg-primary-400/50 
+                       rounded-full
+                       hover:bg-primary-500 dark:hover:bg-primary-400
+                       transition-colors duration-300;
+            }
+            /* Dropdown base styles */
+            .select-wrapper {
+                @apply relative w-full;
+            }
+
+            select.form-input {
+                @apply w-full px-4 py-3 rounded-xl
+                       appearance-none cursor-pointer
+                       bg-white/5 dark:bg-gray-800/5
+                       backdrop-blur-lg
+                       border-2 border-white/20 dark:border-gray-700/20
+                       text-gray-800 dark:text-gray-100
+                       font-medium
+                       transition-all duration-300;
+            }
+
+            /* Glass morphism effect */
+            .select-wrapper::before {
+                @apply content-[''] absolute inset-0
+                       bg-gradient-to-r from-primary-500/5 to-secondary-500/5
+                       rounded-xl opacity-0 transition-opacity duration-300;
+            }
+
+            .select-wrapper:hover::before {
+                @apply opacity-100;
+            }
+
+            /* Hover and focus states */
+            select.form-input:hover {
+                @apply border-primary-500/30 dark:border-primary-400/30
+                       shadow-lg shadow-primary-500/10
+                       transform scale-[1.01];
+            }
+
+            select.form-input:focus {
+                @apply outline-none
+                       border-primary-500/50 dark:border-primary-400/50
+                       ring-2 ring-primary-500/20 dark:ring-primary-400/20
+                       shadow-xl shadow-primary-500/20
+                       transform scale-[1.02];
+            }
+
+            /* Dropdown arrow with animation */
+            .select-arrow {
+                @apply absolute right-4 top-1/2 -translate-y-1/2
+                       w-5 h-5 pointer-events-none
+                       text-primary-500 dark:text-primary-400
+                       transition-all duration-500;
+            }
+
+            .select-wrapper:hover .select-arrow {
+                @apply transform -translate-y-[60%] rotate-180 scale-110;
+            }
+
+            /* Enhanced dropdown options */
+            select option {
+                @apply px-6 py-3
+                       bg-white/90 dark:bg-gray-800/90
+                       backdrop-blur-lg
+                       text-gray-800 dark:text-gray-100
+                       border-b border-gray-100/10 dark:border-gray-700/10
+                       cursor-pointer
+                       transition-colors duration-200;
+            }
+
+            select option:hover {
+                @apply bg-gradient-to-r from-primary-500/20 to-secondary-500/20;
+            }
+
+            /* Improved optgroup styling */
+            select optgroup {
+                @apply font-bold px-6 py-3
+                       bg-gradient-to-r from-white/95 to-white/90
+                       dark:from-gray-800/95 dark:to-gray-800/90
+                       text-gray-900 dark:text-gray-100
+                       border-b-2 border-primary-500/20 dark:border-primary-400/20
+                       backdrop-blur-lg;
+            }
+
+            /* Custom scrollbar with smooth transitions */
+            select {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(14, 165, 233, 0.3) transparent;
+            }
+
+            select::-webkit-scrollbar {
+                @apply w-2;
+            }
+
+            select::-webkit-scrollbar-track {
+                @apply bg-transparent rounded-full;
+            }
+
+            select::-webkit-scrollbar-thumb {
+                @apply bg-gradient-to-b from-primary-500/40 to-secondary-500/40
+                       rounded-full
+                       transition-all duration-300;
+            }
+
+            select::-webkit-scrollbar-thumb:hover {
+                @apply from-primary-500/60 to-secondary-500/60;
+            }
+
+            /* Smooth expansion animation */
+            @keyframes selectExpand {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.95) translateY(-10px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+
+            select[size] {
+                animation: selectExpand 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            /* Glass card integration with enhanced depth */
+            .glass-select {
+                @apply relative overflow-visible;
+            }
+
+            .glass-select::before {
+                @apply content-[''] absolute -inset-[1px]
+                       bg-gradient-to-r from-primary-500/10 to-secondary-500/10
+                       rounded-xl blur-sm -z-10;
+            }
+
+            /* Enhanced focus ring with animation */
+            select.form-input:focus-visible {
+                @apply ring-4 ring-offset-2 ring-primary-500/30
+                       dark:ring-primary-400/30 dark:ring-offset-gray-900
+                       transform scale-[1.02]
+                       transition-all duration-300;
+            }
+
+            /* Selected option with visual feedback */
+            select option:checked {
+                @apply bg-gradient-to-r from-primary-500/30 to-secondary-500/30
+                       text-primary-600 dark:text-primary-400
+                       font-semibold;
+            }
+
+            /* Mobile optimization */
+            @media (max-width: 768px) {
+                select.form-input {
+                    @apply text-base py-2.5;
+                }
+                
+                select option {
+                    @apply px-4 py-2.5;
+                }
+                
+                select optgroup {
+                    @apply px-4 py-2.5;
+                }
+                
+                .select-arrow {
+                    @apply w-4 h-4;
+                }
+            }
+
+            /* Loading state with pulse animation */
+            select.loading {
+                @apply animate-pulse bg-gradient-to-r from-primary-500/10 to-secondary-500/10;
+            }
+
+            /* Error state with attention-grabbing effect */
+            select.error {
+                @apply border-red-500/50 dark:border-red-400/50
+                       ring-4 ring-red-500/20 dark:ring-red-400/20
+                       animate-shake;
+            }
+
+            /* Success state with positive feedback */
+            select.success {
+                @apply border-green-500/50 dark:border-green-400/50
+                       ring-4 ring-green-500/20 dark:ring-green-400/20;
+            }
+
+            /* Disabled state with clear visual indication */
+            select:disabled {
+                @apply opacity-50 cursor-not-allowed
+                       bg-gray-100/50 dark:bg-gray-800/50;
+            }
+
+            /* Icon integration for better visual hierarchy */
+            .select-wrapper.with-icon {
+                @apply relative;
+            }
+
+            .select-wrapper.with-icon::after {
+                @apply content-[''] absolute left-4 top-1/2 -translate-y-1/2
+                       w-5 h-5 pointer-events-none
+                       bg-contain bg-center bg-no-repeat;
+            }
+
+            .select-wrapper.with-icon select {
+                @apply pl-12;
+            }
+
+            /* Avatar Profile Styles */
+            .avatar-container {
+                @apply relative w-10 h-10 rounded-full overflow-hidden cursor-pointer
+                       transition-transform duration-300 ease-out focus:outline-none
+                       hover:scale-105 active:scale-95;
+                z-index: 9999;
+            }
+
+            .avatar-gradient {
+                @apply absolute inset-0 bg-gradient-to-r from-[#00B0FF] via-[#EC4899] to-[#00B0FF]
+                       animate-gradient-xy;
+            }
+
+            .avatar-glow {
+                @apply absolute inset-0 rounded-full;
+                animation: glow-pulse 4s ease-in-out infinite;
+            }
+
+            .avatar-content {
+                @apply absolute inset-[2px] rounded-full overflow-hidden
+                       bg-white dark:bg-gray-900;
+            }
+
+            .avatar-image {
+                @apply w-full h-full object-cover
+                       transition-transform duration-300
+                       hover:scale-110;
+            }
+
+            /* Profile Dropdown Styles */
+            .profile-dropdown-header {
+                @apply p-4 border-b border-gray-100/10 dark:border-gray-700/10
+                       backdrop-blur-lg;
+            }
+
+            .profile-dropdown-name {
+                @apply text-sm font-medium text-gray-900 dark:text-white;
+            }
+
+            .profile-dropdown-email {
+                @apply text-sm text-gray-500 dark:text-gray-400;
+            }
+
+            .profile-dropdown-menu {
+                @apply p-2;
+            }
+
+            .profile-dropdown-item {
+                @apply flex items-center gap-2 w-full px-4 py-2.5 text-sm
+                       rounded-lg transition-all duration-200
+                       hover:bg-primary-500/10 dark:hover:bg-primary-400/10
+                       active:scale-95;
+            }
+
+            .profile-dropdown-item.danger {
+                @apply text-red-600 dark:text-red-400
+                       hover:bg-red-50/10 dark:hover:bg-red-900/20;
+            }
+
+            /* Mobile Optimization */
+            @media (max-width: 768px) {
+                .avatar-container {
+                    @apply w-9 h-9;
+                }
+
+                .profile-dropdown {
+                    @apply w-48;
+                }
+
+                .profile-dropdown-header {
+                    @apply p-3;
+                }
+
+                .profile-dropdown-item {
+                    @apply px-3 py-1.5;
+                }
+            }
+
+            .notification-container {
+                @apply fixed top-0 right-0 left-0 z-[9999] pointer-events-none;
+            }
+
+            .notification {
+                @apply max-w-md mx-auto my-4 px-6 py-4 rounded-xl shadow-lg 
+                       backdrop-blur-lg border border-white/20 
+                       flex items-center gap-3 pointer-events-auto
+                       transform transition-all duration-500;
+                animation: slideInDown 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .notification.success {
+                @apply bg-green-500/90 text-white;
+            }
+
+            .notification.error {
+                @apply bg-red-500/90 text-white;
+            }
+
+            .notification.info {
+                @apply bg-blue-500/90 text-white;
+            }
+
+            .notification.warning {
+                @apply bg-yellow-500/90 text-white;
+            }
+
+            .notification-icon {
+                @apply w-6 h-6 flex-shrink-0;
+            }
+
+            .notification-content {
+                @apply flex-1;
+            }
+
+            .notification-title {
+                @apply font-medium mb-1;
+            }
+
+            .notification-message {
+                @apply text-sm opacity-90;
+            }
+
+            .notification-progress {
+                @apply absolute bottom-0 left-0 h-1 bg-white/30 
+                       transform origin-left transition-transform;
+            }
+
+            .notification.slide-out {
+                animation: slideOutUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+
+            /* Avatar Container Hover Effect */
+            .avatar-container:hover {
+                @apply transform scale-105;
+            }
+
+            /* Avatar Container Active Effect */
+            .avatar-container:active {
+                @apply transform scale-95;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen transition-all duration-500 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)]">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 py-4">
+        <nav class="mx-auto max-w-7xl">
+            <div class="flex items-center justify-between px-6 py-3 bg-white/5 dark:bg-gray-900/5 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-[0_0_0_1.5px_rgba(0,0,0,0.08)]">
+                <a href="../../" class="logo">
+                    Tèo Sushi
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Toggle -->
+                    <button id="langToggle" class="relative group p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)]">
+                        <div class="relative w-6 h-6 transform transition-transform duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] group-hover:scale-110">
+                            <svg class="w-6 h-6 text-primary-500 dark:text-primary-400 transform transition-all duration-500 ease-[cubic-bezier(0.4, 0, 0.2, 1)] opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                            <div class="lang-indicator absolute -bottom-2 -right-1 flex items-center justify-center w-[18px] h-[18px] text-[8px] font-bold rounded-[6px] bg-gradient-to-r from-[#00B0FF] to-[#EC4899] text-white transform transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] group-hover:scale-110 z-10 shadow-sm">
+                                <span class="lang-text transform transition-all duration-300 ease-[cubic-bezier(0.4, 0, 0.2, 1)] translate-y-[0.5px]">EN</span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="relative p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-primary-500 dark:hidden transform hover:rotate-180 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="w-6 h-6 text-primary-400 hidden dark:block transform hover:rotate-180 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                        </svg>
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="profile-dropdown-container" style="z-index: 9999;">
+                        <button id="profileDropdownBtn" class="avatar-container group">
+                            <div class="avatar-gradient"></div>
+                            <div class="avatar-glow"></div>
+                            <div class="avatar-content">
+                                <img src="../../assets/ico/Avt.ico" alt="Profile" class="avatar-image">
+                            </div>
+                        </button>
+                        
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-xl overflow-hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg border border-white/20 dark:border-gray-700/20" style="z-index: 9999;">
+                            <div class="p-4 border-b border-gray-100/10 dark:border-gray-700/10">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Hoàng Việt Quang</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">teosushi1014@gmail.com</p>
+                            </div>
+                            <div class="p-2">
+                                <button data-action="logout" type="button" class="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50/10 dark:hover:bg-red-900/20 transition-colors duration-200" style="cursor: pointer; pointer-events: auto; z-index: 10000;">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    <span data-vi="Đăng Xuất" data-en="Logout">Đăng Xuất</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden relative p-2 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/30 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-primary-500 transform transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16m-7 6h7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-2">
+                <div class="mx-4 p-4 animate-slide-down bg-white/5 dark:bg-gray-900/5 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/20">
+                    <div class="flex flex-col space-y-4">
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-24 pb-12">
+        <!-- Dashboard Header -->
+        <div class="container mx-auto px-4 mb-8">
+            <div class="flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl font-bold gradient-text" data-vi="Quản Lý Dự Án" data-en="Project Management">Quản Lý Dự Án</h1>
+                    <div class="flex items-center gap-4">
+                        <button onclick="openAddProjectModal()" class="btn-primary flex items-center gap-2">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span data-vi="Thêm Dự Án" data-en="Add Project">Thêm Dự Án</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="container mx-auto px-4 mb-8">
+            <div class="glass-card">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" id="searchProject" 
+                               class="form-input" 
+                               placeholder="Tìm kiếm dự án..."
+                               onkeyup="filterProjects()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div id="bulkActions" class="container mx-auto px-4 mb-8 hidden">
+            <div class="glass-card">
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="checkAll" 
+                               class="form-checkbox h-5 w-5 text-primary-500 rounded border-gray-300 focus:ring-primary-500"
+                               onchange="toggleAllProjects()">
+                        <label for="checkAll" class="ml-2 text-sm">Chọn tất cả</label>
+                    </div>
+                    <div class="flex-1"></div>
+                    <div class="flex items-center gap-4">
+                        <div class="select-wrapper group glass-select">
+                            <select id="bulkStatusUpdate" 
+                                    class="form-input" 
+                                    onchange="bulkUpdateStatus(this.value)">
+                                <option value="">Cập nhật trạng thái</option>
+                                <optgroup label="Trạng thái">
+                                    <option value="active">Đang hoạt động</option>
+                                    <option value="draft">Bản nháp</option>
+                                    <option value="archived">Đã lưu trữ</option>
+                                </optgroup>
+                            </select>
+                            <div class="select-arrow">
+                                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                        <button onclick="bulkDeleteProjects()" 
+                                class="btn-secondary text-red-500 hover:bg-red-500/10">
+                            <i class="fas fa-trash mr-2"></i>
+                            Xóa đã chọn
+                        </button>
+                        <button onclick="exportProjects()" 
+                                class="btn-secondary">
+                            <i class="fas fa-download mr-2"></i>
+                            Xuất
+                        </button>
+                        <label class="btn-secondary cursor-pointer">
+                            <i class="fas fa-upload mr-2"></i>
+                            Nhập
+                            <input type="file" accept=".json" onchange="importProjects(event)" class="hidden">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+                <!-- Projects will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Add/Edit Project Modal -->
+        <div id="projectModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+            <div class="glass-card max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold gradient-text" id="modalTitle">Thêm Dự Án Mới</h3>
+                    <button onclick="closeProjectModal()" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <form id="projectForm" class="space-y-6" onsubmit="handleProjectSubmit(event)">
+                    <input type="hidden" id="projectId">
+                    
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Tên dự án</label>
+                        <input type="text" id="projectName" class="form-input" required>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Mô tả</label>
+                        <textarea id="projectDescription" class="form-input" rows="4" required></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium">Danh mục</label>
+                            <select id="projectCategory" class="form-input" required>
+                                <option value="web">Web Development</option>
+                                <option value="mobile">Mobile App</option>
+                                <option value="desktop">Desktop App</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium">Trạng thái</label>
+                            <select id="projectStatus" class="form-input" required>
+                                <option value="active">Đang hoạt động</option>
+                                <option value="draft">Bản nháp</option>
+                                <option value="archived">Đã lưu trữ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Hình ảnh dự án</label>
+                        <input type="file" id="projectImage" class="form-input" accept="image/*">
+                        <div id="imagePreview" class="mt-2 rounded-xl overflow-hidden hidden">
+                            <img id="previewImg" class="w-full h-48 object-cover">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Link demo</label>
+                        <input type="url" id="projectDemo" class="form-input">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Link source code</label>
+                        <input type="url" id="projectSource" class="form-input">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Tags</label>
+                        <input type="text" id="projectTags" class="form-input" placeholder="Nhập tags, phân cách bằng dấu phẩy">
+                    </div>
+
+                    <div class="flex justify-end gap-4">
+                        <button type="button" onclick="previewProject()" class="btn-secondary">
+                            <i class="fas fa-eye mr-2"></i>
+                            Preview
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save mr-2"></i>
+                            Lưu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Preview Modal -->
+        <div id="previewModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+            <div class="glass-card max-w-2xl w-full mx-4">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold gradient-text">Preview Dự Án</h3>
+                    <button onclick="closePreviewModal()" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="previewContent" class="space-y-6">
+                    <!-- Preview content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Import main.js first -->
+    <script src="../../assets/js/main.js"></script>
+    <!-- Import dashboard.js -->
+    <script src="./dashboard.js"></script>
+    <script>
+        // Initialize dashboard on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!window.dashboard) {
+                window.dashboard = new DashboardUI();
+                window.dashboard.init();
+            }
+        });
+    </script>
+</body>
+</html> 

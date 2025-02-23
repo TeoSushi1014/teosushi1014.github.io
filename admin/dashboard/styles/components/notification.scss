@@ -1,0 +1,120 @@
+#notification-container {
+    position: fixed;
+    top: $spacing-md;
+    right: $spacing-md;
+    z-index: $z-index-tooltip;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    pointer-events: none;
+    
+    .notification {
+        pointer-events: auto;
+        min-width: 300px;
+        max-width: 400px;
+        padding: $spacing-md;
+        border-radius: $border-radius-lg;
+        background: var(--bg-color);
+        box-shadow: $shadow-lg;
+        transform: translateX(120%);
+        transition: transform 0.3s ease-in-out;
+        
+        &.notification-show {
+            transform: translateX(0);
+        }
+        
+        &.slide-out {
+            transform: translateX(120%);
+        }
+        
+        .notification-content {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-xs;
+            
+            .notification-title {
+                font-size: $font-size-lg;
+                font-weight: 600;
+                margin: 0;
+            }
+            
+            .notification-message {
+                color: var(--text-secondary);
+                margin: 0;
+            }
+        }
+        
+        .notification-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: currentColor;
+            opacity: 0.2;
+            animation: progress 3s linear;
+        }
+        
+        // Notification types
+        &.success {
+            background: var(--success-color);
+            color: white;
+            
+            .notification-message {
+                color: rgba(255, 255, 255, 0.9);
+            }
+        }
+        
+        &.error {
+            background: var(--error-color);
+            color: white;
+            
+            .notification-message {
+                color: rgba(255, 255, 255, 0.9);
+            }
+        }
+        
+        &.warning {
+            background: var(--warning-color);
+            color: white;
+            
+            .notification-message {
+                color: rgba(255, 255, 255, 0.9);
+            }
+        }
+        
+        &.info {
+            background: var(--info-color);
+            color: white;
+            
+            .notification-message {
+                color: rgba(255, 255, 255, 0.9);
+            }
+        }
+    }
+}
+
+@keyframes progress {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0;
+    }
+}
+
+// Dark mode
+@media (prefers-color-scheme: dark) {
+    #notification-container {
+        .notification {
+            background: var(--bg-secondary);
+            
+            &.success,
+            &.error,
+            &.warning,
+            &.info {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+            }
+        }
+    }
+} 
